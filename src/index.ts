@@ -10,6 +10,8 @@ import validateEnv from './utils/validateEnv';
 
 import authRouter from './routes/auth.routes';
 import userRouter from './routes/user.routes';
+import rimsRouter from './routes/rims.routes';
+
 import AppError from './utils/appError';
 
 // import nodemailer from 'nodemailer';
@@ -50,6 +52,8 @@ async function bootstrap() {
   // ROUTES
   app.use('/api/auth', authRouter);
   app.use('/api/users', userRouter);
+  app.use('/api/rims', rimsRouter);
+
 
   // Testing
   app.get('/api/healthchecker', (_, res: Response) => {

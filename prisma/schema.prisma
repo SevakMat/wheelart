@@ -37,3 +37,20 @@ enum RoleEnumType {
   user
   admin
 }
+model Rims {
+  @@map(name: "rims")
+
+  id              String      @id @default(uuid())
+  rimModel        String      @db.VarChar(255)
+  size            Int
+  centerDistance  Int
+  width           Int
+  bore            Int
+  etOffset        String      @db.VarChar(255)
+  color           String      @db.VarChar(255)
+  ean             Int
+  gram            Int
+  packIncludes    String      @db.VarChar(255)
+  tmpsCompatible  Boolean
+  state           String      @db.VarChar(255)
+}

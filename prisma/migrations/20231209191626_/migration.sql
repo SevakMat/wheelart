@@ -20,6 +20,25 @@ CREATE TABLE "users" (
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "rims" (
+    "id" TEXT NOT NULL,
+    "rimModel" VARCHAR(255) NOT NULL,
+    "size" INTEGER NOT NULL,
+    "centerDistance" INTEGER NOT NULL,
+    "width" INTEGER NOT NULL,
+    "bore" INTEGER NOT NULL,
+    "etOffset" VARCHAR(255) NOT NULL,
+    "color" VARCHAR(255) NOT NULL,
+    "ean" INTEGER NOT NULL,
+    "gram" INTEGER NOT NULL,
+    "packIncludes" VARCHAR(255) NOT NULL,
+    "tmpsCompatible" BOOLEAN NOT NULL,
+    "state" VARCHAR(255) NOT NULL,
+
+    CONSTRAINT "rims_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
