@@ -23,18 +23,14 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "rims" (
     "id" TEXT NOT NULL,
+    "sizeR" INTEGER NOT NULL,
+    "studHoles" INTEGER NOT NULL,
+    "pcd" INTEGER NOT NULL,
+    "centerBore" VARCHAR(255) NOT NULL,
     "rimModel" VARCHAR(255) NOT NULL,
-    "size" INTEGER NOT NULL,
-    "centerDistance" INTEGER NOT NULL,
     "width" INTEGER NOT NULL,
-    "bore" INTEGER NOT NULL,
-    "etOffset" VARCHAR(255) NOT NULL,
     "color" VARCHAR(255) NOT NULL,
-    "ean" INTEGER NOT NULL,
     "gram" INTEGER NOT NULL,
-    "packIncludes" VARCHAR(255) NOT NULL,
-    "tmpsCompatible" BOOLEAN NOT NULL,
-    "state" VARCHAR(255) NOT NULL,
 
     CONSTRAINT "rims_pkey" PRIMARY KEY ("id")
 );

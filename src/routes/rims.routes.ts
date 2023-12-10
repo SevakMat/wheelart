@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllRimsHandler, getRimsByInputArgsHandler } from '../controllers/rims.controller';
+import { getAllRimsHandler, getRimsByInputArgsHandler, getRimsByCarInputArgsHandler } from '../controllers/rims.controller';
 
 const router = express.Router();
 
@@ -7,5 +7,7 @@ const router = express.Router();
 
 router.get('/all', getAllRimsHandler);
 router.post('/where', getRimsByInputArgsHandler);
+
+router.post('/by-car', getRimsByCarInputArgsHandler);
 
 export default router;
