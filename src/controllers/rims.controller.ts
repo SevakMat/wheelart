@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { findAllRimsService, findRimsByInputArgsService } from '../services/rims.service';
-import { FindWheelByCarService } from '../services/wheelFitmentAPI.service';
-import { CliarsRimsByInputArgs } from './helpers/CliarsRimsByInputArgs';
+import { FindWheelByCarService, GetAllCars, GetModelByCar } from '../services/wheelFitmentAPI.service';
+import { CliarsRimsByInputArgs } from './inputs/CliarsRimsByInputArgs';
 export const getAllRimsHandler = async (
   req: Request,
   res: Response,
@@ -74,6 +74,42 @@ export const getRimsByCarInputArgsHandler = async (
     next(err);
   }
 };
+
+export const getAllCarsHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+
+    const dataFromApi = await GetAllCars()
+    res.status(200).status(200).json({
+      status: 'success',
+      data: dataFromApi,
+    });
+  } catch (err: any) {
+    next(err);
+  }
+};
+
+// export const GetModelByCarHandler = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+
+//     const dataFromApi = await GetModelByCar()
+//     res.status(200).status(200).json({
+//       status: 'success',
+//       data: dataFromApi,
+//     });
+//   } catch (err: any) {
+//     next(err);
+//   }
+// };
+
+
 
 
 

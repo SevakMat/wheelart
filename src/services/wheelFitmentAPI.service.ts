@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 import axios from 'axios';
 import { AxiosResponse } from 'axios';
+import { CarsDataFormater } from '../controllers/helpers/CarsDataFormater';
 
 // make=bmw&
 // model=3-series&
@@ -68,4 +69,42 @@ export const FindWheelByCarService = async (props: FindWheelByCarProps): Promise
       return {}
     });
 
+};
+
+export const GetAllCars = async () => {
+  let url = "https://api.wheel-size.com/v2/makes/?user_key=730f8ee09c9c4ec4519b3cc39e9db35f"
+
+  var config = {
+    method: 'get',
+    url,
+    headers: {}
+  };
+
+  return axios(config)
+    .then(function (response) {
+      return CarsDataFormater(response)
+    })
+
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+export const GetModelByCar = async (model: string) => {
+  let url = `https://api.wheel-size.com/v2/models/?make=${model}&user_key=730f8ee09c9c4ec4519b3cc39e9db35f`
+
+  var config = {
+    method: 'get',
+    url,
+    headers: {}
+  };
+
+  return axios(config)
+    .then(function (response) {
+      return CarsDataFormater(response)
+    })
+
+    .catch(function (error) {
+      console.log(error);
+    });
 };
