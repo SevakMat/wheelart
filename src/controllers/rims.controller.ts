@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { findAllRimsService, findRimsByInputArgsService } from '../services/rims.service';
-import { FindWheelByCarService, GetAllCars, GetModelByCar } from '../services/wheelFitmentAPI.service';
+import { FindWheelDetailsByCarService, getCarsInfoByCarsData } from '../services/wheelFitmentAPI.service';
 import { CliarsRimsByInputArgs } from './inputs/CliarsRimsByInputArgs';
 export const getAllRimsHandler = async (
   req: Request,
@@ -55,34 +55,33 @@ export const getRimsByCarInputArgsHandler = async (
 ) => {
   try {
 
-    const dataFromApi = await FindWheelByCarService(req.body.where)
+    const wheelDetails = await FindWheelDetailsByCarService(req.body.where)
 
     const rims = await findRimsByInputArgsService({
-      where: dataFromApi,
+      where: wheelDetails,
       select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true }
     });
-    console.log(rims);
 
 
     res.status(200).status(200).json({
       status: 'success',
-      data: {
-        rims,
-      },
+      data: rims
     });
   } catch (err: any) {
     next(err);
   }
 };
 
-export const getAllCarsHandler = async (
+export const getAllCarsTypesHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
 
-    const dataFromApi = await GetAllCars()
+    const dataFromApi = await getCarsInfoByCarsData("makes")
+    console.log(444, dataFromApi);
+
     res.status(200).status(200).json({
       status: 'success',
       data: dataFromApi,
@@ -92,24 +91,61 @@ export const getAllCarsHandler = async (
   }
 };
 
-// export const GetModelByCarHandler = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
+export const getModelByCarHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { make } = req.query
 
-//     const dataFromApi = await GetModelByCar()
-//     res.status(200).status(200).json({
-//       status: 'success',
-//       data: dataFromApi,
-//     });
-//   } catch (err: any) {
-//     next(err);
-//   }
-// };
+    const dataFromApi = await getCarsInfoByCarsData("models", make as string)
+    res.status(200).status(200).json({
+      status: 'success',
+      data: dataFromApi,
+    });
+  } catch (err: any) {
+    next(err);
+  }
+};
+
+export const getYearByCarHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { make, model } = req.query
+
+    const dataFromApi = await getCarsInfoByCarsData("years", make as string, model as string)
+    res.status(200).status(200).json({
+      status: 'success',
+      data: dataFromApi,
+    });
+  } catch (err: any) {
+    next(err);
+  }
+};
 
 
+export const getModificationsByCarHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+
+  try {
+    const { make, model, year } = req.query
+
+    const dataFromApi = await getCarsInfoByCarsData("modifications", make as string, model as string, year as string)
+    res.status(200).status(200).json({
+      status: 'success',
+      data: dataFromApi,
+    });
+  } catch (err: any) {
+    next(err);
+  }
+};
 
 
 

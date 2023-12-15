@@ -10,21 +10,22 @@ import { CarsDataFormater } from '../controllers/helpers/CarsDataFormater';
 // user_key=YOUR-API-KEY
 
 interface FindWheelByCarProps {
+  key: string
   make?: string;
-  model?: number;
+  model?: string;
   modification?: string;
-  year?: number
+  year?: string
 }
 
-const generateUrl = ({ make, model, modification, year }: FindWheelByCarProps) => {
-  let url = "https://api.wheel-size.com/v2/search/by_model/"
+const generateUrl = ({ key, make, model, year, modification }: FindWheelByCarProps) => {
+  let url = `https://api.wheel-size.com/v2/${key}/?`
 
-  const makeParams = make ? `?make=${make}&` : ""
+  const makeParams = make ? `make=${make}&` : ""
   const modelParams = model ? `model=${model}&` : ""
-  const modificationParams = modification ? `modification=${modification}&` : ""
-  const yesrParams = year ? `year=${year}` : ""
-  const apyKey = "&user_key=730f8ee09c9c4ec4519b3cc39e9db35f"
-  url = url + makeParams + modelParams + modificationParams + yesrParams + apyKey
+  const modificationParams = "modification" ? `modification=${modification}&` : ""
+  const yesrParams = year ? `year=${year}&` : ""
+  const apyKey = "user_key=730f8ee09c9c4ec4519b3cc39e9db35f"
+  url = url + makeParams + modelParams + yesrParams + modificationParams + apyKey
 
   return url
 }
@@ -32,10 +33,10 @@ const generateUrl = ({ make, model, modification, year }: FindWheelByCarProps) =
 const filterDate = (data: any) => {
 
   const findUnic = data[0].technical
-  console.log(data[0].technical.stud_holes);
-  console.log(data[0].technical.pcd);
-  console.log(data[0].technical.centre_bore);
-  console.log(data[0].wheels[0].front.rim_diameter);
+  // console.log(data[0].technical.stud_holes);
+  // console.log(data[0].technical.pcd);
+  // console.log(data[0].technical.centre_bore);
+  // console.log(data[0].wheels[0].front.rim_diameter);
 
 
   const curentWheelData = {
@@ -49,9 +50,10 @@ const filterDate = (data: any) => {
 }
 
 
-export const FindWheelByCarService = async (props: FindWheelByCarProps): Promise<Prisma.RimsWhereInput> => {
-  let url = generateUrl(props)
-  console.log(url);
+export const FindWheelDetailsByCarService = async (props: FindWheelByCarProps): Promise<Prisma.RimsWhereInput> => {
+  let url = generateUrl({ ...props, key: "search/by_model" })
+
+  console.log(333, url);
 
 
   var config = {
@@ -65,46 +67,32 @@ export const FindWheelByCarService = async (props: FindWheelByCarProps): Promise
 
     })
     .catch(function (error) {
-      console.log(error);
+      // console.log(error);
       return {}
     });
-
 };
 
-export const GetAllCars = async () => {
-  let url = "https://api.wheel-size.com/v2/makes/?user_key=730f8ee09c9c4ec4519b3cc39e9db35f"
+export const getCarsInfoByCarsData = async (key: string, make?: string, model?: string, year?: string, modification?: string) => {
+  const url = generateUrl({
+    key: key,
+    make: make,
+    model: model,
+    year: year,
+    modification: modification
+  })
+  console.log(url);
 
   var config = {
     method: 'get',
-    url,
-    headers: {}
+    url: url,
+    headers: {},
   };
-
   return axios(config)
     .then(function (response) {
       return CarsDataFormater(response)
     })
-
     .catch(function (error) {
-      console.log(error);
-    });
-};
-
-export const GetModelByCar = async (model: string) => {
-  let url = `https://api.wheel-size.com/v2/models/?make=${model}&user_key=730f8ee09c9c4ec4519b3cc39e9db35f`
-
-  var config = {
-    method: 'get',
-    url,
-    headers: {}
-  };
-
-  return axios(config)
-    .then(function (response) {
-      return CarsDataFormater(response)
-    })
-
-    .catch(function (error) {
-      console.log(error);
+      return error.message
+      // console.log(error);
     });
 };
