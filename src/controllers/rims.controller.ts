@@ -59,7 +59,7 @@ export const getRimsByCarInputArgsHandler = async (
 
     const rims = await findRimsByInputArgsService({
       where: wheelDetails,
-      select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true }
+      select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true, imageUrl: true }
     });
 
 
@@ -80,7 +80,6 @@ export const getAllCarsTypesHandler = async (
   try {
 
     const dataFromApi = await getCarsInfoByCarsData("makes")
-    console.log(444, dataFromApi);
 
     res.status(200).status(200).json({
       status: 'success',

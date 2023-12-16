@@ -53,9 +53,6 @@ const filterDate = (data: any) => {
 export const FindWheelDetailsByCarService = async (props: FindWheelByCarProps): Promise<Prisma.RimsWhereInput> => {
   let url = generateUrl({ ...props, key: "search/by_model" })
 
-  console.log(333, url);
-
-
   var config = {
     method: 'get',
     url: url,
@@ -80,7 +77,6 @@ export const getCarsInfoByCarsData = async (key: string, make?: string, model?: 
     year: year,
     modification: modification
   })
-  console.log(url);
 
   var config = {
     method: 'get',

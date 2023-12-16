@@ -49,4 +49,5 @@ model Rims {
   width           Int
   color           String      @db.VarChar(255)
   gram            Int
+  imageUrl        String      @db.VarChar(255)
 }

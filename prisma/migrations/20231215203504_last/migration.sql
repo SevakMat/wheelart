@@ -31,6 +31,7 @@ CREATE TABLE "rims" (
     "width" INTEGER NOT NULL,
     "color" VARCHAR(255) NOT NULL,
     "gram" INTEGER NOT NULL,
+    "imageUrl" VARCHAR(255) NOT NULL,
 
     CONSTRAINT "rims_pkey" PRIMARY KEY ("id")
 );
