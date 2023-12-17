@@ -11,6 +11,7 @@ import validateEnv from './utils/validateEnv';
 import authRouter from './routes/auth.routes';
 import userRouter from './routes/user.routes';
 import rimsRouter from './routes/rims.routes';
+import filterRouter from './routes/filters.routes';
 
 import AppError from './utils/appError';
 
@@ -53,6 +54,7 @@ async function bootstrap() {
   app.use('/api/auth', authRouter);
   app.use('/api/users', userRouter);
   app.use('/api/rims', rimsRouter);
+  app.use('/api/filters', filterRouter);
 
 
   // Testing

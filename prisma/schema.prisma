@@ -40,7 +40,7 @@ enum RoleEnumType {
 model Rims {
   @@map(name: "rims")
 
-  id              String      @id @default(uuid())
+  id    Int     @id @default(autoincrement())
   sizeR           Int      
   studHoles       Int      
   pcd             Int
@@ -49,5 +49,7 @@ model Rims {
   width           Int
   color           String      @db.VarChar(255)
   gram            Int
+  description     String      @db.VarChar(255)
   imageUrl        String      @db.VarChar(255)
+  price           Int      
 }
