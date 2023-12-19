@@ -22,7 +22,7 @@ CREATE TABLE "users" (
 
 -- CreateTable
 CREATE TABLE "rims" (
-    "id" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
     "sizeR" INTEGER NOT NULL,
     "studHoles" INTEGER NOT NULL,
     "pcd" INTEGER NOT NULL,
@@ -31,7 +31,9 @@ CREATE TABLE "rims" (
     "width" INTEGER NOT NULL,
     "color" VARCHAR(255) NOT NULL,
     "gram" INTEGER NOT NULL,
+    "description" VARCHAR(255) NOT NULL,
     "imageUrl" VARCHAR(255) NOT NULL,
+    "price" INTEGER NOT NULL,
 
     CONSTRAINT "rims_pkey" PRIMARY KEY ("id")
 );

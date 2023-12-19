@@ -56,12 +56,12 @@ export const getRimsByCarInputArgsHandler = async (
   try {
 
     const wheelDetails = await FindWheelDetailsByCarService(req.body.where)
+    console.log(2222, wheelDetails);
 
     const rims = await findRimsByInputArgsService({
       where: wheelDetails,
-      select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true, imageUrl: true }
+      select: { id: true, sizeR: true, centerBore: true, imageUrl: true, rimModel: true, price: true }
     });
-
 
     res.status(200).status(200).json({
       status: 'success',
