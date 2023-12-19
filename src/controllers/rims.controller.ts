@@ -56,6 +56,7 @@ export const getRimsByCarInputArgsHandler = async (
   try {
 
     const wheelDetails = await FindWheelDetailsByCarService(req.body.where)
+    console.log(2222, wheelDetails);
 
     const rims = await findRimsByInputArgsService({
       where: wheelDetails,

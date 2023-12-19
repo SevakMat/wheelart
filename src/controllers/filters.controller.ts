@@ -12,7 +12,7 @@ export const getAllFilters = async (
   try {
     res.status(200).status(200).json({
       status: 'success',
-      filters: filterData,
+      filterData,
     });
   } catch (err: any) {
     next(err);
