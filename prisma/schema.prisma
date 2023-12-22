@@ -53,3 +53,16 @@ model Rims {
   imageUrl        String      @db.VarChar(255)
   price           Int      
 }
+
+
+model Tire {
+  @@map(name: "tire")
+
+  id    Int       @id @default(autoincrement())
+  tireWidth       Int
+  tireAspectRatio Int
+  rimDiameter     Int
+  marka           String      @db.VarChar(255)
+  stock           Int
+  imageUrl           String      @db.VarChar(255)
+}
