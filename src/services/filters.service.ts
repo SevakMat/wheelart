@@ -16,7 +16,6 @@ export const getFiltersService = async (filter: GetFiltersServiceType) => {
   const filterData = CliiarsFiltersService(filter);
   const result: any = await prisma.rims.groupBy(filterData);
 
-
   const wheelData = CliiarsCarFiltersService(filter)
   const wheels = await prisma.rims.findMany(wheelData);
 

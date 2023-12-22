@@ -30,14 +30,58 @@ const generateUrl = ({ key, make, model, year, modification }: FindWheelByCarPro
   return url
 }
 
+interface Wheel {
+  front: {
+    tire_width?: number;
+    tire_aspect_ratio?: number;
+    rim_diameter?: number;
+  };
+}
+
+interface InputObject {
+  front: {
+    tire_width?: number;
+    tire_aspect_ratio?: number;
+    rim_diameter?: number;
+  };
+}
+
+interface ResultObject {
+  tireWidth: number[];
+  tireAspectRatio: number[];
+  rimDiameter: number[];
+}
+
+function transformWheelsObject(inputObject: InputObject[]): ResultObject {
+  const resultObject: ResultObject = {
+    tireWidth: [],
+    tireAspectRatio: [],
+    rimDiameter: []
+  };
+  inputObject.forEach((wheel) => {
+    const rear = wheel.front;
+
+    if (rear.tire_width) {
+      resultObject.tireWidth.push(rear.tire_width);
+    }
+
+    if (rear.tire_aspect_ratio) {
+      resultObject.tireAspectRatio.push(rear.tire_aspect_ratio);
+    }
+
+    if (rear.rim_diameter) {
+      resultObject.rimDiameter.push(rear.rim_diameter);
+    }
+  });
+
+  return resultObject;
+}
+
+
+
 const filterDate = (data: any) => {
 
   const findUnic = data[0].technical
-  // console.log(data[0].technical.stud_holes);
-  // console.log(data[0].technical.pcd);
-  // console.log(data[0].technical.centre_bore);
-  // console.log(data[0].wheels[0].front.rim_diameter);
-
 
   const curentWheelData = {
     studHoles: findUnic.stud_holes,
@@ -46,11 +90,25 @@ const filterDate = (data: any) => {
     sizeR: data[0].wheels[0].front.rim_diameter
   }
 
-  return curentWheelData
+  const rimeFront = data[0].wheels[0].front
+
+  const curentTireData = {
+    tireWidth: rimeFront.tire_width,
+    tireAspectRatio: rimeFront.tire_aspect_ratio,
+    rimDiameter: rimeFront.rim_diameter
+
+  }
+
+  // const curentRimeData = transformWheelsObject(data[0].wheels)
+
+  return {
+    wheelDetails: curentWheelData,
+    tireDetails: curentTireData
+  }
 }
 
 
-export const FindWheelDetailsByCarService = async (props: FindWheelByCarProps): Promise<Prisma.RimsWhereInput> => {
+export const FindWheelDetailsByCarService = async (props: FindWheelByCarProps): Promise<any> => {
   let url = generateUrl({ ...props, key: "search/by_model" })
 
   var config = {

@@ -38,6 +38,18 @@ CREATE TABLE "rims" (
     CONSTRAINT "rims_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "tire" (
+    "id" SERIAL NOT NULL,
+    "tireWidth" INTEGER NOT NULL,
+    "tireAspectRatio" INTEGER NOT NULL,
+    "rimDiameter" INTEGER NOT NULL,
+    "marka" VARCHAR(255) NOT NULL,
+    "stock" INTEGER NOT NULL,
+
+    CONSTRAINT "tire_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
