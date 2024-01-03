@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { AxiosResponse } from 'axios';
 import { CarsDataFormater } from '../controllers/helpers/CarsDataFormater';
 
@@ -10,11 +10,11 @@ import { CarsDataFormater } from '../controllers/helpers/CarsDataFormater';
 // user_key=YOUR-API-KEY
 
 interface FindWheelByCarProps {
-  key: string
+  key: string;
   make?: string;
   model?: string;
   modification?: string;
-  year?: string
+  year?: string;
 }
 
 const generateUrl = ({ key, make, model, year, modification }: FindWheelByCarProps) => {
@@ -22,7 +22,7 @@ const generateUrl = ({ key, make, model, year, modification }: FindWheelByCarPro
 
   const makeParams = make ? `make=${make}&` : ""
   const modelParams = model ? `model=${model}&` : ""
-  const modificationParams = "modification" ? `modification=${modification}&` : ""
+  const modificationParams = modification ? `modification=${modification}&` : ""
   const yesrParams = year ? `year=${year}&` : ""
   const apyKey = "user_key=730f8ee09c9c4ec4519b3cc39e9db35f"
   url = url + makeParams + modelParams + yesrParams + modificationParams + apyKey
@@ -79,7 +79,7 @@ function transformWheelsObject(inputObject: InputObject[]): ResultObject {
 
 
 
-const filterDate = (data: any) => {
+const filterData = (data: any) => {
 
   const findUnic = data[0].technical
 
@@ -108,6 +108,38 @@ const filterDate = (data: any) => {
 }
 
 
+
+
+function extractTireInformation(inputArray: any) {
+  // Initialize an empty array to store the extracted tire information
+  const tireArray: any = [];
+
+  // Iterate over each object in the input array
+  inputArray.forEach((item: any) => {
+    // Check if 'front' property exists and contains necessary tire information
+    if (item.front && item.front.tire_width && item.front.tire_aspect_ratio && item.front.rim_diameter) {
+      // Extract the required tire information and add it to the tireArray
+      tireArray.push({
+        tireWidth: item.front.tire_width,
+        tireAspectRatio: item.front.tire_aspect_ratio,
+        rimDiameter: item.front.rim_diameter,
+      });
+    }
+
+    // Check if 'rear' property exists and contains necessary tire information
+    if (item.rear && item.rear.tire_width && item.rear.tire_aspect_ratio && item.rear.rim_diameter) {
+      // Extract the required tire information and add it to the tireArray
+      tireArray.push({
+        tireWidth: item.rear.tire_width,
+        tireAspectRatio: item.rear.tire_aspect_ratio,
+        rimDiameter: item.rear.rim_diameter,
+      });
+    }
+  });
+
+  return tireArray;
+}
+
 export const FindWheelDetailsByCarService = async (props: FindWheelByCarProps): Promise<any> => {
   let url = generateUrl({ ...props, key: "search/by_model" })
 
@@ -118,35 +150,53 @@ export const FindWheelDetailsByCarService = async (props: FindWheelByCarProps): 
   };
   return axios(config)
     .then(function (response) {
-      return filterDate(response.data.data)
+      return filterData(response.data.data)
 
     })
     .catch(function (error) {
-      // console.log(error);
-      return {}
+      throw error;
     });
 };
 
-export const getCarsInfoByCarsData = async (key: string, make?: string, model?: string, year?: string, modification?: string) => {
-  const url = generateUrl({
-    key: key,
-    make: make,
-    model: model,
-    year: year,
-    modification: modification
-  })
+export const FindTireDetailsByCarService = async (props: FindWheelByCarProps): Promise<any> => {
+  let url = generateUrl({ ...props, key: "search/by_model" })
 
   var config = {
     method: 'get',
     url: url,
-    headers: {},
+    headers: {}
   };
   return axios(config)
     .then(function (response) {
-      return CarsDataFormater(response)
+      return extractTireInformation(response.data.data[0].wheels)
+
     })
     .catch(function (error) {
-      return error.message
-      // console.log(error);
+      throw error;
     });
+};
+
+
+export const getCarsInfoByCarsData = async (
+  key: string,
+  make?: string,
+  model?: string,
+  year?: string,
+  modification?: string
+) => {
+  const url = generateUrl({ key, make, model, year, modification });
+
+
+  const config: AxiosRequestConfig = {
+    method: 'get',
+    url: url,
+    headers: {},
+  };
+
+  try {
+    const response = await axios(config);
+    return CarsDataFormater(response);
+  } catch (error: any) {
+    throw error;
+  }
 };

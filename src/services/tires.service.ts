@@ -18,6 +18,6 @@ export const findTiresByInputArgsService = async (
       where
     })) as Tire[];
   } catch (error) {
-    console.log(error);
+    throw error
   }
 };

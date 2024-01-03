@@ -15,7 +15,6 @@ import {
   signTokens,
   // updateUser,
 } from '../services/user.service';
-import { Prisma } from '@prisma/client';
 import config from 'config';
 import AppError from '../utils/appError';
 // import redisClient from '../utils/connectRedis';

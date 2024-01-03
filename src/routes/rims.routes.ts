@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllRimsHandler, getRimsByInputArgsHandler, getRimsByCarInputArgsHandler, getAllCarsTypesHandler, getModelByCarHandler, getYearByCarHandler, getModificationsByCarHandler } from '../controllers/rims.controller';
+import { getAllRimsHandler, getRimsByInputArgsHandler, getRimsByCarInputArgsHandler, getAllCarsTypesHandler, getModelByCarHandler, getYearByCarHandler, getModificationsByCarHandler, getRimDataHandler } from '../controllers/rims.controller';
 
 const router = express.Router();
 
@@ -12,14 +12,15 @@ router.post('/where', getRimsByInputArgsHandler);
 // es vekaluma mashni tvyalnery i gnum api ic vekalum db um searcha anum beruma
 router.post('/by-car', getRimsByCarInputArgsHandler);
 
-router.get('/all-cars', getAllCarsTypesHandler);
+router.get('/makes', getAllCarsTypesHandler);
 
-router.get('/all-models', getModelByCarHandler);
+router.get('/models', getModelByCarHandler);
 
-router.get('/all-years', getYearByCarHandler);
+router.get('/years', getYearByCarHandler);
 
-router.get('/all-modifications', getModificationsByCarHandler);
+router.get('/modifications', getModificationsByCarHandler);
 
+router.post('/:id', getRimDataHandler);
 
 
 export default router;
