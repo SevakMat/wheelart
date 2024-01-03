@@ -27,4 +27,13 @@ export const findRimsByInputArgsService = async (
   })) as Rims[];
 };
 
+export const findRimByInputArgsService = async (
+  { where, select }: FindRimsByInputArgsServiceProps
+) => {
+
+  return (await prisma.rims.findFirst({
+    select,
+    where
+  })) as Rims
+};
 

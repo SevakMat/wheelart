@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { findAllRimsService, findRimsByInputArgsService } from '../services/rims.service';
+import { findAllRimsService, findRimByInputArgsService, findRimsByInputArgsService } from '../services/rims.service';
 import { findTiresByInputArgsService } from '../services/tires.service';
-import { FindWheelDetailsByCarService, getCarsInfoByCarsData } from '../services/wheelFitmentAPI.service';
+import { FindTireDetailsByCarService, FindWheelDetailsByCarService, getCarsInfoByCarsData } from '../services/wheelFitmentAPI.service';
 import { CliarsRimsByInputArgs } from './inputs/CliarsRimsByInputArgs';
 export const getAllRimsHandler = async (
   req: Request,
@@ -57,8 +57,6 @@ export const getRimsByCarInputArgsHandler = async (
   try {
 
     const { wheelDetails, tireDetails } = await FindWheelDetailsByCarService(req.body.where)
-    console.log("tireDetails", tireDetails);
-    console.log("wheelDetails", wheelDetails);
 
     const rims = await findRimsByInputArgsService({
       where: wheelDetails,
@@ -155,5 +153,43 @@ export const getModificationsByCarHandler = async (
   }
 };
 
+export const getRimDataHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+
+  try {
+    const { id } = req.params
+    const { body } = req
+
+    const tireData = await FindTireDetailsByCarService(body)
+
+    const rimId = +id
+
+    const wheel = await findRimByInputArgsService({
+      where: {
+        id: rimId
+      },
+      select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true, imageUrl: true }
+    });
+
+    const tires = await findTiresByInputArgsService({
+      where: {
+        OR: tireData
+      },
+      select: { id: true, tireWidth: true, tireAspectRatio: true, rimDiameter: true, imageUrl: true }
+
+    })
+
+    res.status(200).status(200).json({
+      status: 'success',
+      wheel,
+      tires
+    });
+  } catch (err: any) {
+    next(err);
+  }
+};
 
 
