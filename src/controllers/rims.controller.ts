@@ -86,7 +86,13 @@ export const getAllCarsTypesHandler = async (
 ) => {
   try {
 
-    const dataFromApi = await getCarsInfoByCarsData("makes")
+    // const dataFromApi = await getCarsInfoByCarsData("makes")
+
+    const dataFromApi = [
+      { name: "Bmw", image: "asdasdasdasd" },
+      { name: "Mercedes", image: "asdasdasdasd" },
+      { name: "Opel", image: "asdasdasdasd" },
+    ];
 
     res.status(200).status(200).json({
       status: 'success',
@@ -105,7 +111,13 @@ export const getModelByCarHandler = async (
   try {
     const { make } = req.query
 
-    const dataFromApi = await getCarsInfoByCarsData("models", make as string)
+    // const dataFromApi = await getCarsInfoByCarsData("models", make as string)
+    const dataFromApi = [
+      { name: "Series3", image: "asdasdasdasd" },
+      { name: "Series5", image: "asdasdasdasd" },
+      { name: "Series7", image: "asdasdasdasd" },
+    ];
+
     res.status(200).status(200).json({
       status: 'success',
       data: dataFromApi,
@@ -123,7 +135,13 @@ export const getYearByCarHandler = async (
   try {
     const { make, model } = req.query
 
-    const dataFromApi = await getCarsInfoByCarsData("years", make as string, model as string)
+    // const dataFromApi = await getCarsInfoByCarsData("years", make as string, model as string)
+    const dataFromApi = [
+      { name: "2007", image: "asdasdasdasd" },
+      { name: "2008", image: "asdasdasdasd" },
+      { name: "2009", image: "asdasdasdasd" },
+    ];
+
     res.status(200).status(200).json({
       status: 'success',
       data: dataFromApi,
@@ -143,7 +161,13 @@ export const getModificationsByCarHandler = async (
   try {
     const { make, model, year } = req.query
 
-    const dataFromApi = await getCarsInfoByCarsData("modifications", make as string, model as string, year as string)
+    // const dataFromApi = await getCarsInfoByCarsData("modifications", make as string, model as string, year as string)
+
+    const dataFromApi = [
+      { name: "228i", image: "asdasdasdasd" },
+      { name: "230i", image: "asdasdasdasd" },
+      { name: "248i", image: "asdasdasdasd" },
+    ];
     res.status(200).status(200).json({
       status: 'success',
       data: dataFromApi,
@@ -153,7 +177,7 @@ export const getModificationsByCarHandler = async (
   }
 };
 
-export const getRimDataHandler = async (
+export const getSingleRimDataHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -163,29 +187,31 @@ export const getRimDataHandler = async (
     const { id } = req.params
     const { body } = req
 
-    const tireData = await FindTireDetailsByCarService(body)
 
     const rimId = +id
 
-    const wheel = await findRimByInputArgsService({
+    const singleRim = await findRimByInputArgsService({
       where: {
         id: rimId
       },
-      select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true, imageUrl: true }
+      select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true, imageUrl: true, color: true, price: true, rimModel: true, width: true, gram: true }
     });
 
-    const tires = await findTiresByInputArgsService({
-      where: {
-        OR: tireData
-      },
-      select: { id: true, tireWidth: true, tireAspectRatio: true, rimDiameter: true, imageUrl: true }
-
-    })
+    let tires = []
+    if (body.make && body.model & body.year && body.modification) {
+      const tireData = await FindTireDetailsByCarService(body)
+      tires = await findTiresByInputArgsService({
+        where: {
+          OR: tireData
+        },
+        select: { id: true, tireWidth: true, tireAspectRatio: true, rimDiameter: true, imageUrl: true }
+      })
+    }
 
     res.status(200).status(200).json({
       status: 'success',
-      wheel,
-      tires
+      singleRim,
+      tires: []
     });
   } catch (err: any) {
     next(err);

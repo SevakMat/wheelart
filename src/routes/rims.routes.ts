@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllRimsHandler, getRimsByInputArgsHandler, getRimsByCarInputArgsHandler, getAllCarsTypesHandler, getModelByCarHandler, getYearByCarHandler, getModificationsByCarHandler, getRimDataHandler } from '../controllers/rims.controller';
+import { getAllRimsHandler, getRimsByInputArgsHandler, getRimsByCarInputArgsHandler, getAllCarsTypesHandler, getModelByCarHandler, getYearByCarHandler, getModificationsByCarHandler, getSingleRimDataHandler } from '../controllers/rims.controller';
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.get('/years', getYearByCarHandler);
 
 router.get('/modifications', getModificationsByCarHandler);
 
-router.post('/:id', getRimDataHandler);
+router.post('/:id', getSingleRimDataHandler);
 
 
 export default router;
