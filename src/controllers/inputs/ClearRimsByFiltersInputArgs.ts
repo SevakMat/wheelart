@@ -5,7 +5,7 @@ export const ClearRimsByFiltersInputArgs = (filter: GetFiltersServiceType): any 
 
   const filterQuery = RimFilterQuery(filter)
 
-  const skip = filter?.pagination ? (filter?.pagination - 1) * 10 : 0
+  const skip = filter?.pagination ? (filter?.pagination - 1) * 12 : 0
 
   const groupedFilters: Record<string, any> = {
     ...(Object.keys(filterQuery).length > 0 && { where: filterQuery }),
@@ -19,7 +19,7 @@ export const ClearRimsByFiltersInputArgs = (filter: GetFiltersServiceType): any 
       studHoles: true,
       imageUrl: true,
     },
-    take: 10,// qani hat eta
+    take: 12,// qani hat eta
     skip // vorduc sksi
   };
 

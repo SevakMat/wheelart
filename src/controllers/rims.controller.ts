@@ -177,7 +177,7 @@ export const getModificationsByCarHandler = async (
   }
 };
 
-export const getRimDataHandler = async (
+export const getSingleRimDataHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -187,29 +187,31 @@ export const getRimDataHandler = async (
     const { id } = req.params
     const { body } = req
 
-    const tireData = await FindTireDetailsByCarService(body)
 
     const rimId = +id
 
-    const wheel = await findRimByInputArgsService({
+    const singleRim = await findRimByInputArgsService({
       where: {
         id: rimId
       },
-      select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true, imageUrl: true }
+      select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true, imageUrl: true, color: true, price: true, rimModel: true, width: true, gram: true }
     });
 
-    const tires = await findTiresByInputArgsService({
-      where: {
-        OR: tireData
-      },
-      select: { id: true, tireWidth: true, tireAspectRatio: true, rimDiameter: true, imageUrl: true }
-
-    })
+    let tires = []
+    if (body.make && body.model & body.year && body.modification) {
+      const tireData = await FindTireDetailsByCarService(body)
+      tires = await findTiresByInputArgsService({
+        where: {
+          OR: tireData
+        },
+        select: { id: true, tireWidth: true, tireAspectRatio: true, rimDiameter: true, imageUrl: true }
+      })
+    }
 
     res.status(200).status(200).json({
       status: 'success',
-      wheel,
-      tires
+      singleRim,
+      tires: []
     });
   } catch (err: any) {
     next(err);
