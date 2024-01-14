@@ -142,7 +142,6 @@ function extractTireInformation(inputArray: any) {
 
 export const FindWheelDetailsByCarService = async (props: FindWheelByCarProps): Promise<any> => {
   let url = generateUrl({ ...props, key: "search/by_model" })
-
   var config = {
     method: 'get',
     url: url,
