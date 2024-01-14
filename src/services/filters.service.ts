@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import { CliiarsCarFiltersService, CliiarsFiltersService } from "../controllers/inputs/CliiarsFiltersService";
+import { ClearFiltersInputArgs } from "../controllers/inputs/ClearFiltersInputArgs";
+import { ClearRimsByFiltersInputArgs } from "../controllers/inputs/ClearRimsByFiltersInputArgs";
+import { RimFilterQuery } from "../controllers/queries/RimFilterQuery";
 import { TransformArray } from "../helpers/transformeFilters";
 
 export interface GetFiltersServiceType {
@@ -7,21 +9,32 @@ export interface GetFiltersServiceType {
   pcd: number[];
   studHoles: number[];
   centerBore: string[];
+  pagination?: number
 }
 
 const prisma = new PrismaClient();
 
-export const getFiltersService = async (filter: GetFiltersServiceType) => {
+export const getFiltersAndRimsService = async (userSelectedFilters: GetFiltersServiceType) => {
 
-  const filterData = CliiarsFiltersService(filter);
-  const result: any = await prisma.rims.groupBy(filterData);
+  const clearFilterData = ClearFiltersInputArgs(userSelectedFilters);
+  const result: any = await prisma.rims.groupBy(clearFilterData);
 
-  const wheelData = CliiarsCarFiltersService(filter)
-  const wheels = await prisma.rims.findMany(wheelData);
+  const clearRimData = ClearRimsByFiltersInputArgs(userSelectedFilters)
+  const rimFilterQuery = RimFilterQuery(userSelectedFilters)
+
+  const wheelsAndCount = await prisma.$transaction([
+    prisma.rims.findMany(clearRimData),
+    prisma.rims.count({
+      where: rimFilterQuery,
+    }),
+  ]);
+
+  const [wheels, rimsCount] = wheelsAndCount;
 
   return {
     filters: TransformArray(result),
-    wheelsData: wheels
+    wheelsData: wheels,
+    rimsCount: rimsCount
   }
   return TransformArray(result);
 };
