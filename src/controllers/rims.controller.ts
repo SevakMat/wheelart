@@ -82,6 +82,42 @@ export const getRimsByCarInputArgsHandler = async (
   }
 };
 
+
+export const getCarDatailsHandler = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+
+    const { where } = req.body
+
+    let modelDada, yearDada, modificationDada = []
+    if (where?.make) {
+      modelDada = await getCarsInfoByCarsData("models", where?.make as string)
+    }
+
+    if (where?.make && where?.model) {
+      yearDada = await getCarsInfoByCarsData("years", where?.make as string, where?.model as string)
+    }
+
+    if (where?.make && where?.model && where?.year) {
+      modificationDada = await getCarsInfoByCarsData("modifications", where?.make as string, where?.model as string, where?.year as string)
+    }
+    res.status(200).json({
+      status: 'success',
+      data: {
+        modelDada,
+        yearDada,
+        modificationDada
+      }
+    });
+  } catch (err: any) {
+    console.log(err);
+
+  }
+};
+
+
 export const getAllCarsTypesHandler = async (
   req: Request,
   res: Response,
@@ -106,79 +142,79 @@ export const getAllCarsTypesHandler = async (
   }
 };
 
-export const getModelByCarHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { make } = req.query
+// export const getModelByCarHandler = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const { make } = req.query
 
-    const dataFromApi = await getCarsInfoByCarsData("models", make as string)
-    // const dataFromApi = [
-    //   { name: "Series3", image: "asdasdasdasd" },
-    //   { name: "Series5", image: "asdasdasdasd" },
-    //   { name: "Series7", image: "asdasdasdasd" },
-    // ];
+//     const dataFromApi = await getCarsInfoByCarsData("models", make as string)
+//     // const dataFromApi = [
+//     //   { name: "Series3", image: "asdasdasdasd" },
+//     //   { name: "Series5", image: "asdasdasdasd" },
+//     //   { name: "Series7", image: "asdasdasdasd" },
+//     // ];
 
-    res.status(200).status(200).json({
-      status: 'success',
-      data: dataFromApi,
-    });
-  } catch (err: any) {
-    next(err);
-  }
-};
+//     res.status(200).status(200).json({
+//       status: 'success',
+//       data: dataFromApi,
+//     });
+//   } catch (err: any) {
+//     next(err);
+//   }
+// };
 
-export const getYearByCarHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { make, model } = req.query
+// export const getYearByCarHandler = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const { make, model } = req.query
 
-    const dataFromApi = await getCarsInfoByCarsData("years", make as string, model as string)
-    // const dataFromApi = [
-    //   { name: "2007", image: "asdasdasdasd" },
-    //   { name: "2008", image: "asdasdasdasd" },
-    //   { name: "2009", image: "asdasdasdasd" },
-    // ];
+//     const dataFromApi = await getCarsInfoByCarsData("years", make as string, model as string)
+//     // const dataFromApi = [
+//     //   { name: "2007", image: "asdasdasdasd" },
+//     //   { name: "2008", image: "asdasdasdasd" },
+//     //   { name: "2009", image: "asdasdasdasd" },
+//     // ];
 
-    res.status(200).status(200).json({
-      status: 'success',
-      data: dataFromApi,
-    });
-  } catch (err: any) {
-    next(err);
-  }
-};
+//     res.status(200).status(200).json({
+//       status: 'success',
+//       data: dataFromApi,
+//     });
+//   } catch (err: any) {
+//     next(err);
+//   }
+// };
 
 
-export const getModificationsByCarHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+// export const getModificationsByCarHandler = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
 
-  try {
-    const { make, model, year } = req.query
+//   try {
+//     const { make, model, year } = req.query
 
-    const dataFromApi = await getCarsInfoByCarsData("modifications", make as string, model as string, year as string)
+//     const dataFromApi = await getCarsInfoByCarsData("modifications", make as string, model as string, year as string)
 
-    // const dataFromApi = [
-    //   { name: "228i", image: "asdasdasdasd" },
-    //   { name: "230i", image: "asdasdasdasd" },
-    //   { name: "248i", image: "asdasdasdasd" },
-    // ];
-    res.status(200).status(200).json({
-      status: 'success',
-      data: dataFromApi,
-    });
-  } catch (err: any) {
-    next(err);
-  }
-};
+//     // const dataFromApi = [
+//     //   { name: "228i", image: "asdasdasdasd" },
+//     //   { name: "230i", image: "asdasdasdasd" },
+//     //   { name: "248i", image: "asdasdasdasd" },
+//     // ];
+//     res.status(200).status(200).json({
+//       status: 'success',
+//       data: dataFromApi,
+//     });
+//   } catch (err: any) {
+//     next(err);
+//   }
+// };
 
 export const getSingleRimDataHandler = async (
   req: Request,
