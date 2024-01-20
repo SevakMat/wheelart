@@ -11,9 +11,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY989-01_02.png?v=1665673277",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY989-01_02.png?v=1665673277;undefined",
       "price": 750,
-      "gram": 50000
+      "gram": 50000,
+      "score": 1
     },
     {
       "sizeR": 18,
@@ -24,9 +25,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_6064.png?v=1677601719",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_6064.png?v=1677601719;undefined",
       "price": 750,
-      "gram": 50000
+      "gram": 50000,
+      "score": 2
     },
     {
       "sizeR": 18,
@@ -37,9 +39,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A397-03.jpg?v=1690279221",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A397-03.jpg?v=1690279221;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A397-03_3.jpg?v=1690279221",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 1
     },
     {
       "sizeR": 18,
@@ -50,9 +53,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A360-07.jpg?v=1681809659",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A360-07.jpg?v=1681809659;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 18,
@@ -63,9 +67,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY138-09.jpg?v=1689409343",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY138-09.jpg?v=1689409343;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY138-09v2.jpg?v=1689409343",
       "price": 650,
-      "gram": 50000
+      "gram": 50000,
+      "score": 3
     },
     {
       "sizeR": 18,
@@ -76,9 +81,10 @@ async function main() {
       "width": 7,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY138-03.png?v=1665673274",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY138-03.png?v=1665673274;undefined",
       "price": 750,
-      "gram": 50000
+      "gram": 50000,
+      "score": 3
     },
     {
       "sizeR": 18,
@@ -89,9 +95,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A223-02.jpg?v=1686664412",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A223-02.jpg?v=1686664412;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A223-02v2.jpg?v=1686664412",
       "price": 600,
-      "gram": 52000
+      "gram": 52000,
+      "score": 3
     },
     {
       "sizeR": 19,
@@ -102,9 +109,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/B1558-19v1.jpg?v=1683642350",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/B1558-19v1.jpg?v=1683642350;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/B1558-19v3.jpg?v=1683642350",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 3
     },
     {
       "sizeR": 19,
@@ -115,9 +123,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/B5252-19.jpg?v=1683642350",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/B5252-19.jpg?v=1683642350;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/B5252-19v2.jpg?v=1683642350",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 1
     },
     {
       "sizeR": 19,
@@ -128,9 +137,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A360-05.png?v=1670662148",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A360-05.png?v=1670662148;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_4132.jpg?v=1680170302",
       "price": 950,
-      "gram": 52000
+      "gram": 52000,
+      "score": 5
     },
     {
       "sizeR": 19,
@@ -141,9 +151,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/XFE6919.jpg?v=1697017006",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/XFE6919.jpg?v=1697017006;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/XFE6919v2.jpg?v=1697017005",
       "price": 950,
-      "gram": 52000
+      "gram": 52000,
+      "score": 2
     },
     {
       "sizeR": 19,
@@ -154,9 +165,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY989-01_02.png?v=1665673277",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY989-01_02.png?v=1665673277;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 19,
@@ -167,9 +179,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A212_213-01.png?v=1665673277",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A212_213-01.png?v=1665673277;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 2
     },
     {
       "sizeR": 19,
@@ -180,9 +193,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY988-07.png?v=1665673277",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY988-07.png?v=1665673277;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 4
     },
     {
       "sizeR": 19,
@@ -193,9 +207,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A330-01.jpg?v=1681809659",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A330-01.jpg?v=1681809659;undefined",
       "price": 800,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 20,
@@ -206,9 +221,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/BY1464v2.jpg?v=1686220076",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/BY1464v2.jpg?v=1686220076;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/BY1464v1.jpg?v=1686220076",
       "price": 1250,
-      "gram": 52000
+      "gram": 52000,
+      "score": 3
     },
     {
       "sizeR": 20,
@@ -219,9 +235,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/BY1464v2.jpg?v=1686220076",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/BY1464v2.jpg?v=1686220076;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/BY1464v1.jpg?v=1686220076",
       "price": 1300,
-      "gram": 52000
+      "gram": 52000,
+      "score": 4
     },
     {
       "sizeR": 20,
@@ -232,9 +249,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A1017v1v.jpg?v=1681810194",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A1017v1v.jpg?v=1681810194;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A10173v2.jpg?v=1681810102",
       "price": 1100,
-      "gram": 62000
+      "gram": 62000,
+      "score": 2
     },
     {
       "sizeR": 20,
@@ -245,9 +263,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A326-01_327-01.png?v=1670662079",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A326-01_327-01.png?v=1670662079;undefined",
       "price": 1300,
-      "gram": 52000
+      "gram": 52000,
+      "score": 5
     },
     {
       "sizeR": 19,
@@ -258,9 +277,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY138-03.png?v=1665673273",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY138-03.png?v=1665673273;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 2
     },
     {
       "sizeR": 20,
@@ -271,9 +291,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/jante_baton.png?v=1679414078",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/jante_baton.png?v=1679414078;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_6862.jpg?v=1679414094",
       "price": 1100,
-      "gram": 52000
+      "gram": 52000,
+      "score": 1
     },
     {
       "sizeR": 19,
@@ -284,9 +305,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A1017.png?v=1665673279",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A1017.png?v=1665673279;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 1
     },
     {
       "sizeR": 18,
@@ -297,9 +319,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Morgan19BLM.jpg?v=1686045156",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Morgan19BLM.jpg?v=1686045156;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Morgan19BLMv2.jpg?v=1686045156",
       "price": 750,
-      "gram": 50000
+      "gram": 50000,
+      "score": 4
     },
     {
       "sizeR": 18,
@@ -310,9 +333,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY718-01.png?v=1665673274",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY718-01.png?v=1665673274;undefined",
       "price": 750,
-      "gram": 50000
+      "gram": 50000,
+      "score": 2
     },
     {
       "sizeR": 19,
@@ -323,9 +347,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/O11-0304.jpg?v=1683902185",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/O11-0304.jpg?v=1683902185;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/O11-0304v2.jpg?v=1683902184",
       "price": 750,
-      "gram": 52000
+      "gram": 52000,
+      "score": 5
     },
     {
       "sizeR": 19,
@@ -336,9 +361,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/160_161-03.png?v=1665673278",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/160_161-03.png?v=1665673278;undefined",
       "price": 900,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 19,
@@ -349,9 +375,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A194195-02.jpg?v=1686664412",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A194195-02.jpg?v=1686664412;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A194195-02v2.jpg?v=1686664411",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 1
     },
     {
       "sizeR": 19,
@@ -362,9 +389,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/160-161-01_d6006fae-8ff5-4a6a-8add-8209cd9b1e91.jpg?v=1697880452",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/160-161-01_d6006fae-8ff5-4a6a-8add-8209cd9b1e91.jpg?v=1697880452;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_E2071.jpg?v=1697880451",
       "price": 900,
-      "gram": 52000
+      "gram": 52000,
+      "score": 4
     },
     {
       "sizeR": 19,
@@ -375,9 +403,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_5699.png?v=1675768292",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_5699.png?v=1675768292;undefined",
       "price": 900,
-      "gram": 52000
+      "gram": 52000,
+      "score": 4
     },
     {
       "sizeR": 19,
@@ -388,9 +417,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/BK273.png?v=1678899344",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/BK273.png?v=1678899344;undefined",
       "price": 900,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 19,
@@ -401,9 +431,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY719-0506.png?v=1665673275",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY719-0506.png?v=1665673275;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 2
     },
     {
       "sizeR": 19,
@@ -414,9 +445,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_6362.png?v=1678294565",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_6362.png?v=1678294565;undefined",
       "price": 800,
-      "gram": 52000
+      "gram": 52000,
+      "score": 1
     },
     {
       "sizeR": 19,
@@ -427,9 +459,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A338_339-04.png?v=1665673278",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A338_339-04.png?v=1665673278;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_E2134.png?v=1680169405",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 19,
@@ -440,9 +473,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/ARC19177-0102.jpg?v=1681809658",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/ARC19177-0102.jpg?v=1681809658;undefined",
       "price": 900,
-      "gram": 52000
+      "gram": 52000,
+      "score": 1
     },
     {
       "sizeR": 19,
@@ -453,9 +487,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/O10-0304.jpg?v=1683902184",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/O10-0304.jpg?v=1683902184;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/O10-0304v2.jpg?v=1683902183",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 3
     },
     {
       "sizeR": 19,
@@ -466,9 +501,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Flex19BLM.jpg?v=1686045224",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Flex19BLM.jpg?v=1686045224;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Flex19BLMv2.jpg?v=1686045224",
       "price": 850,
-      "gram": 50000
+      "gram": 50000,
+      "score": 3
     },
     {
       "sizeR": 19,
@@ -479,9 +515,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Rubin_59407_08.png?v=1666103344",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Rubin_59407_08.png?v=1666103344;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Rubin_59407_083.png?v=1680164025",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 19,
@@ -492,9 +529,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A338_339-06.png?v=1665673277",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A338_339-06.png?v=1665673277;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_E2149.png?v=1680605472",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 5
     },
     {
       "sizeR": 19,
@@ -505,9 +543,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A196_197-02.png?v=1665673275",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A196_197-02.png?v=1665673275;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 3
     },
     {
       "sizeR": 19,
@@ -518,9 +557,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/H5080-19.jpg?v=1683296108",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/H5080-19.jpg?v=1683296108;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/H5080-19v2.jpg?v=1683296108",
       "price": 900,
-      "gram": 52000
+      "gram": 52000,
+      "score": 2
     },
     {
       "sizeR": 19,
@@ -531,9 +571,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A189_190-02.png?v=1665673274",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A189_190-02.png?v=1665673274;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 3
     },
     {
       "sizeR": 19,
@@ -544,9 +585,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Omi19512030.png?v=1680605091",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Omi19512030.png?v=1680605091;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Omi19512030v2.png?v=1680605091",
       "price": 900,
-      "gram": 52000
+      "gram": 52000,
+      "score": 4
     },
     {
       "sizeR": 19,
@@ -557,9 +599,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Omi19512030.png?v=1680605091",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Omi19512030.png?v=1680605091;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Omi19512030v2.png?v=1680605091",
       "price": 900,
-      "gram": 52000
+      "gram": 52000,
+      "score": 1
     },
     {
       "sizeR": 19,
@@ -570,9 +613,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/ARC19193-7172.jpg?v=1681809659",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/ARC19193-7172.jpg?v=1681809659;undefined",
       "price": 900,
-      "gram": 52000
+      "gram": 52000,
+      "score": 4
     },
     {
       "sizeR": 19,
@@ -583,9 +627,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Rubin_59407_08.png?v=1666103344",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Rubin_59407_08.png?v=1666103344;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Rubin_59407_083.png?v=1680164025",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 20,
@@ -596,9 +641,10 @@ async function main() {
       "width": 9,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/AnomalyBMX6.png?v=1673872442",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/AnomalyBMX6.png?v=1673872442;undefined",
       "price": 1100,
-      "gram": 52000
+      "gram": 52000,
+      "score": 5
     },
     {
       "sizeR": 21,
@@ -609,9 +655,10 @@ async function main() {
       "width": 9,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A342343-03.jpg?v=1683902184",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A342343-03.jpg?v=1683902184;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A342343-03v2.jpg?v=1683902184",
       "price": 1200,
-      "gram": 62000
+      "gram": 62000,
+      "score": 3
     },
     {
       "sizeR": 21,
@@ -622,9 +669,10 @@ async function main() {
       "width": 9,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_4160.png?v=1670662325",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_4160.png?v=1670662325;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_4161.jpg?v=1680169911",
       "price": 1200,
-      "gram": 62000
+      "gram": 62000,
+      "score": 3
     },
     {
       "sizeR": 18,
@@ -635,9 +683,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Game18BFP5112.png?v=1680796623",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Game18BFP5112.png?v=1680796623;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Game18BFP5112v2.jpg?v=1680796623",
       "price": 750,
-      "gram": 50000
+      "gram": 50000,
+      "score": 2
     },
     {
       "sizeR": 20,
@@ -648,9 +697,10 @@ async function main() {
       "width": 9,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A277_62796b47-cbc8-47c6-92bd-d97075d25d81.jpg?v=1690359293",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A277_62796b47-cbc8-47c6-92bd-d97075d25d81.jpg?v=1690359293;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A277v2.jpg?v=1690359293",
       "price": 1100,
-      "gram": 52000
+      "gram": 52000,
+      "score": 5
     },
     {
       "sizeR": 19,
@@ -661,9 +711,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY739-05.png?v=1665673276",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY739-05.png?v=1665673276;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 19,
@@ -674,9 +725,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY1109-02.jpg?v=1689758640",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY1109-02.jpg?v=1689758640;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY1109-02v2.jpg?v=1689758641",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 3
     },
     {
       "sizeR": 19,
@@ -687,9 +739,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY739-05.png?v=1665673276",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY739-05.png?v=1665673276;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 19,
@@ -700,9 +753,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY808-03.png?v=1672920891",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY808-03.png?v=1672920891;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/808.png?v=1680169533",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 2
     },
     {
       "sizeR": 19,
@@ -713,9 +767,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A171-03.jpg?v=1681809659",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A171-03.jpg?v=1681809659;undefined",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 3
     },
     {
       "sizeR": 20,
@@ -726,9 +781,10 @@ async function main() {
       "width": 9,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/dy1268-01.jpg?v=1683902184",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/dy1268-01.jpg?v=1683902184;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/dy1268-01v2.jpg?v=1683902184",
       "price": 1100,
-      "gram": 52000
+      "gram": 52000,
+      "score": 4
     },
     {
       "sizeR": 19,
@@ -739,9 +795,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Tor19664535.png?v=1680605091",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Tor19664535.png?v=1680605091;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/Tor19664535v2.png?v=1680605091",
       "price": 850,
-      "gram": 52000
+      "gram": 52000,
+      "score": 4
     },
     {
       "sizeR": 20,
@@ -752,9 +809,10 @@ async function main() {
       "width": 9,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A277-06.png?v=1672920755",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A277-06.png?v=1672920755;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A277-06v2.jpg?v=1680169832",
       "price": 1100,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 20,
@@ -765,9 +823,10 @@ async function main() {
       "width": 9,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A277_62796b47-cbc8-47c6-92bd-d97075d25d81.jpg?v=1690359293",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A277_62796b47-cbc8-47c6-92bd-d97075d25d81.jpg?v=1690359293;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/A277v2.jpg?v=1690359293",
       "price": 1100,
-      "gram": 52000
+      "gram": 52000,
+      "score": 5
     },
     {
       "sizeR": 20,
@@ -778,9 +837,10 @@ async function main() {
       "width": 9,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY580.jpg?v=1690359294",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY580.jpg?v=1690359294;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY580v2.jpg?v=1690359294",
       "price": 1100,
-      "gram": 52000
+      "gram": 52000,
+      "score": 1
     },
     {
       "sizeR": 20,
@@ -791,9 +851,10 @@ async function main() {
       "width": 9,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY830-01.png?v=1676734596",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY830-01.png?v=1676734596;undefined",
       "price": 1100,
-      "gram": 52000
+      "gram": 52000,
+      "score": 0
     },
     {
       "sizeR": 20,
@@ -804,9 +865,10 @@ async function main() {
       "width": 9,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY830-06.png?v=1672920437",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY830-06.png?v=1672920437;undefined",
       "price": 1100,
-      "gram": 52000
+      "gram": 52000,
+      "score": 1
     },
     {
       "sizeR": 20,
@@ -817,9 +879,10 @@ async function main() {
       "width": 9,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY800-04.png?v=1665673277",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY800-04.png?v=1665673277;undefined",
       "price": 1100,
-      "gram": 52000
+      "gram": 52000,
+      "score": 4
     },
     {
       "sizeR": 17,
@@ -830,9 +893,10 @@ async function main() {
       "width": 7,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY227-04.png?v=1676734637",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY227-04.png?v=1676734637;undefined",
       "price": 700,
-      "gram": 42000
+      "gram": 42000,
+      "score": 1
     },
     {
       "sizeR": 17,
@@ -843,9 +907,10 @@ async function main() {
       "width": 7,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY237-02.jpg?v=1681812003",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY237-02.jpg?v=1681812003;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_E1994.jpg?v=1681812002",
       "price": 700,
-      "gram": 42000
+      "gram": 42000,
+      "score": 2
     },
     {
       "sizeR": 17,
@@ -856,9 +921,10 @@ async function main() {
       "width": 7,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY237-02.jpg?v=1681812003",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY237-02.jpg?v=1681812003;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/IMG_E1994.jpg?v=1681812002",
       "price": 700,
-      "gram": 42000
+      "gram": 42000,
+      "score": 1
     },
     {
       "sizeR": 18,
@@ -869,9 +935,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY968-02.png?v=1665673269",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY968-02.png?v=1665673269;undefined",
       "price": 750,
-      "gram": 50000
+      "gram": 50000,
+      "score": 3
     },
     {
       "sizeR": 18,
@@ -882,9 +949,10 @@ async function main() {
       "width": 7,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY418-11.jpg?v=1683902185",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY418-11.jpg?v=1683902185;https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY418-11v2.webp?v=1683902181",
       "price": 650,
-      "gram": 50000
+      "gram": 50000,
+      "score": 1
     },
     {
       "sizeR": 18,
@@ -895,9 +963,10 @@ async function main() {
       "width": 8,
       "color": "test",
       "description": "description",
-      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY968-06.jpg?v=1681809659",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0552/5294/2905/files/DY968-06.jpg?v=1681809659;undefined",
       "price": 750,
-      "gram": 50000
+      "gram": 50000,
+      "score": 5
     }
   ];
 

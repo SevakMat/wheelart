@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { findAllRimsService, findRimByInputArgsService, findRimsByInputArgsService } from '../services/rims.service';
+import { findAllRimsService, findPopularRimsService, findRimByInputArgsService, findRimsByInputArgsService } from '../services/rims.service';
 import { findTiresByInputArgsService } from '../services/tires.service';
 import { FindTireDetailsByCarService, FindWheelDetailsByCarService, getCarsInfoByCarsData } from '../services/wheelFitmentAPI.service';
 import { CliarsRimsByInputArgs } from './inputs/CliarsRimsByInputArgs';
@@ -352,7 +352,6 @@ export const getCarsTypesHandler = async (
 export const getSingleRimDataHandler = async (
   req: Request,
   res: Response,
-  next: NextFunction
 ) => {
 
   try {
@@ -386,8 +385,27 @@ export const getSingleRimDataHandler = async (
       tires: []
     });
   } catch (err: any) {
-    next(err);
+    console.log(err)
   }
 };
 
+
+
+export const getPopularRimsDataHandler = async (
+  req: Request,
+  res: Response,
+) => {
+
+  try {
+
+    const popularRims = await findPopularRimsService()
+
+    res.status(200).status(200).json({
+      status: 'success',
+      popularRims,
+    });
+  } catch (err: any) {
+    console.log(err)
+  }
+};
 

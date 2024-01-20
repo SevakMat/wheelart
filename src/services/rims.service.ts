@@ -24,7 +24,6 @@ export const findRimsByInputArgsService = async (
 
   const skip = pagination ? (pagination - 1) * 12 : 0
 
-
   const [rims, rimsCount] = await Promise.all([
     prisma.rims.findMany({
       select,
@@ -48,4 +47,15 @@ export const findRimByInputArgsService = async (
     where
   })) as Rims
 };
+
+export const findPopularRimsService = async () => {
+
+  return (await prisma.rims.findMany({
+    orderBy: {
+      score: 'asc',
+    },
+    take: 8,
+  })) as Rims[];
+};
+
 
