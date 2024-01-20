@@ -2,7 +2,7 @@ import { GetFiltersServiceType } from "../../services/filters.service";
 
 export const ClearFiltersInputArgs = (filter: GetFiltersServiceType): any => {
 
-  const { sizeR, pcd, studHoles, centerBore } = filter;
+  const { sizeR, pcd, studHoles, centerBore, width, color } = filter;
 
   const filterQuery: Record<string, { in: (number | string)[] }> = {};
 
@@ -18,17 +18,27 @@ export const ClearFiltersInputArgs = (filter: GetFiltersServiceType): any => {
     filterQuery.studHoles = { in: studHoles };
   }
 
+  if (color && color.length > 0) {
+    filterQuery.color = { in: color };
+  }
+
+  if (width && width.length > 0) {
+    filterQuery.width = { in: width };
+  }
+
   if (centerBore && centerBore.length > 0) {
     filterQuery.centerBore = { in: centerBore.map(String) };
   }
 
   const groupedFilters: Record<string, any> = {
-    by: ['sizeR', 'pcd', 'studHoles', 'centerBore'],
+    by: ['sizeR', 'pcd', 'studHoles', 'centerBore', 'width', 'color'],
     _count: {
       sizeR: true,
       pcd: true,
       studHoles: true,
       centerBore: true,
+      width: true,
+      color: true
     },
     ...(Object.keys(filterQuery).length > 0 && { having: filterQuery }),
   };

@@ -9,6 +9,8 @@ export interface GetFiltersServiceType {
   pcd?: number[];
   studHoles?: number[];
   centerBore?: string[];
+  width?: number[]
+  color?: string[]
   pagination?: number
 }
 

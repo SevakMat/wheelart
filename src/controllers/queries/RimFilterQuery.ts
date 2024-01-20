@@ -1,7 +1,7 @@
 import { GetFiltersServiceType } from "../../services/filters.service";
 
 export const RimFilterQuery = (filter: GetFiltersServiceType) => {
-  const { sizeR, pcd, studHoles, centerBore } = filter;
+  const { sizeR, pcd, studHoles, centerBore, width, color } = filter;
 
   const filterQuery: Record<string, { in: (number | string)[] }> = {};
 
@@ -20,5 +20,15 @@ export const RimFilterQuery = (filter: GetFiltersServiceType) => {
   if (centerBore && centerBore.length > 0) {
     filterQuery.centerBore = { in: centerBore.map(String) };
   }
+  if (width && width.length > 0) {
+    filterQuery.width = { in: width };
+  }
+
+  if (color && color.length > 0) {
+    filterQuery.color = { in: color };
+  }
+
+
+
   return filterQuery
 }

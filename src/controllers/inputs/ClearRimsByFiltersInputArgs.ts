@@ -18,6 +18,8 @@ export const ClearRimsByFiltersInputArgs = (filter: GetFiltersServiceType): any 
       pcd: true,
       studHoles: true,
       imageUrl: true,
+      width: true,
+      color: true
     },
     take: 12,// qani hat eta
     skip // vord uc sksi
