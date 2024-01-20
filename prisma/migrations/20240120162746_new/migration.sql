@@ -34,6 +34,7 @@ CREATE TABLE "rims" (
     "description" VARCHAR(255) NOT NULL,
     "imageUrl" VARCHAR(255) NOT NULL,
     "price" INTEGER NOT NULL,
+    "score" INTEGER NOT NULL,
 
     CONSTRAINT "rims_pkey" PRIMARY KEY ("id")
 );
@@ -46,6 +47,7 @@ CREATE TABLE "tire" (
     "rimDiameter" INTEGER NOT NULL,
     "marka" VARCHAR(255) NOT NULL,
     "stock" INTEGER NOT NULL,
+    "imageUrl" VARCHAR(255) NOT NULL,
 
     CONSTRAINT "tire_pkey" PRIMARY KEY ("id")
 );

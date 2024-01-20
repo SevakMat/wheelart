@@ -51,7 +51,8 @@ model Rims {
   gram            Int
   description     String      @db.VarChar(255)
   imageUrl        String      @db.VarChar(255)
-  price           Int      
+  price           Int
+  score           Int
 }
 
 
