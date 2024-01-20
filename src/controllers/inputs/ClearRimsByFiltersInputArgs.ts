@@ -20,7 +20,7 @@ export const ClearRimsByFiltersInputArgs = (filter: GetFiltersServiceType): any 
       imageUrl: true,
     },
     take: 12,// qani hat eta
-    skip // vorduc sksi
+    skip // vord uc sksi
   };
 
   return groupedFilters;

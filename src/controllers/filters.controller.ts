@@ -14,7 +14,8 @@ export const getAllFilters = async (
       filterData,
     });
   } catch (err: any) {
-    next(err);
+    console.log(err);
+
   }
 };
 

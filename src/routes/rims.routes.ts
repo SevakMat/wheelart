@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllRimsHandler, getRimsByInputArgsHandler, getRimsByCarInputArgsHandler, getAllCarsTypesHandler, getSingleRimDataHandler, getCarDatailsHandler } from '../controllers/rims.controller';
+import { getAllRimsHandler, getRimsByInputArgsHandler, getRimsByCarInputArgsHandler, getCarsTypesHandler, getSingleRimDataHandler, getCarDatailsHandler } from '../controllers/rims.controller';
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.get('/all', getAllRimsHandler);
 router.post('/where', getRimsByInputArgsHandler);
 
 // return car makes
-router.get('/makes', getAllCarsTypesHandler);
+router.get('/makes', getCarsTypesHandler);
 
 // // return car models
 // router.get('/models', getModelByCarHandler);

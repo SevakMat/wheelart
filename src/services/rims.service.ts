@@ -14,17 +14,29 @@ export const findAllRimsService = async (
 interface FindRimsByInputArgsServiceProps {
   where: Prisma.RimsWhereInput,
   select?: Prisma.RimsSelect
+  pagination?: number
 
 }
 
 export const findRimsByInputArgsService = async (
-  { where, select }: FindRimsByInputArgsServiceProps
+  { where, select, pagination }: FindRimsByInputArgsServiceProps
 ) => {
 
-  return (await prisma.rims.findMany({
-    select,
-    where
-  })) as Rims[];
+  const skip = pagination ? (pagination - 1) * 12 : 0
+
+
+  const [rims, rimsCount] = await Promise.all([
+    prisma.rims.findMany({
+      select,
+      where,
+      take: 12,
+      skip,
+    }),
+    prisma.rims.count({
+      where,
+    }),
+  ]);
+  return { rims, rimsCount };
 };
 
 export const findRimByInputArgsService = async (
