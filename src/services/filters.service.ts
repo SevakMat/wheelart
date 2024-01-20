@@ -5,10 +5,13 @@ import { RimFilterQuery } from "../controllers/queries/RimFilterQuery";
 import { TransformArray } from "../helpers/transformeFilters";
 
 export interface GetFiltersServiceType {
-  sizeR: number[];
-  pcd: number[];
-  studHoles: number[];
-  centerBore: string[];
+  sizeR?: number[];
+  pcd?: number[];
+  studHoles?: number[];
+  centerBore?: string[];
+  width?: number[]
+  color?: string[]
+  price?: string[]
   pagination?: number
 }
 
@@ -36,5 +39,4 @@ export const getFiltersAndRimsService = async (userSelectedFilters: GetFiltersSe
     wheelsData: wheels,
     rimsCount: rimsCount
   }
-  return TransformArray(result);
 };

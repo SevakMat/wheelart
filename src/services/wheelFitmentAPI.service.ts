@@ -30,14 +30,6 @@ const generateUrl = ({ key, make, model, year, modification }: FindWheelByCarPro
   return url
 }
 
-interface Wheel {
-  front: {
-    tire_width?: number;
-    tire_aspect_ratio?: number;
-    rim_diameter?: number;
-  };
-}
-
 interface InputObject {
   front: {
     tire_width?: number;
@@ -142,7 +134,6 @@ function extractTireInformation(inputArray: any) {
 
 export const FindWheelDetailsByCarService = async (props: FindWheelByCarProps): Promise<any> => {
   let url = generateUrl({ ...props, key: "search/by_model" })
-
   var config = {
     method: 'get',
     url: url,

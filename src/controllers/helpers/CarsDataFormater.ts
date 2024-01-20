@@ -5,7 +5,7 @@ export const CarsDataFormater = (data: any, by?: string) => {
     return {
       name: car.name || '',
       logo: car.logo || '',
-      slug: car.slug || '',
+      slug: car.slug ? car.slug.toString() : '',
 
     };
   });
