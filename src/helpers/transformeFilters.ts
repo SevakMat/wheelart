@@ -1,11 +1,13 @@
 interface InputItem {
-  _count: { sizeR: number; pcd: number, studHoles: number; centerBore: number, width: number, color: number };
+  _count: { sizeR: number; pcd: number, studHoles: number; centerBore: number, width: number, color: number, price: number };
   sizeR: number;
   pcd: number;
   studHoles: number;
   centerBore: number | string; // Allow centerBore to be a string
   width: number
   color: number | string
+  price: number
+
 }
 
 interface OutputItem {
@@ -16,6 +18,7 @@ interface OutputItem {
   centerBore?: number;
   width?: number;
   color?: any;
+  price?: number
 }
 
 interface TransformResult {
@@ -25,12 +28,13 @@ interface TransformResult {
   centerBore: OutputItem[];
   width: OutputItem[];
   color: OutputItem[];
+  price: OutputItem[];
 }
 
-type UpdateResultKey = 'sizeR' | 'pcd' | 'studHoles' | 'centerBore' | 'width' | 'color';
+type UpdateResultKey = 'sizeR' | 'pcd' | 'studHoles' | 'centerBore' | 'width' | 'color' | 'price';
 
 export const TransformArray = (inputArray: InputItem[]): TransformResult => {
-  const result: TransformResult = { sizeR: [], pcd: [], studHoles: [], centerBore: [], width: [], color: [] };
+  const result: TransformResult = { sizeR: [], pcd: [], studHoles: [], centerBore: [], width: [], color: [], price: [] };
 
   const updateResult = (key: UpdateResultKey, count: number, value?: number | string) => {
     const entry = result[key].find(
@@ -47,13 +51,13 @@ export const TransformArray = (inputArray: InputItem[]): TransformResult => {
     }
   };
 
-  inputArray.forEach(({ _count, sizeR, pcd, studHoles, centerBore, width, color }) => {
+  inputArray.forEach(({ _count, sizeR, pcd, studHoles, centerBore, width, color, price }) => {
     updateResult('sizeR', _count.sizeR, sizeR);
     updateResult('pcd', _count.pcd, pcd);
     updateResult('studHoles', _count.studHoles, studHoles);
     updateResult('width', _count.width, width);
     updateResult('color', _count.color, color);
-
+    updateResult('price', _count.price, price);
     updateResult('centerBore', _count.centerBore, Number(centerBore)); // Convert centerBore to number
   });
 

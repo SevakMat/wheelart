@@ -11,6 +11,7 @@ export interface GetFiltersServiceType {
   centerBore?: string[];
   width?: number[]
   color?: string[]
+  price?: string[]
   pagination?: number
 }
 
