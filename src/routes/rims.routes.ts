@@ -21,7 +21,6 @@ router.get('/makes', getCarsTypesHandler);
 // // return car modifications
 // router.get('/modifications', getModificationsByCarHandler);
 
-// es ashxatuma palyubomu
 router.post('/rim/:id', getSingleRimDataHandler);
 
 router.get('/rim/popular-rims', getPopularRimsDataHandler);

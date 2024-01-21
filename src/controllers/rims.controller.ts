@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { findAllRimsService, findPopularRimsService, findRimByInputArgsService, findRimsByInputArgsService } from '../services/rims.service';
-import { findTiresByInputArgsService } from '../services/tires.service';
+import { findAllRimsService, findPopularRimsService, findRecommendedRimsService, findRimByInputArgsService, findRimsByInputArgsService } from '../services/rims.service';
+import { findTiresByInputArgsService, findTiresTestService } from '../services/tires.service';
 import { FindTireDetailsByCarService, FindWheelDetailsByCarService, getCarsInfoByCarsData } from '../services/wheelFitmentAPI.service';
 import { CliarsRimsByInputArgs } from './inputs/CliarsRimsByInputArgs';
 export const getAllRimsHandler = async (
@@ -365,10 +365,23 @@ export const getSingleRimDataHandler = async (
       where: {
         id: rimId
       },
-      select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true, imageUrl: true, color: true, price: true, rimModel: true, width: true, gram: true }
+      select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true, imageUrl: true, color: true, price: true, rimModel: true, width: true, gram: true, score: true }
     });
 
-    let tires = []
+    const recommendedRims: any = await findRecommendedRimsService({
+      where: {
+        studHoles: singleRim.studHoles || undefined,
+        pcd: singleRim.pcd || undefined,
+        centerBore: singleRim.centerBore || undefined,
+        NOT: {
+          id: rimId, // Exclude records where the id is equal to 4
+        },
+      },
+      select: { id: true, sizeR: true, studHoles: true, pcd: true, centerBore: true, imageUrl: true, color: true, price: true, rimModel: true, width: true, gram: true }
+    })
+
+
+    let tires: any = []
     if (body.make && body.model & body.year && body.modification) {
       const tireData = await FindTireDetailsByCarService(body)
       tires = await findTiresByInputArgsService({
@@ -377,12 +390,18 @@ export const getSingleRimDataHandler = async (
         },
         select: { id: true, tireWidth: true, tireAspectRatio: true, rimDiameter: true, imageUrl: true }
       })
+    } else {
+      tires = await findTiresTestService({
+        select: { id: true, tireWidth: true, tireAspectRatio: true, rimDiameter: true, imageUrl: true }
+      })
+
     }
 
     res.status(200).status(200).json({
       status: 'success',
       singleRim,
-      tires: []
+      recommendedTires: tires,
+      recommendedRims: recommendedRims
     });
   } catch (err: any) {
     console.log(err)

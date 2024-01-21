@@ -58,4 +58,14 @@ export const findPopularRimsService = async () => {
   })) as Rims[];
 };
 
+export const findRecommendedRimsService = async (
+  { where, select }: FindRimsByInputArgsServiceProps
+) => {
+
+  return (await prisma.rims.findMany({
+    select,
+    where,
+    take: 5,
+  })) as Rims[];
+};
 
