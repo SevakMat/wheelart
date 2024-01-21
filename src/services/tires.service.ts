@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 
 interface FindTiresByInputArgsServiceProps {
-  where: Prisma.TireWhereInput,
+  where?: Prisma.TireWhereInput,
   select?: Prisma.TireSelect
 }
 
@@ -16,6 +16,18 @@ export const findTiresByInputArgsService = async (
     return (await prisma.tire.findMany({
       select,
       where
+    })) as Tire[];
+  } catch (error) {
+    throw error
+  }
+};
+export const findTiresTestService = async (
+  { select }: FindTiresByInputArgsServiceProps
+) => {
+  try {
+    return (await prisma.tire.findMany({
+      select,
+      take: 5,
     })) as Tire[];
   } catch (error) {
     throw error
