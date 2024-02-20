@@ -3,6 +3,8 @@ import { findAllRimsService, findPopularRimsService, findRecommendedRimsService,
 import { findTiresByInputArgsService, findTiresTestService } from '../services/tires.service';
 import { FindTireDetailsByCarService, FindWheelDetailsByCarService, getCarsInfoByCarsData } from '../services/wheelFitmentAPI.service';
 import { CliarsRimsByInputArgs } from './inputs/CliarsRimsByInputArgs';
+
+
 export const getAllRimsHandler = async (
   req: Request,
   res: Response,
@@ -24,6 +26,7 @@ export const getAllRimsHandler = async (
     next(err);
   }
 };
+
 export const getRimsByInputArgsHandler = async (
   req: Request,
   res: Response,
@@ -92,7 +95,7 @@ export const getCarDatailsHandler = async (
 
     const { where } = req.body
 
-    let modelDada, yearDada, modificationDada: any = []
+    let modelDada, generationDada, modificationDada: any = []
     if (where?.make) {
       modelDada = [
         { name: '1 Series', logo: '', slug: '1-series' },
@@ -160,21 +163,28 @@ export const getCarDatailsHandler = async (
     }
 
     if (where?.make && where?.model) {
-      yearDada = [
-        { name: 2023, logo: '', slug: "2023" },
-        { name: 2022, logo: '', slug: "2022" },
-        { name: 2021, logo: '', slug: "2021" },
-        { name: 2020, logo: '', slug: "2020" },
-        { name: 2019, logo: '', slug: "2019" },
-        { name: 2018, logo: '', slug: "2018" },
-        { name: 2017, logo: '', slug: "2017" },
 
-
+      generationDada = [
+        { name: 'VII LCI (G20/G21)', logo: '', slug: '8b77b4b515' },
+        { name: 'VII (G20/G21)', logo: '', slug: 'ddd1df4434' },
+        { name: 'VI LCI (F30/F31/F34)', logo: '', slug: '958ad0d05d' },
+        { name: 'VI (F30/F31/F34)', logo: '', slug: '577ef1154f' },
+        { name: 'V (E90/E91/E92/E93) LCI', logo: '', slug: '3fe230348e' },
+        { name: 'V (E90/E91/E92/E93)', logo: '', slug: '01161aaa0b' },
+        { name: 'IV (E46) Facelift', logo: '', slug: '47a7f2c033' },
+        { name: 'IV (E46)', logo: '', slug: '555d6702c9' },
+        { name: 'III (E36)', logo: '', slug: '335f535208' },
+        { name: 'II (E30)', logo: '', slug: 'f340f1b1f6' },
+        { name: 'I (E21)', logo: '', slug: 'e4a6222cdb' }
       ]
-      // yearDada = await getCarsInfoByCarsData("years", where?.make as string, where?.model as string)
-    }
+      // generationDada = await getCarsInfoByCarsData("generations", where?.make as string, where?.model as string)
 
-    if (where?.make && where?.model && where?.year) {
+    }
+    /// stuc nerqev 
+
+    console.log(generationDada);
+
+    if (where?.make && where?.model && where?.generation) {
       modificationDada = [
         { name: '335xi', logo: '', slug: 'e3db0dc2ac' },
         { name: '335i', logo: '', slug: '657521cffe' },
@@ -240,7 +250,7 @@ export const getCarDatailsHandler = async (
       status: 'success',
       data: {
         modelDada,
-        yearDada,
+        generationDada,
         modificationDada
       }
     });
