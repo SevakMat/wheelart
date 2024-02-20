@@ -21,6 +21,21 @@ export const findTiresByInputArgsService = async (
     throw error
   }
 };
+
+export const findTireByInputArgsService = async (
+  { where, select }: FindTiresByInputArgsServiceProps
+): Promise<Tire> => {
+  try {
+    return (await prisma.tire.findFirst({
+      select,
+      where
+    })) as any;
+  } catch (error) {
+    throw error
+  }
+}
+
+
 export const findTiresTestService = async (
   { select }: FindTiresByInputArgsServiceProps
 ) => {
@@ -32,4 +47,12 @@ export const findTiresTestService = async (
   } catch (error) {
     throw error
   }
+};
+
+export const findAllTiresService = async (
+  select?: Prisma.TireSelect
+) => {
+  return (await prisma.tire.findMany({
+    select,
+  })) as Tire[];
 };

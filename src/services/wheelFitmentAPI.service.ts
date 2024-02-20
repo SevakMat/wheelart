@@ -14,16 +14,16 @@ interface FindWheelByCarProps {
   make?: string;
   model?: string;
   modification?: string;
-  year?: string;
+  generation?: string;
 }
 
-const generateUrl = ({ key, make, model, year, modification }: FindWheelByCarProps) => {
+const generateUrl = ({ key, make, model, generation, modification }: FindWheelByCarProps) => {
   let url = `https://api.wheel-size.com/v2/${key}/?`
 
   const makeParams = make ? `make=${make}&` : ""
   const modelParams = model ? `model=${model}&` : ""
   const modificationParams = modification ? `modification=${modification}&` : ""
-  const yesrParams = year ? `year=${year}&` : ""
+  const yesrParams = generation ? `generation=${generation}&` : ""
   const apyKey = "user_key=730f8ee09c9c4ec4519b3cc39e9db35f"
   url = url + makeParams + modelParams + yesrParams + modificationParams + apyKey
 
@@ -172,10 +172,10 @@ export const getCarsInfoByCarsData = async (
   key: string,
   make?: string,
   model?: string,
-  year?: string,
+  generation?: string,
   modification?: string
 ) => {
-  const url = generateUrl({ key, make, model, year, modification });
+  const url = generateUrl({ key, make, model, generation, modification });
 
 
   const config: AxiosRequestConfig = {
