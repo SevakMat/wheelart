@@ -7,9 +7,11 @@
   },
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "start:dev": "npx nodemon",
     "start": "npm run build && node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "pm2:start:app": "pm2 start app.json",
     "db:migrate": "npx prisma migrate dev --name user-entity --create-only && yarn prisma generate"
   },
   "keywords": [],

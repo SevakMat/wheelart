@@ -8,7 +8,6 @@ import cookieParser from 'cookie-parser';
 
 import validateEnv from './utils/validateEnv';
 
-import authRouter from './routes/auth.routes';
 import userRouter from './routes/user.routes';
 import rimsRouter from './routes/rims.routes';
 
@@ -55,7 +54,6 @@ async function bootstrap() {
   if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
   // ROUTES
-  app.use('/api/auth', authRouter);
   app.use('/api/users', userRouter);
   app.use('/api/rims', rimsRouter);
   app.use('/api/filters', filterRouter);
