@@ -18,7 +18,7 @@ export const TireFilterQuery = (filter: GetTiresFiltersServiceType) => {
   }
 
   if (tireAspectRatio && tireAspectRatio.length > 0) {
-    filterQuery.tireAspectRatio = { in: tireAspectRatio.map(String) };
+    filterQuery.tireAspectRatio = { in: tireAspectRatio };
   }
   if (tireWidth && tireWidth.length > 0) {
     filterQuery.tireWidth = { in: tireWidth };
