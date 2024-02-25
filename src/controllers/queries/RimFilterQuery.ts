@@ -1,6 +1,6 @@
-import { GetFiltersServiceType } from "../../services/filters.service";
+import { GetRimsFiltersServiceType } from "../../services/filters.service";
 
-export const RimFilterQuery = (filter: GetFiltersServiceType) => {
+export const RimFilterQuery = (filter: GetRimsFiltersServiceType) => {
   const { sizeR, pcd, studHoles, centerBore, width, color, price } = filter;
 
   const filterQuery: Record<string, { in: (number | string)[] }> = {};

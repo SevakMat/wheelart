@@ -1,7 +1,7 @@
-import { GetFiltersServiceType } from "../../services/filters.service";
+import { GetRimsFiltersServiceType } from "../../services/filters.service";
 import { RimFilterQuery } from "../queries/RimFilterQuery";
 
-export const ClearRimsByFiltersInputArgs = (filter: GetFiltersServiceType): any => {
+export const ClearRimsByFiltersInputArgs = (filter: GetRimsFiltersServiceType): any => {
 
   const filterQuery = RimFilterQuery(filter)
 

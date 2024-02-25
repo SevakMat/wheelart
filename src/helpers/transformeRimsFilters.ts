@@ -33,7 +33,7 @@ interface TransformResult {
 
 type UpdateResultKey = 'sizeR' | 'pcd' | 'studHoles' | 'centerBore' | 'width' | 'color' | 'price';
 
-export const TransformArray = (inputArray: InputItem[]): TransformResult => {
+export const TransformeRimsFilters = (inputArray: InputItem[]): TransformResult => {
   const result: TransformResult = { sizeR: [], pcd: [], studHoles: [], centerBore: [], width: [], color: [], price: [] };
 
   const updateResult = (key: UpdateResultKey, count: number, value?: number | string) => {
