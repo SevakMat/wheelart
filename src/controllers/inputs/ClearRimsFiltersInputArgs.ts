@@ -1,6 +1,6 @@
-import { GetFiltersServiceType } from "../../services/filters.service";
+import { GetRimsFiltersServiceType } from "../../services/filters.service";
 
-export const ClearFiltersInputArgs = (filter: GetFiltersServiceType): any => {
+export const ClearRimsFiltersInputArgs = (filter: GetRimsFiltersServiceType): any => {
 
   const { sizeR, pcd, studHoles, centerBore, width, color, price } = filter;
 
