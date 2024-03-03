@@ -18,9 +18,17 @@ export const excludedFields = [
 const prisma = new PrismaClient();
 
 export const createUser = async (input: Prisma.UserCreateInput) => {
-  return (await prisma.user.create({
+  console.log("ekac", input);
+
+  const user = await prisma.user.create({
     data: input,
-  })) as User;
+    select: {
+      id: true, email: true, firstName: true, active: true, emailVerified: true, lastName: true, role: true,
+    }
+  });
+  console.log("uase", user);
+
+  return { ...user, id: user.id.toString() }
 };
 
 // export const findUser = async (
@@ -37,10 +45,11 @@ export const findUniqueUser = async (
   where: Prisma.UserWhereUniqueInput,
   select?: Prisma.UserSelect
 ) => {
-  return (await prisma.user.findUnique({
+  const userDara = await prisma.user.findUnique({
     where,
     select,
-  })) as User;
+  }) 
+  return userDara as User;
 };
 
 // export const updateUser = async (
@@ -60,10 +69,10 @@ export const signTokens = async (user: Prisma.UserCreateInput) => {
   // 2. Create Access and Refresh tokens
 
   const payload = {
-    userId: user.id,
+    userId: Number(user.id),
     userEmail: user.email
   }
-
+  
   const access_token = jwt.sign({ payload }, config.get<string>("jwtSecretKey"), { expiresIn: '1h' });
   const refresh_token = jwt.sign({ payload }, config.get<string>("jwtRefreshSecretKey"), { expiresIn: '1d' });
 
