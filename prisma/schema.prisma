@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id                BigInt     @id @default(autoincrement())
+  id                Int        @id @default(autoincrement())
   createdDate       DateTime   @default(now()) @map("created_date")
   updatedDate       DateTime   @default(now()) @map("updated_date")
   uuid              String     @default(uuid()) @db.VarChar(40)
@@ -16,7 +16,7 @@ model User {
   lastName          String?    @map("last_name") @db.VarChar(255)
   phoneNumber       String?    @map("phone_number") @db.VarChar(255)
   email             String     @unique @db.VarChar(255)
-  password           String     @unique @db.VarChar(255)
+  password          String     @unique @db.VarChar(255)
   role              RoleEnumType  @default(user)
   lastActive        DateTime?  @map("last_active")
   loginCount        Int        @default(0) @map("login_count")
@@ -26,7 +26,7 @@ model User {
   passwordResetToken String?
   verificationCode  String?    @db.Text @unique
   identityVerified  Boolean    @default(false) @map("identity_verified")
-  baskets           Basket[]   // Bidirectional relation
+  orders        OrderUser[]
 
   @@unique([email, verificationCode, passwordResetToken])
   @@index([email, verificationCode, passwordResetToken])
@@ -35,18 +35,6 @@ model User {
 enum RoleEnumType {
   user
   admin
-}
-
-model Basket {
-  id         Int       @id @default(autoincrement())
-  user       User      @relation(fields: [userId], references: [id])
-  userId     BigInt
-  tire       Tire      @relation(fields: [tireId], references: [id])
-  tireId     Int
-  rim        Rims      @relation(fields: [rimId], references: [id])
-  rimId      Int
-
-  @@index([userId])
 }
 
 model Rims {
@@ -65,8 +53,9 @@ model Rims {
   imageUrl      String    @db.VarChar(255)
   price         Int
   score         Int
-  baskets       Basket[]  // Bidirectional relation
+  orders        Order[]  // Add this line to establish the relation
 }
+
 
 model Tire {
   @@map(name: "tire")
@@ -78,5 +67,43 @@ model Tire {
   marka           String    @db.VarChar(255)
   stock           Int
   imageUrl        String    @db.VarChar(255)
-  baskets         Basket[]  // Bidirectional relation
+  orders          Order[]  // Add this line to establish the relation
+
+}
+
+
+enum OrderStatusType {
+  CREATED
+  PROGRESS
+  DONE
+  CANCEL
+}
+
+enum OrderTypeEnum {
+  RIM
+  TIRE
+}
+
+model Order {
+  id         Int             @id @default(autoincrement())
+  orderType  OrderTypeEnum
+  status     OrderStatusType @default(CREATED)
+  itemId     Int
+  tire       Tire?           @relation(fields: [itemId], references: [id], map: "tire_order_item_id_fkey")
+  rims       Rims?           @relation(fields: [itemId], references: [id], map: "rims_order_item_id_fkey")
+  users      OrderUser[]
+  itemCount      Int         @map("item_count")
+  @@index([itemId])
+}
+
+
+model OrderUser {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  orderId    Int
+  user       User     @relation(fields: [userId], references: [id], map: "order_user_user_id_fkey")
+  order      Order    @relation(fields: [orderId], references: [id], map: "order_user_order_id_fkey")
+
+  @@index([userId])
+  @@index([orderId])
 }

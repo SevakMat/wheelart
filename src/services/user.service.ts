@@ -60,7 +60,7 @@ export const findUniqueUser = async (
 //   return (await prisma.user.update({ where, data, select })) as User;
 // };
 
-export const signTokens = async (user: Prisma.UserCreateInput) => {
+export const signTokens = async (user: any) => {
   // 1. Create Session
   // redisClient.set(`${user.id}`, JSON.stringify(omit(user, excludedFields)), {
   //   EX: config.get<number>("redisCacheExpiresIn") * 60,

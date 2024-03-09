@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-export const ClearCreateUserInputArgs = (data: Prisma.UserCreateInput) => {
+export const ClearCreateUserInputArgs = (data: any) => {
 
   return {
     id: data?.id ?? undefined,

@@ -1,9 +1,15 @@
 -- CreateEnum
 CREATE TYPE "RoleEnumType" AS ENUM ('user', 'admin');
 
+-- CreateEnum
+CREATE TYPE "OrderStatusType" AS ENUM ('CREATED', 'PROGRESS', 'DONE', 'CANCEL');
+
+-- CreateEnum
+CREATE TYPE "OrderTypeEnum" AS ENUM ('RIM', 'TIRE');
+
 -- CreateTable
 CREATE TABLE "User" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "created_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "uuid" VARCHAR(40) NOT NULL,
@@ -23,16 +29,6 @@ CREATE TABLE "User" (
     "identity_verified" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Basket" (
-    "id" SERIAL NOT NULL,
-    "userId" BIGINT NOT NULL,
-    "tireId" INTEGER NOT NULL,
-    "rimId" INTEGER NOT NULL,
-
-    CONSTRAINT "Basket_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -67,6 +63,26 @@ CREATE TABLE "tire" (
     CONSTRAINT "tire_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Order" (
+    "id" SERIAL NOT NULL,
+    "orderType" "OrderTypeEnum" NOT NULL,
+    "status" "OrderStatusType" NOT NULL DEFAULT 'CREATED',
+    "itemId" INTEGER NOT NULL,
+    "item_count" INTEGER NOT NULL,
+
+    CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "OrderUser" (
+    "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "orderId" INTEGER NOT NULL,
+
+    CONSTRAINT "OrderUser_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -83,13 +99,22 @@ CREATE INDEX "User_email_verificationCode_passwordResetToken_idx" ON "User"("ema
 CREATE UNIQUE INDEX "User_email_verificationCode_passwordResetToken_key" ON "User"("email", "verificationCode", "passwordResetToken");
 
 -- CreateIndex
-CREATE INDEX "Basket_userId_idx" ON "Basket"("userId");
+CREATE INDEX "Order_itemId_idx" ON "Order"("itemId");
+
+-- CreateIndex
+CREATE INDEX "OrderUser_userId_idx" ON "OrderUser"("userId");
+
+-- CreateIndex
+CREATE INDEX "OrderUser_orderId_idx" ON "OrderUser"("orderId");
 
 -- AddForeignKey
-ALTER TABLE "Basket" ADD CONSTRAINT "Basket_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "tire_order_item_id_fkey" FOREIGN KEY ("itemId") REFERENCES "tire"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Basket" ADD CONSTRAINT "Basket_tireId_fkey" FOREIGN KEY ("tireId") REFERENCES "tire"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "rims_order_item_id_fkey" FOREIGN KEY ("itemId") REFERENCES "rims"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Basket" ADD CONSTRAINT "Basket_rimId_fkey" FOREIGN KEY ("rimId") REFERENCES "rims"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "OrderUser" ADD CONSTRAINT "order_user_user_id_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "OrderUser" ADD CONSTRAINT "order_user_order_id_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
