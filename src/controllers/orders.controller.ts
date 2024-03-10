@@ -18,7 +18,7 @@ export const createOrderHandler = async (
   try {
 
     const { orderData } = req.body
-    console.log("req.body",orderData);
+    console.log("req.body", orderData);
 
 
     orderData.map(async (order: OrderType) => {
@@ -49,5 +49,36 @@ export const createOrderHandler = async (
       status: 'error',
     });
 
+  }
+};
+
+export const getUserOrdersListHandler = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const { id } = req.params
+
+    const userId = parseInt(id, 10); // Using parseInt
+
+    const orderList = await prisma.order.findMany({
+      where: {
+        users: {
+          some: {
+            userId
+          },
+        }
+      }
+    })
+    res.status(200).json({
+      status: 'success',
+      data: { orderList },
+    });
+
+
+  } catch (err: any) {
+    res.status(400).json({
+      status: 'error',
+    });
   }
 };

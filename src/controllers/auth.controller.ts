@@ -51,7 +51,7 @@ export const registerUserHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-  
+
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
@@ -62,20 +62,20 @@ export const registerUserHandler = async (
       .digest('hex');
 
 
-      const clearUserData = ClearCreateUserInputArgs(req.body)
+    const clearUserData = ClearCreateUserInputArgs(req.body)
 
-    const user = await createUser({...clearUserData,password:hashedPassword});
+    const user = await createUser({ ...clearUserData, password: hashedPassword });
 
 
     res.status(200).json({
       status: 'success',
-      user: user  ,
+      user: user,
     });
 
   } catch (err: any) {
     if (err) {
-      console.log("errrm",err);
-      
+      console.log("errrm", err);
+
       if (err.code === 'P2002') {
         return res.status(404).json({
           status: 'fail',
@@ -97,7 +97,7 @@ export const loginUserHandler = async (
 
     const user = await findUniqueUser(
       { email: email.toLowerCase() },
-      { id: true, email: true, emailVerified: true, password: true }
+      { id: true, email: true, emailVerified: true, password: true, firstName: true, lastName: true, phoneNumber: true, orders: true }
     );
 
     if (!user) {
@@ -114,7 +114,7 @@ export const loginUserHandler = async (
       );
     }
 
-    
+
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return next(new AppError(400, 'Invalid email or password'));
     }
@@ -132,6 +132,7 @@ export const loginUserHandler = async (
     res.status(200).json({
       status: 'success',
       access_token,
+      user
     });
   } catch (err: any) {
     next(err);
