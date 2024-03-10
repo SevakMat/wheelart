@@ -1854,6 +1854,22 @@ async function main() {
       stock: 2,
       imageUrl: "https://s.list.am/r/542/60912542.webp"
     }]
+
+  const users = [
+    {
+      email: 'testEmail@gmial.com',
+      name: 'Name',
+      password: 'Pass',
+      passwordResetAt: new Date(),
+      passwordResetToken: 'asadasdoumdc9hj9',
+      role: "user",
+      verified: true,
+      updatedAt: new Date(),
+      createdAt: new Date(),
+
+    }
+
+  ]
   rimsSeedData.map(async (item) => {
     await prisma.rims.create({
       data: item
@@ -1866,6 +1882,18 @@ async function main() {
     })
   })
 
+  await prisma.user.create({
+    data: {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      phoneNumber: '+1234567890',
+      password:"aasdasd",
+      role: 'user',
+
+      // Add other fields as needed
+    },
+  });
 
 }
 main()

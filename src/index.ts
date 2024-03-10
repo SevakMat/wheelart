@@ -13,9 +13,9 @@ import userRouter from './routes/user.routes';
 import rimsRouter from './routes/rims.routes';
 
 import tiresRouter from './routes/tires.routes';
-
-
 import filterRouter from './routes/filters.routes';
+import ordersRouter from './routes/order.routes';
+
 
 import AppError from './utils/appError';
 
@@ -59,8 +59,8 @@ async function bootstrap() {
   app.use('/api/users', userRouter);
   app.use('/api/rims', rimsRouter);
   app.use('/api/filters', filterRouter);
-
   app.use('/api/tires', tiresRouter);
+  app.use('/api/orders', ordersRouter);
 
 
   // Testing

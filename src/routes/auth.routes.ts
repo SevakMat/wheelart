@@ -2,6 +2,7 @@ import express from 'express';
 import {
   // forgotPasswordHandler,
   loginUserHandler,
+  logoutUserHandler,
   // logoutUserHandler,
   // refreshAccessTokenHandler,
   registerUserHandler,
@@ -36,6 +37,7 @@ router.post('/login', validate(loginUserSchema), loginUserHandler);
 // );
 
 // router.get('/logout', deserializeUser, requireUser, logoutUserHandler);
+router.post('/logout',  logoutUserHandler);
 
 // router.post(
 //   '/forgotpassword',

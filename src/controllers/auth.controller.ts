@@ -17,6 +17,7 @@ import {
 } from '../services/user.service';
 import config from 'config';
 import AppError from '../utils/appError';
+import { ClearCreateUserInputArgs } from './inputs/ClearCreateUserInputArgs';
 // import redisClient from '../utils/connectRedis';
 // import { signJwt, verifyJwt } from '../utils/jwt';
 // import Email from '../utils/email';
@@ -47,7 +48,6 @@ const refreshTokenCookieOptions: CookieOptions = {
 export const registerUserHandler = async (
   // req: Request<{}, {}, RegisterUserInput>,
   req: any,
-
   res: Response,
   next: NextFunction
 ) => {
@@ -61,21 +61,20 @@ export const registerUserHandler = async (
       .update(verifyCode)
       .digest('hex');
 
-    const user = await createUser({
-      name: req.body.name,
-      email: req.body.email.toLowerCase(),
-      password: hashedPassword,
-      verificationCode,
-    });
 
-    res.status(201).json({
+    const clearUserData = ClearCreateUserInputArgs(req.body)
+
+    const user = await createUser({ ...clearUserData, password: hashedPassword });
+
+
+    res.status(200).json({
       status: 'success',
-      message:
-        'An email with a verification code has been sent to your email',
+      user: user,
     });
 
   } catch (err: any) {
     if (err) {
+      console.log("errrm", err);
 
       if (err.code === 'P2002') {
         return res.status(404).json({
@@ -98,7 +97,7 @@ export const loginUserHandler = async (
 
     const user = await findUniqueUser(
       { email: email.toLowerCase() },
-      { id: true, email: true, verified: true, password: true }
+      { id: true, email: true, emailVerified: true, password: true, firstName: true, lastName: true, phoneNumber: true, orders: true }
     );
 
     if (!user) {
@@ -106,7 +105,7 @@ export const loginUserHandler = async (
     }
 
     // Check if user is verified
-    if (!user.verified) {
+    if (!user.emailVerified) {
       return next(
         new AppError(
           401,
@@ -133,6 +132,7 @@ export const loginUserHandler = async (
     res.status(200).json({
       status: 'success',
       access_token,
+      user
     });
   } catch (err: any) {
     next(err);
