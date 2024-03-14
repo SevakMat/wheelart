@@ -17,9 +17,7 @@ export const createOrderHandler = async (
 ) => {
   try {
 
-    const { orderData } = req.body
-    console.log("req.body", orderData);
-
+    const { orderData,id } = req.body
 
     orderData.map(async (order: OrderType) => {
       const clearData: any = ClearCreateOrderInputArgs(order)
@@ -28,7 +26,7 @@ export const createOrderHandler = async (
       });
       const newOrderUser = await prisma.orderUser.create({
         data: {
-          userId: 1,
+          userId:id,
           orderId: newOrder.id
         }
       })
@@ -66,10 +64,24 @@ export const getUserOrdersListHandler = async (
         users: {
           some: {
             userId
-          },
+          }
+        }
+      },
+      include: {
+        tire: {
+          select: {
+            imageUrl: true
+          }
+        },
+        rims: {
+          select: {
+            imageUrl: true
+          }
         }
       }
-    })
+    });
+    console.log("orderList",orderList);
+    
     res.status(200).json({
       status: 'success',
       data: { orderList },
