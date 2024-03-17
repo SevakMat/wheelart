@@ -16,6 +16,10 @@ import tiresRouter from './routes/tires.routes';
 import filterRouter from './routes/filters.routes';
 import ordersRouter from './routes/order.routes';
 
+import adminRimRouter from './routes/admin/adminRim.routes';
+import adminTireRouter from './routes/admin/adminTire.routes';
+import adminUserRouter from './routes/admin/adminUser.routes';
+import adminOrderRouter from './routes/admin/adminOrder.routes';
 
 import AppError from './utils/appError';
 
@@ -62,6 +66,12 @@ async function bootstrap() {
   app.use('/api/tires', tiresRouter);
   app.use('/api/orders', ordersRouter);
 
+  app.use('/api/admin/rims', adminRimRouter);
+  app.use('/api/admin/tires', adminTireRouter);
+  app.use('/api/admin/users', adminUserRouter);
+  app.use('/api/admin/orders', adminOrderRouter);
+
+  
 
   // Testing
   app.get('/api/healthchecker', (_, res: Response) => {
