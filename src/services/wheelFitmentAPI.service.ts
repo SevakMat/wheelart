@@ -23,9 +23,9 @@ const generateUrl = ({ key, make, model, generation, modification }: FindWheelBy
   const makeParams = make ? `make=${make}&` : ""
   const modelParams = model ? `model=${model}&` : ""
   const modificationParams = modification ? `modification=${modification}&` : ""
-  const yesrParams = generation ? `generation=${generation}&` : ""
+  const generationParams = generation ? `generation=${generation}&` : ""
   const apyKey = "user_key=730f8ee09c9c4ec4519b3cc39e9db35f"
-  url = url + makeParams + modelParams + yesrParams + modificationParams + apyKey
+  url = url + makeParams + modelParams + generationParams + modificationParams + apyKey
 
   return url
 }
@@ -177,7 +177,7 @@ export const getCarsInfoByCarsData = async (
 ) => {
   const url = generateUrl({ key, make, model, generation, modification });
 
-
+  
   const config: AxiosRequestConfig = {
     method: 'get',
     url: url,
