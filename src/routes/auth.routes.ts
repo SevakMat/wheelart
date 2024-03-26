@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  UserPaymentHandler,
   // forgotPasswordHandler,
   loginUserHandler,
   logoutUserHandler,
@@ -38,6 +39,9 @@ router.post('/login', validate(loginUserSchema), loginUserHandler);
 
 // router.get('/logout', deserializeUser, requireUser, logoutUserHandler);
 router.post('/logout',  logoutUserHandler);
+
+router.get('/create-checkout-session',  UserPaymentHandler);
+
 
 // router.post(
 //   '/forgotpassword',

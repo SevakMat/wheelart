@@ -18,6 +18,9 @@ import {
 import config from 'config';
 import AppError from '../utils/appError';
 import { ClearCreateUserInputArgs } from './inputs/ClearCreateUserInputArgs';
+import Stripe from 'stripe';
+
+
 // import redisClient from '../utils/connectRedis';
 // import { signJwt, verifyJwt } from '../utils/jwt';
 // import Email from '../utils/email';
@@ -386,3 +389,41 @@ export const logoutUserHandler = async (
 //     next(err);
 //   }
 // };
+
+
+export const UserPaymentHandler = async (
+  req: any,
+  res: Response,
+) => {
+
+
+  const stripe = new Stripe("sk_test_51Oxq6W09PFox5FiCtqiN9puZqBNaI6lyhabsTO2nztwJqPU9SrQ8fXiKicm6j9nQmCb3n80hG7tARQyviP7iyYDg00sUXFwt2T");
+
+  const lineItems = [
+    {
+    price_data: {
+      currency: 'usd',
+      product_data: {
+        name: "red rime",
+        images: ["https://wheelart.fr/cdn/shop/products/DY989-01_02_8c93b44c-8593-4daf-8f01-e4b1d2d60e82.jpg?v=1680616563&width=1100"]
+      },
+      unit_amount: Math.round(5000)
+    },
+    quantity: 5
+  }
+  ]
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types:["card"],
+    line_items:lineItems,
+    mode:"payment",
+    success_url:'http://localhost:3000/rims?success',
+    cancel_url:'http://localhost:3000/rims?cancle'
+  })
+
+  console.log(2112,session);
+  res.status(200).json({
+    status: 'success',
+    id:session.id
+  });
+};
