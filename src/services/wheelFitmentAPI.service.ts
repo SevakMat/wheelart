@@ -74,7 +74,7 @@ function transformWheelsObject(inputObject: InputObject[]): ResultObject {
 const filterData = (data: any) => {
 
   const findUnic = data[0].technical
-
+  
   const curentWheelData = {
     studHoles: findUnic.stud_holes,
     pcd: findUnic.pcd,
@@ -88,7 +88,6 @@ const filterData = (data: any) => {
     tireWidth: rimeFront.tire_width,
     tireAspectRatio: rimeFront.tire_aspect_ratio,
     rimDiameter: rimeFront.rim_diameter
-
   }
 
   // const curentRimeData = transformWheelsObject(data[0].wheels)
@@ -139,6 +138,7 @@ export const FindWheelDetailsByCarService = async (props: FindWheelByCarProps): 
     url: url,
     headers: {}
   };
+  
   return axios(config)
     .then(function (response) {
       return filterData(response.data.data)
@@ -189,5 +189,6 @@ export const getCarsInfoByCarsData = async (
     return CarsDataFormater(response);
   } catch (error: any) {
     throw error;
+    
   }
 };

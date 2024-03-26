@@ -60,11 +60,8 @@ export const getRimsByCarInputArgsHandler = async (
 
     const { pagination } = req.body.where;
     const { wheelDetails, tireDetails } = await FindWheelDetailsByCarService(req.body.where)
-
-    // const wheelDetails: any = { studHoles: 5, pcd: 112, centerBore: '66.6', sizeR: 19 }
-
-    // const tireDetails: any = { tireWidth: 205, tireAspectRatio: 55, rimDiameter: 16 }
-
+    console.log(wheelDetails, tireDetails);
+    
     const { rims, rimsCount } = await findRimsByInputArgsService({
       where: wheelDetails,
       select: { id: true, sizeR: true, centerBore: true, imageUrl: true, rimModel: true, price: true, pcd: true, studHoles: true },
@@ -81,6 +78,11 @@ export const getRimsByCarInputArgsHandler = async (
       data: { rims, tires, rimsCount, wheelDetails }
     });
   } catch (err: any) {
+    res.status(403).json({
+      status: 'error',
+      message:"something is wrong with getRimsByCarInputArgsHandler",
+      data: { }
+    });
     console.log(err);
 
   }
