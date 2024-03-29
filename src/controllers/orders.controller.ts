@@ -17,7 +17,7 @@ export const createOrderHandler = async (
 ) => {
   try {
 
-    const { orderData,id } = req.body
+    const { orderData, id } = req.body
 
     orderData.map(async (order: OrderType) => {
       const clearData: any = ClearCreateOrderInputArgs(order)
@@ -26,7 +26,7 @@ export const createOrderHandler = async (
       });
       const newOrderUser = await prisma.orderUser.create({
         data: {
-          userId:id,
+          userId: id,
           orderId: newOrder.id
         }
       })
@@ -59,7 +59,7 @@ export const getUserOrdersListHandler = async (
 
     const userId = parseInt(id, 10); // Using parseInt
 
-    const orderList = await prisma.order.findMany({
+    const userOrders = await prisma.order.findMany({
       where: {
         users: {
           some: {
@@ -79,9 +79,17 @@ export const getUserOrdersListHandler = async (
           }
         }
       }
-    });
-    console.log("orderList",orderList);
-    
+    })
+
+    const orderList = userOrders.map(order => ({
+      id: order.id,
+      orderType: order.orderType,
+      status: order.status,
+      imgUrl: order.orderType === 'TIRE' ? order.tire?.imageUrl : order.rims?.imageUrl,
+      itemCount: order.itemCount
+    })
+    )
+
     res.status(200).json({
       status: 'success',
       data: { orderList },
