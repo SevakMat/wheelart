@@ -17,16 +17,14 @@ CREATE TABLE "User" (
     "last_name" VARCHAR(255),
     "phone_number" VARCHAR(255),
     "email" VARCHAR(255) NOT NULL,
-    "password" VARCHAR(255) NOT NULL,
+    "password" VARCHAR(255),
     "role" "RoleEnumType" NOT NULL DEFAULT 'user',
     "last_active" TIMESTAMP(3),
-    "login_count" INTEGER NOT NULL DEFAULT 0,
-    "activation_date" TIMESTAMP(3),
     "active" BOOLEAN NOT NULL DEFAULT true,
     "email_verified" BOOLEAN NOT NULL DEFAULT false,
     "passwordResetToken" TEXT,
     "verificationCode" TEXT,
-    "identity_verified" BOOLEAN NOT NULL DEFAULT false,
+    "google_id" VARCHAR(255),
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

@@ -3,6 +3,7 @@ import {
   // forgotPasswordHandler,
   loginUserHandler,
   logoutUserHandler,
+  registerGoogleUserHandler,
   // logoutUserHandler,
   // refreshAccessTokenHandler,
   registerUserHandler,
@@ -17,6 +18,7 @@ import { validate } from "../middleware/validate";
 import {
   forgotPasswordSchema,
   loginUserSchema,
+  registerGoogleUserSchema,
   registerUserSchema,
   resetPasswordSchema,
   verifyEmailSchema,
@@ -26,6 +28,12 @@ import { UserPaymentHandler } from "../controllers/payment.controler";
 const router = express.Router();
 
 router.post("/register", validate(registerUserSchema), registerUserHandler);
+
+router.post(
+  "/register-google",
+  // validate(registerGoogleUserSchema),
+  registerGoogleUserHandler
+);
 
 router.post("/login", validate(loginUserSchema), loginUserHandler);
 

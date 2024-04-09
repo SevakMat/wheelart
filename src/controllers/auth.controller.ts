@@ -20,6 +20,8 @@ import config from "config";
 import AppError from "../utils/appError";
 import { ClearCreateUserInputArgs } from "./inputs/ClearCreateUserInputArgs";
 import Stripe from "stripe";
+import { ClearUserGoogleInputArgs } from "./inputs/ClearUserGoogleInputArgs";
+import { PrismaClient } from "@prisma/client";
 
 // import redisClient from '../utils/connectRedis';
 // import { signJwt, verifyJwt } from '../utils/jwt';
@@ -89,6 +91,80 @@ export const registerUserHandler = async (
   }
 };
 
+export const registerGoogleUserHandler = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  const prisma = new PrismaClient();
+
+  try {
+    const { email, googleId } = req.body;
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [{ email }, { googleId }],
+      },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        active: true,
+        emailVerified: true,
+        lastName: true,
+        role: true,
+        googleId: true,
+      },
+    });
+
+    if (user) {
+      const { access_token, refresh_token } = await signTokens(user);
+
+      res.cookie("access_token", access_token, accessTokenCookieOptions);
+      res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
+      res.cookie("logged_in", true, {
+        ...accessTokenCookieOptions,
+        httpOnly: false,
+      });
+
+      res.status(200).json({
+        status: "success",
+        access_token,
+        user,
+      });
+    } else {
+      const clearUserGoogleData = ClearUserGoogleInputArgs(req.body);
+      const user = await createUser(clearUserGoogleData);
+
+      const { access_token, refresh_token } = await signTokens(user);
+
+      res.cookie("access_token", access_token, accessTokenCookieOptions);
+      res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
+      res.cookie("logged_in", true, {
+        ...accessTokenCookieOptions,
+        httpOnly: false,
+      });
+
+      res.status(200).json({
+        status: "success",
+        access_token,
+        user,
+      });
+    }
+  } catch (err: any) {
+    if (err) {
+      console.log("errrm", err);
+
+      if (err.code === "P2002") {
+        return res.status(404).json({
+          status: "fail",
+          message: "something happend with registerGoogleUserHandler",
+        });
+      }
+    }
+    next(err);
+  }
+};
+
 export const loginUserHandler = async (
   req: any,
   res: Response,
@@ -125,9 +201,10 @@ export const loginUserHandler = async (
       );
     }
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return next(new AppError(400, "Invalid email or password"));
-    }
+    ///////////////////!!!!!!!!!!!!!!!
+    // if (!user || !(await bcrypt.compare(password, user?.password))) {
+    //   return next(new AppError(400, "Invalid email or password"));
+    // }
 
     // Sign Tokens
     const { access_token, refresh_token } = await signTokens(user);

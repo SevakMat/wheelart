@@ -47,6 +47,24 @@ export const loginUserSchema = object({
   }),
 });
 
+export const registerGoogleUserSchema = object({
+  body: object({
+    firstName: string({
+      required_error: "firstName is required",
+    }),
+    lastName: string({
+      required_error: "lastName is required",
+    }),
+    email: string({
+      required_error: "Email address is required",
+    }).email("Invalid email address"),
+
+    googleId: string({
+      required_error: "GoogleId  is required",
+    }).email("Invalid googleId "),
+  }),
+});
+
 export const verifyEmailSchema = object({
   params: object({
     verificationCode: string(),
