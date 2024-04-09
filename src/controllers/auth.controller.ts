@@ -1,25 +1,25 @@
-import crypto from 'crypto';
-import { CookieOptions, NextFunction, Request, Response } from 'express';
-import bcrypt from 'bcryptjs';
+import crypto from "crypto";
+import { CookieOptions, NextFunction, Request, Response } from "express";
+import bcrypt from "bcryptjs";
 import {
   ForgotPasswordInput,
   LoginUserInput,
   RegisterUserInput,
   ResetPasswordInput,
   VerifyEmailInput,
-} from '../schemas/user.schema';
+} from "../schemas/user.schema";
 import {
   createUser,
   findUniqueUser,
   // findUser,
   signTokens,
+  transformToLineItems,
   // updateUser,
-} from '../services/user.service';
-import config from 'config';
-import AppError from '../utils/appError';
-import { ClearCreateUserInputArgs } from './inputs/ClearCreateUserInputArgs';
-import Stripe from 'stripe';
-
+} from "../services/user.service";
+import config from "config";
+import AppError from "../utils/appError";
+import { ClearCreateUserInputArgs } from "./inputs/ClearCreateUserInputArgs";
+import Stripe from "stripe";
 
 // import redisClient from '../utils/connectRedis';
 // import { signJwt, verifyJwt } from '../utils/jwt';
@@ -27,25 +27,25 @@ import Stripe from 'stripe';
 
 const cookiesOptions: CookieOptions = {
   httpOnly: true,
-  sameSite: 'lax',
+  sameSite: "lax",
 };
 
-if (process.env.NODE_ENV === 'production') cookiesOptions.secure = true;
+if (process.env.NODE_ENV === "production") cookiesOptions.secure = true;
 
 const accessTokenCookieOptions: CookieOptions = {
   ...cookiesOptions,
   expires: new Date(
-    Date.now() + config.get<number>('accessTokenExpiresIn') * 60 * 1000
+    Date.now() + config.get<number>("accessTokenExpiresIn") * 60 * 1000
   ),
-  maxAge: config.get<number>('accessTokenExpiresIn') * 60 * 1000,
+  maxAge: config.get<number>("accessTokenExpiresIn") * 60 * 1000,
 };
 
 const refreshTokenCookieOptions: CookieOptions = {
   ...cookiesOptions,
   expires: new Date(
-    Date.now() + config.get<number>('refreshTokenExpiresIn') * 60 * 1000
+    Date.now() + config.get<number>("refreshTokenExpiresIn") * 60 * 1000
   ),
-  maxAge: config.get<number>('refreshTokenExpiresIn') * 60 * 1000,
+  maxAge: config.get<number>("refreshTokenExpiresIn") * 60 * 1000,
 };
 
 export const registerUserHandler = async (
@@ -54,35 +54,34 @@ export const registerUserHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
-    const verifyCode = crypto.randomBytes(32).toString('hex');
+    const verifyCode = crypto.randomBytes(32).toString("hex");
     const verificationCode = crypto
-      .createHash('sha256')
+      .createHash("sha256")
       .update(verifyCode)
-      .digest('hex');
+      .digest("hex");
 
+    const clearUserData = ClearCreateUserInputArgs(req.body);
 
-    const clearUserData = ClearCreateUserInputArgs(req.body)
-
-    const user = await createUser({ ...clearUserData, password: hashedPassword });
-
-
-    res.status(200).json({
-      status: 'success',
-      user: user,
+    const user = await createUser({
+      ...clearUserData,
+      password: hashedPassword,
     });
 
+    res.status(200).json({
+      status: "success",
+      user: user,
+    });
   } catch (err: any) {
     if (err) {
       console.log("errrm", err);
 
-      if (err.code === 'P2002') {
+      if (err.code === "P2002") {
         return res.status(404).json({
-          status: 'fail',
-          message: 'something happend with registration',
+          status: "fail",
+          message: "something happend with registration",
         });
       }
     }
@@ -100,11 +99,20 @@ export const loginUserHandler = async (
 
     const user = await findUniqueUser(
       { email: email.toLowerCase() },
-      { id: true, email: true, emailVerified: true, password: true, firstName: true, lastName: true, phoneNumber: true, orders: true }
+      {
+        id: true,
+        email: true,
+        emailVerified: true,
+        password: true,
+        firstName: true,
+        lastName: true,
+        phoneNumber: true,
+        orders: true,
+      }
     );
 
     if (!user) {
-      return next(new AppError(400, 'Invalid email or password'));
+      return next(new AppError(400, "Invalid email or password"));
     }
 
     // Check if user is verified
@@ -112,30 +120,29 @@ export const loginUserHandler = async (
       return next(
         new AppError(
           401,
-          'You are not verified, please verify your email to login'
+          "You are not verified, please verify your email to login"
         )
       );
     }
 
-
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return next(new AppError(400, 'Invalid email or password'));
+      return next(new AppError(400, "Invalid email or password"));
     }
 
     // Sign Tokens
     const { access_token, refresh_token } = await signTokens(user);
 
-    res.cookie('access_token', access_token, accessTokenCookieOptions);
-    res.cookie('refresh_token', refresh_token, refreshTokenCookieOptions);
-    res.cookie('logged_in', true, {
+    res.cookie("access_token", access_token, accessTokenCookieOptions);
+    res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
+    res.cookie("logged_in", true, {
       ...accessTokenCookieOptions,
       httpOnly: false,
     });
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       access_token,
-      user
+      user,
     });
   } catch (err: any) {
     next(err);
@@ -203,9 +210,9 @@ export const loginUserHandler = async (
 // };
 
 function logout(res: Response) {
-  res.cookie('access_token', '', { maxAge: 1 });
-  res.cookie('refresh_token', '', { maxAge: 1 });
-  res.cookie('logged_in', '', { maxAge: 1 });
+  res.cookie("access_token", "", { maxAge: 1 });
+  res.cookie("refresh_token", "", { maxAge: 1 });
+  res.cookie("logged_in", "", { maxAge: 1 });
 }
 
 export const logoutUserHandler = async (
@@ -218,7 +225,7 @@ export const logoutUserHandler = async (
     logout(res);
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
     });
   } catch (err: any) {
     next(err);
@@ -389,41 +396,3 @@ export const logoutUserHandler = async (
 //     next(err);
 //   }
 // };
-
-
-export const UserPaymentHandler = async (
-  req: any,
-  res: Response,
-) => {
-
-
-  const stripe = new Stripe("sk_test_51Oxq6W09PFox5FiCtqiN9puZqBNaI6lyhabsTO2nztwJqPU9SrQ8fXiKicm6j9nQmCb3n80hG7tARQyviP7iyYDg00sUXFwt2T");
-
-  const lineItems = [
-    {
-    price_data: {
-      currency: 'usd',
-      product_data: {
-        name: "red rime",
-        images: ["https://wheelart.fr/cdn/shop/products/DY989-01_02_8c93b44c-8593-4daf-8f01-e4b1d2d60e82.jpg?v=1680616563&width=1100"]
-      },
-      unit_amount: Math.round(5000)
-    },
-    quantity: 5
-  }
-  ]
-
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types:["card"],
-    line_items:lineItems,
-    mode:"payment",
-    success_url:'http://localhost:3000/rims?success',
-    cancel_url:'http://localhost:3000/rims?cancle'
-  })
-
-  console.log(2112,session);
-  res.status(200).json({
-    status: 'success',
-    id:session.id
-  });
-};

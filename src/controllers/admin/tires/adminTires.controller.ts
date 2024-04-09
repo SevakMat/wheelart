@@ -1,5 +1,5 @@
-import { PrismaClient, Tire } from '@prisma/client';
-import { Request, Response } from 'express';
+import { PrismaClient, Tire } from "@prisma/client";
+import { Request, Response } from "express";
 import {
   TireData,
   TireResponse,
@@ -9,15 +9,23 @@ import {
   GetAllTiresHandler,
   GetTireByIdHandler,
   UpdateTireHandler,
-  DeleteTireHandler
-} from './types';
+  DeleteTireHandler,
+} from "./types";
 
 const prisma = new PrismaClient();
 
 export const createTireHandler: CreateTireHandler = async (req, res) => {
   try {
-    const { tireWidth, tireAspectRatio, rimDiameter, marka, stock, imageUrl } = req.body;
-    
+    const {
+      tireWidth,
+      tireAspectRatio,
+      rimDiameter,
+      marka,
+      stock,
+      imageUrl,
+      price,
+    } = req.body;
+
     const createdTire = await prisma.tire.create({
       data: {
         tireWidth,
@@ -25,18 +33,19 @@ export const createTireHandler: CreateTireHandler = async (req, res) => {
         rimDiameter,
         marka,
         stock,
-        imageUrl
-      }
+        imageUrl,
+        price,
+      },
     });
 
     res.status(201).json({
-      status: 'success',
+      status: "success",
       data: { tire: createdTire },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to create tire',
+      status: "error",
+      message: "Failed to create tire",
     });
   }
 };
@@ -46,13 +55,13 @@ export const getAllTiresHandler: GetAllTiresHandler = async (req, res) => {
     const allTires = await prisma.tire.findMany();
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { tires: allTires },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to fetch tires',
+      status: "error",
+      message: "Failed to fetch tires",
     });
   }
 };
@@ -70,19 +79,19 @@ export const getTireByIdHandler: GetTireByIdHandler = async (req, res) => {
 
     if (!tire) {
       return res.status(404).json({
-        status: 'error',
-        message: 'Tire not found',
+        status: "error",
+        message: "Tire not found",
       });
     }
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { tire },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to fetch tire',
+      status: "error",
+      message: "Failed to fetch tire",
     });
   }
 };
@@ -91,7 +100,8 @@ export const updateTireHandler: UpdateTireHandler = async (req, res) => {
   try {
     const { id } = req.params;
     const tireId = parseInt(id, 10);
-    const { tireWidth, tireAspectRatio, rimDiameter, marka, stock, imageUrl } = req.body;
+    const { tireWidth, tireAspectRatio, rimDiameter, marka, stock, imageUrl } =
+      req.body;
 
     const updatedTire = await prisma.tire.update({
       where: {
@@ -103,18 +113,18 @@ export const updateTireHandler: UpdateTireHandler = async (req, res) => {
         rimDiameter,
         marka,
         stock,
-        imageUrl
+        imageUrl,
       },
     });
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { tire: updatedTire },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to update tire',
+      status: "error",
+      message: "Failed to update tire",
     });
   }
 };
@@ -133,8 +143,8 @@ export const deleteTireHandler: DeleteTireHandler = async (req, res) => {
     res.status(204).end();
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to delete tire',
+      status: "error",
+      message: "Failed to delete tire",
     });
   }
 };

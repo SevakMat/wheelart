@@ -1,61 +1,64 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { ClearCreateOrderInputArgs } from "./inputs/ClearCreateOrderInputArgs";
 
 const prisma = new PrismaClient();
 
 export interface OrderType {
-  itemId: number,
-  type: string,
-  count: number,
-  status: string
+  itemId: number;
+  type: string;
+  count: number;
+  status: string;
 }
 
-export const createOrderHandler = async (
-  req: Request,
-  res: Response,
-) => {
+export const createOrderHandler = async (req: Request, res: Response) => {
   try {
+    const { orderData, sessionId, id } = req.body;
 
-    const { orderData, id } = req.body
+    const orderCount = await prisma.order.count({
+      where: {
+        sessionId: sessionId,
+      },
+    });
+    console.log(orderCount);
+
+    if (orderCount > 0) {
+      res.status(200).json({
+        status: "You already created orders for this items",
+      });
+    }
 
     orderData.map(async (order: OrderType) => {
-      const clearData: any = ClearCreateOrderInputArgs(order)
+      const clearData: any = ClearCreateOrderInputArgs(order, sessionId);
+
       const newOrder = await prisma.order.create({
-        data: clearData
+        data: clearData,
       });
+
       const newOrderUser = await prisma.orderUser.create({
         data: {
           userId: id,
-          orderId: newOrder.id
-        }
-      })
-
-    })
-
-    res.status(200).json({
-      status: 'success',
-      data: {
-      },
+          orderId: newOrder.id,
+        },
+      });
     });
 
-
+    res.status(200).json({
+      status: "success",
+      data: {},
+    });
   } catch (err: any) {
     console.log(err);
 
     res.status(400).json({
-      status: 'error',
+      status: "error",
     });
-
   }
 };
 
-export const getUserOrdersListHandler = async (
-  req: Request,
-  res: Response,
-) => {
+export const getUserOrdersListHandler = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params
+    const { id } = req.params;
 
     const userId = parseInt(id, 10); // Using parseInt
 
@@ -63,42 +66,44 @@ export const getUserOrdersListHandler = async (
       where: {
         users: {
           some: {
-            userId
-          }
-        }
+            userId,
+          },
+        },
       },
       include: {
         tire: {
           select: {
-            imageUrl: true
-          }
+            imageUrl: true,
+          },
         },
         rims: {
           select: {
-            imageUrl: true
-          }
-        }
-      }
-    })
+            imageUrl: true,
+          },
+        },
+      },
+    });
+    console.log("userOrders", userOrders);
 
-    const orderList = userOrders.map(order => ({
+    const orderList = userOrders.map((order) => ({
       id: order.id,
       orderType: order.orderType,
       status: order.status,
-      imgUrl: order.orderType === 'TIRE' ? order.tire?.imageUrl : order.rims?.imageUrl,
-      itemCount: order.itemCount
-    })
-    )
+      imgUrl:
+        order.orderType === "TIRE"
+          ? order.tire?.imageUrl
+          : order.rims?.imageUrl,
+      itemCount: order.itemCount,
+    }));
+    console.log("orderList", orderList);
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { orderList },
     });
-
-
   } catch (err: any) {
     res.status(400).json({
-      status: 'error',
+      status: "error",
     });
   }
 };

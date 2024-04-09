@@ -1,6 +1,5 @@
-import express from 'express';
+import express from "express";
 import {
-  UserPaymentHandler,
   // forgotPasswordHandler,
   loginUserHandler,
   logoutUserHandler,
@@ -9,11 +8,11 @@ import {
   registerUserHandler,
   // resetPasswordHandler,
   // verifyEmailHandler,
-} from '../controllers/auth.controller';
+} from "../controllers/auth.controller";
 
-import { deserializeUser } from '../middleware/deserializeUser';
-import { requireUser } from '../middleware/requireUser';
-import { validate } from '../middleware/validate';
+import { deserializeUser } from "../middleware/deserializeUser";
+import { requireUser } from "../middleware/requireUser";
+import { validate } from "../middleware/validate";
 
 import {
   forgotPasswordSchema,
@@ -21,13 +20,14 @@ import {
   registerUserSchema,
   resetPasswordSchema,
   verifyEmailSchema,
-} from '../schemas/user.schema';
+} from "../schemas/user.schema";
+import { UserPaymentHandler } from "../controllers/payment.controler";
 
 const router = express.Router();
 
-router.post('/register', validate(registerUserSchema), registerUserHandler);
+router.post("/register", validate(registerUserSchema), registerUserHandler);
 
-router.post('/login', validate(loginUserSchema), loginUserHandler);
+router.post("/login", validate(loginUserSchema), loginUserHandler);
 
 // router.get('/refresh', refreshAccessTokenHandler);
 
@@ -38,10 +38,9 @@ router.post('/login', validate(loginUserSchema), loginUserHandler);
 // );
 
 // router.get('/logout', deserializeUser, requireUser, logoutUserHandler);
-router.post('/logout',  logoutUserHandler);
+router.post("/logout", logoutUserHandler);
 
-router.get('/create-checkout-session',  UserPaymentHandler);
-
+router.post("/create-checkout-session", UserPaymentHandler);
 
 // router.post(
 //   '/forgotpassword',
