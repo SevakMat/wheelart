@@ -1,11 +1,14 @@
-import { OrderType } from "../orders.controller"
+import { OrderType } from "../orders.controller";
 
-export const ClearCreateOrderInputArgs = (data: OrderType) => {
-
+export const ClearCreateOrderInputArgs = (
+  data: OrderType,
+  sessionId: string
+) => {
   return {
     itemId: data.itemId,
     orderType: data.type,
     status: data.status,
     itemCount: data.count,
-  }
-}
+    sessionId,
+  };
+};

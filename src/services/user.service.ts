@@ -1,7 +1,6 @@
 import { PrismaClient, Prisma, User } from "@prisma/client";
-import jwt, { SignOptions } from 'jsonwebtoken';
-import config from 'config';
-
+import jwt, { SignOptions } from "jsonwebtoken";
+import config from "config";
 
 // import { omit } from "lodash";
 // import redisClient from "../utils/connectRedis";
@@ -18,17 +17,20 @@ export const excludedFields = [
 const prisma = new PrismaClient();
 
 export const createUser = async (input: Prisma.UserCreateInput) => {
-  console.log("ekac", input);
-
   const user = await prisma.user.create({
     data: input,
     select: {
-      id: true, email: true, firstName: true, active: true, emailVerified: true, lastName: true, role: true,
-    }
+      id: true,
+      email: true,
+      firstName: true,
+      active: true,
+      emailVerified: true,
+      lastName: true,
+      role: true,
+    },
   });
-  console.log("uase", user);
 
-  return { ...user, id: user.id.toString() }
+  return { ...user, id: user.id.toString() };
 };
 
 // export const findUser = async (
@@ -48,7 +50,7 @@ export const findUniqueUser = async (
   const userDara = await prisma.user.findUnique({
     where,
     select,
-  }) 
+  });
   return userDara as User;
 };
 
@@ -70,12 +72,19 @@ export const signTokens = async (user: any) => {
 
   const payload = {
     userId: Number(user.id),
-    userEmail: user.email
-  }
-  
-  const access_token = jwt.sign({ payload }, config.get<string>("jwtSecretKey"), { expiresIn: '1h' });
-  const refresh_token = jwt.sign({ payload }, config.get<string>("jwtRefreshSecretKey"), { expiresIn: '1d' });
+    userEmail: user.email,
+  };
 
+  const access_token = jwt.sign(
+    { payload },
+    config.get<string>("jwtSecretKey"),
+    { expiresIn: "1h" }
+  );
+  const refresh_token = jwt.sign(
+    { payload },
+    config.get<string>("jwtRefreshSecretKey"),
+    { expiresIn: "1d" }
+  );
 
   // const access_token = signJwt({ sub: user.id }, "accessTokenPrivateKey", {
   //   expiresIn: `${config.get<number>("accessTokenExpiresIn")}m`,
@@ -86,4 +95,24 @@ export const signTokens = async (user: any) => {
   // });
 
   return { access_token, refresh_token };
+};
+
+export const transformToLineItems = (products: any[]) => {
+  console.log("products", products);
+
+  const lineItems = products.map((product) => {
+    return {
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: product.rimModel ? product.rimModel : product.marka, // Use rimModel as the product name
+          images: [product.imageUrl], // Use imageUrl as the product image
+        },
+        unit_amount: Math.round(product.price * 100), // Convert price to cents
+      },
+      quantity: product.count, // Use count as the quantity
+    };
+  });
+
+  return lineItems;
 };

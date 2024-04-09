@@ -1,33 +1,34 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
 import { findTireByInputArgsService } from "../services/tires.service";
 
-export const getSingleTireDataHandler = async (
-  req: Request,
-  res: Response,
-) => {
-
+export const getSingleTireDataHandler = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params
+    const { id } = req.params;
 
-
-    const tireId = +id
+    const tireId = +id;
 
     const singleTire = await findTireByInputArgsService({
       where: {
-        id: tireId
+        id: tireId,
       },
-      select: { id: true, imageUrl: true, marka: true, rimDiameter: true, stock: true, tireAspectRatio: true, tireWidth: true }
+      select: {
+        id: true,
+        imageUrl: true,
+        marka: true,
+        rimDiameter: true,
+        stock: true,
+        tireAspectRatio: true,
+        tireWidth: true,
+        price: true,
+      },
     });
-    console.log(111, singleTire);
 
     res.status(200).status(200).json({
-      status: 'success',
+      status: "success",
       singleTire,
     });
   } catch (err: any) {
-    console.log(err)
+    console.log(err);
   }
 };
-
-

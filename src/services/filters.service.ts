@@ -13,21 +13,23 @@ export interface GetRimsFiltersServiceType {
   pcd?: number[];
   studHoles?: number[];
   centerBore?: string[];
-  width?: number[]
-  color?: string[]
-  price?: string[]
-  pagination?: number
+  width?: number[];
+  color?: string[];
+  price?: string[];
+  pagination?: number;
 }
 
 const prisma = new PrismaClient();
 
-export const getFiltersAndRimsService = async (userSelectedFilters: GetRimsFiltersServiceType) => {
-
+export const getFiltersAndRimsService = async (
+  userSelectedFilters: GetRimsFiltersServiceType
+) => {
   const clearFilterData = ClearRimsFiltersInputArgs(userSelectedFilters);
+
   const result: any = await prisma.rims.groupBy(clearFilterData);
 
-  const clearRimData = ClearRimsByFiltersInputArgs(userSelectedFilters)
-  const rimFilterQuery = RimFilterQuery(userSelectedFilters)
+  const clearRimData = ClearRimsByFiltersInputArgs(userSelectedFilters);
+  const rimFilterQuery = RimFilterQuery(userSelectedFilters);
 
   const wheelsAndCount = await prisma.$transaction([
     prisma.rims.findMany(clearRimData),
@@ -41,30 +43,28 @@ export const getFiltersAndRimsService = async (userSelectedFilters: GetRimsFilte
   return {
     filters: TransformeRimsFilters(result),
     wheelsData: wheels,
-    rimsCount: rimsCount
-  }
+    rimsCount: rimsCount,
+  };
 };
-
-
 
 export interface GetTiresFiltersServiceType {
   tireWidth?: number[];
   tireAspectRatio?: number[];
   rimDiameter?: number[];
   marka?: string[];
-  stock?:number[];
-  pagination?: number
+  stock?: number[];
+  pagination?: number;
 }
 
-
-export const getFiltersAndTiresService = async (userSelectedFilters: GetTiresFiltersServiceType) => {
-
+export const getFiltersAndTiresService = async (
+  userSelectedFilters: GetTiresFiltersServiceType
+) => {
   const clearTireFilterData = ClearTiresFiltersInputArgs(userSelectedFilters);
 
   const tireData: any = await prisma.tire.groupBy(clearTireFilterData);
 
-  const clearTireData = ClearTiresByFiltersInputArgs(userSelectedFilters)
-  const rimFilterQuery = TireFilterQuery(userSelectedFilters)
+  const clearTireData = ClearTiresByFiltersInputArgs(userSelectedFilters);
+  const rimFilterQuery = TireFilterQuery(userSelectedFilters);
 
   const wheelsAndCount = await prisma.$transaction([
     prisma.tire.findMany(clearTireData),
@@ -74,11 +74,10 @@ export const getFiltersAndTiresService = async (userSelectedFilters: GetTiresFil
   ]);
 
   const [tires, tiresCount] = wheelsAndCount;
-  
+
   return {
     filters: TransformeTiresFilters(tireData),
     tiresData: tires,
-    tiresCount: tiresCount
-  }
+    tiresCount: tiresCount,
+  };
 };
-

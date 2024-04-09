@@ -1,8 +1,9 @@
 import { GetTiresFiltersServiceType } from "../../services/filters.service";
 
-export const ClearTiresFiltersInputArgs = (filter: GetTiresFiltersServiceType): any => {
-
-  const { marka,rimDiameter,stock,tireAspectRatio,tireWidth } = filter;
+export const ClearTiresFiltersInputArgs = (
+  filter: GetTiresFiltersServiceType
+): any => {
+  const { marka, rimDiameter, stock, tireAspectRatio, tireWidth } = filter;
 
   const filterQuery: Record<string, { in: (number | string)[] }> = {};
 
@@ -21,16 +22,16 @@ export const ClearTiresFiltersInputArgs = (filter: GetTiresFiltersServiceType): 
   if (tireWidth && tireWidth.length > 0) {
     filterQuery.tireWidth = { in: tireWidth };
   }
-  
 
   const groupedFilters: Record<string, any> = {
-    by: ["marka","rimDiameter","stock","tireAspectRatio","tireWidth"],
+    by: ["marka", "rimDiameter", "stock", "tireAspectRatio", "tireWidth"],
     _count: {
       marka: true,
       rimDiameter: true,
       stock: true,
       tireAspectRatio: true,
       tireWidth: true,
+      price: true,
     },
     ...(Object.keys(filterQuery).length > 0 && { having: filterQuery }),
   };

@@ -1,6 +1,6 @@
-import { PrismaClient, Rims } from '@prisma/client';
-import { Request, Response } from 'express';
-import {ClearCreateRimDataHelper,ClearUpdateRimDataHelper} from './helpers';
+import { PrismaClient, Rims } from "@prisma/client";
+import { Request, Response } from "express";
+import { ClearCreateRimDataHelper, ClearUpdateRimDataHelper } from "./helpers";
 
 interface RequestWithBody<B> extends Request {
   body: B;
@@ -46,21 +46,20 @@ export const createRimHandler: (
   res: ResponseWithData<RimResponse | ErrorResponse>
 ) => Promise<void> = async (req, res) => {
   try {
-    const clearCreateRimData = ClearCreateRimDataHelper(req.body)
-    console.log(clearCreateRimData,111);
-    
+    const clearCreateRimData = ClearCreateRimDataHelper(req.body);
+
     const createdRim = await prisma.rims.create({
-      data: clearCreateRimData
+      data: clearCreateRimData,
     });
 
     res.status(201).json({
-      status: 'success',
+      status: "success",
       data: { rim: createdRim },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to create rim',
+      status: "error",
+      message: "Failed to create rim",
     });
   }
 };
@@ -70,19 +69,16 @@ export const getAllRimsHandler: (
   res: ResponseWithData<RimsResponse | ErrorResponse>
 ) => Promise<void> = async (req, res) => {
   try {
-    console.log(12312312);
-
     const allRims = await prisma.rims.findMany();
 
-
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { rims: allRims },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to fetch rims',
+      status: "error",
+      message: "Failed to fetch rims",
     });
   }
 };
@@ -103,24 +99,23 @@ export const getRimByIdHandler: (
 
     if (!rim) {
       res.status(404).json({
-        status: 'error',
-        message: 'Rim not found',
+        status: "error",
+        message: "Rim not found",
       });
       return; // Ensure function exits after sending response
     }
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { rim },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to fetch rim',
+      status: "error",
+      message: "Failed to fetch rim",
     });
   }
 };
-
 
 export const updateRimHandler: (
   req: any & RequestWithBody<RimData>,
@@ -129,25 +124,24 @@ export const updateRimHandler: (
   try {
     const { id } = req.params;
     const rimId = parseInt(id, 10);
-    
-    const clearUpdateRimData = ClearUpdateRimDataHelper(req.body)
+
+    const clearUpdateRimData = ClearUpdateRimDataHelper(req.body);
 
     const updatedRim = await prisma.rims.update({
       where: {
         id: rimId,
       },
-      data: clearUpdateRimData
-
+      data: clearUpdateRimData,
     });
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { rim: updatedRim },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to update rim',
+      status: "error",
+      message: "Failed to update rim",
     });
   }
 };
@@ -169,8 +163,8 @@ export const deleteRimHandler: (
     res.status(204).end();
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to delete rim',
+      status: "error",
+      message: "Failed to delete rim",
     });
   }
 };

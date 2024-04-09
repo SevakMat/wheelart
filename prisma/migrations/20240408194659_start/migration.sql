@@ -58,6 +58,7 @@ CREATE TABLE "tire" (
     "rimDiameter" INTEGER NOT NULL,
     "marka" VARCHAR(255) NOT NULL,
     "stock" INTEGER NOT NULL,
+    "price" INTEGER NOT NULL,
     "imageUrl" VARCHAR(255) NOT NULL,
 
     CONSTRAINT "tire_pkey" PRIMARY KEY ("id")
@@ -70,6 +71,7 @@ CREATE TABLE "Order" (
     "status" "OrderStatusType" NOT NULL DEFAULT 'CREATED',
     "itemId" INTEGER NOT NULL,
     "item_count" INTEGER NOT NULL,
+    "sessionId" VARCHAR(255),
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
