@@ -50,7 +50,7 @@ async function bootstrap() {
   // 2. Cors
   app.use(
     cors({
-      origin: [config.get<string>("origin")],
+      origin: true,
       credentials: true,
     })
   );
@@ -97,7 +97,7 @@ async function bootstrap() {
     });
   });
 
-  const port = config.get<number>("port");
+  const port = process.env.PORT;
   app.listen(port, () => {
     console.log(`Server on port: ${8000}`);
   });
