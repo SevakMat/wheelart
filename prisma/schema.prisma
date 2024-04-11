@@ -16,17 +16,15 @@ model User {
   lastName          String?    @map("last_name") @db.VarChar(255)
   phoneNumber       String?    @map("phone_number") @db.VarChar(255)
   email             String     @unique @db.VarChar(255)
-  password          String     @unique @db.VarChar(255)
+  password          String?     @unique @db.VarChar(255)
   role              RoleEnumType  @default(user)
   lastActive        DateTime?  @map("last_active")
-  loginCount        Int        @default(0) @map("login_count")
-  activationDate    DateTime?  @map("activation_date")
   active            Boolean    @default(true)
   emailVerified     Boolean    @default(false) @map("email_verified")
   passwordResetToken String?
   verificationCode  String?    @db.Text @unique
-  identityVerified  Boolean    @default(false) @map("identity_verified")
-  orders        OrderUser[]
+  orders            OrderUser[]
+  googleId          String?    @map("google_id") @db.VarChar(255)
 
   @@unique([email, verificationCode, passwordResetToken])
   @@index([email, verificationCode, passwordResetToken])

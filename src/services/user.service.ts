@@ -2,10 +2,6 @@ import { PrismaClient, Prisma, User } from "@prisma/client";
 import jwt, { SignOptions } from "jsonwebtoken";
 import config from "config";
 
-// import { omit } from "lodash";
-// import redisClient from "../utils/connectRedis";
-// import { signJwt } from "../utils/jwt";
-
 export const excludedFields = [
   "password",
   "verified",
@@ -27,6 +23,7 @@ export const createUser = async (input: Prisma.UserCreateInput) => {
       emailVerified: true,
       lastName: true,
       role: true,
+      googleId: true,
     },
   });
 
