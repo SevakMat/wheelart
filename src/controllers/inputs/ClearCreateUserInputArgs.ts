@@ -9,6 +9,7 @@ export const ClearCreateUserInputArgs = (data: any) => {
     phoneNumber: data.phoneNumber,
     password: data.password,
     role: RoleEnumType.user,
-    emailVerified: true, // need to change
+    emailVerified: false,
+    verificationCode: data.verificationCode,
   };
 };

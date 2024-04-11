@@ -20,7 +20,6 @@ export const createOrderHandler = async (req: Request, res: Response) => {
         sessionId: sessionId,
       },
     });
-    console.log(orderCount);
 
     if (orderCount > 0) {
       res.status(200).json({
@@ -83,7 +82,6 @@ export const getUserOrdersListHandler = async (req: Request, res: Response) => {
         },
       },
     });
-    console.log("userOrders", userOrders);
 
     const orderList = userOrders.map((order) => ({
       id: order.id,
@@ -95,7 +93,6 @@ export const getUserOrdersListHandler = async (req: Request, res: Response) => {
           : order.rims?.imageUrl,
       itemCount: order.itemCount,
     }));
-    console.log("orderList", orderList);
 
     res.status(200).json({
       status: "success",

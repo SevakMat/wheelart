@@ -22,6 +22,8 @@ import { ClearCreateUserInputArgs } from "./inputs/ClearCreateUserInputArgs";
 import Stripe from "stripe";
 import { ClearUserGoogleInputArgs } from "./inputs/ClearUserGoogleInputArgs";
 import { PrismaClient } from "@prisma/client";
+import { sendEmail } from "../emailService/emailService";
+import { decrypt, encrypt } from "../emailService/hashing";
 
 // import redisClient from '../utils/connectRedis';
 // import { signJwt, verifyJwt } from '../utils/jwt';
@@ -31,6 +33,7 @@ const cookiesOptions: CookieOptions = {
   httpOnly: true,
   sameSite: "lax",
 };
+const prisma = new PrismaClient();
 
 if (process.env.NODE_ENV === "production") cookiesOptions.secure = true;
 
@@ -59,22 +62,48 @@ export const registerUserHandler = async (
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
-    const verifyCode = crypto.randomBytes(32).toString("hex");
-    const verificationCode = crypto
-      .createHash("sha256")
-      .update(verifyCode)
-      .digest("hex");
+    const verificationCode = encrypt(
+      req.body.email,
+      process.env.HASH_SECRET_KEY as string
+    );
 
     const clearUserData = ClearCreateUserInputArgs(req.body);
 
-    const user = await createUser({
+    const existingUser = await findUniqueUser(
+      { email: req.body.email.toLowerCase() },
+      {
+        id: true,
+        email: true,
+        emailVerified: true,
+        password: true,
+        firstName: true,
+        lastName: true,
+        phoneNumber: true,
+        orders: true,
+      }
+    );
+
+    if (existingUser) {
+      res.status(202).json({
+        status: "You already have account",
+      });
+    }
+
+    await createUser({
       ...clearUserData,
       password: hashedPassword,
+      verificationCode,
     });
+
+    sendEmail({
+      to: req.body.email,
+      subject: "Email Verification for Wheel Art",
+      text: "Email Verification",
+      html: `<p>Please open this link <a href='${process.env.BASE_URL}/email-verification?verification_code=${verificationCode}'>Wheel Art</a></p>`,
+    }).catch(console.error);
 
     res.status(200).json({
       status: "success",
-      user: user,
     });
   } catch (err: any) {
     if (err) {
@@ -201,6 +230,8 @@ export const loginUserHandler = async (
       );
     }
 
+    // const hashedPassword = await bcrypt.hash(req.body.password, 12);
+
     ///////////////////!!!!!!!!!!!!!!!
     // if (!user || !(await bcrypt.compare(password, user?.password))) {
     //   return next(new AppError(400, "Invalid email or password"));
@@ -309,41 +340,64 @@ export const logoutUserHandler = async (
   }
 };
 
-// export const verifyEmailHandler = async (
-//   req: Request<VerifyEmailInput>,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const verificationCode = crypto
-//       .createHash('sha256')
-//       .update(req.params.verificationCode)
-//       .digest('hex');
+export const verifyEmailHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const decryptedData = decrypt(
+      req.params.verificationCode,
+      process.env.HASH_SECRET_KEY as string
+    );
 
-//     const user = await updateUser(
-//       { verificationCode },
-//       { verified: true, verificationCode: null },
-//       { email: true }
-//     );
+    const user = await prisma.user.update({
+      where: {
+        email: decryptedData,
+      },
+      data: {
+        emailVerified: true,
+      },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        active: true,
+        emailVerified: true,
+        lastName: true,
+        role: true,
+        googleId: true,
+      },
+    });
 
-//     if (!user) {
-//       return next(new AppError(401, 'Could not verify email'));
-//     }
+    if (!user) {
+      return next(new AppError(401, "Could not verify email"));
+    }
 
-//     res.status(200).json({
-//       status: 'success',
-//       message: 'Email verified successfully',
-//     });
-//   } catch (err: any) {
-//     if (err.code === 'P2025') {
-//       return res.status(403).json({
-//         status: 'fail',
-//         message: `Verification code is invalid or user doesn't exist`,
-//       });
-//     }
-//     next(err);
-//   }
-// };
+    const { access_token, refresh_token } = await signTokens(user);
+
+    res.cookie("access_token", access_token, accessTokenCookieOptions);
+    res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
+    res.cookie("logged_in", true, {
+      ...accessTokenCookieOptions,
+      httpOnly: false,
+    });
+
+    res.status(200).json({
+      status: "success",
+      access_token,
+      user,
+    });
+  } catch (err: any) {
+    if (err.code === "P2025") {
+      return res.status(403).json({
+        status: "fail",
+        message: `Verification code is invalid or user doesn't exist`,
+      });
+    }
+    next(err);
+  }
+};
 
 // export const forgotPasswordHandler = async (
 //   req: Request<

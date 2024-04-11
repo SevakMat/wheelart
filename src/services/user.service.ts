@@ -51,22 +51,7 @@ export const findUniqueUser = async (
   return userDara as User;
 };
 
-// export const updateUser = async (
-//   where: Partial<Prisma.UserWhereUniqueInput>,
-//   data: Prisma.UserUpdateInput,
-//   select?: Prisma.UserSelect
-// ) => {
-//   return (await prisma.user.update({ where, data, select })) as User;
-// };
-
 export const signTokens = async (user: any) => {
-  // 1. Create Session
-  // redisClient.set(`${user.id}`, JSON.stringify(omit(user, excludedFields)), {
-  //   EX: config.get<number>("redisCacheExpiresIn") * 60,
-  // });
-
-  // 2. Create Access and Refresh tokens
-
   const payload = {
     userId: Number(user.id),
     userEmail: user.email,
@@ -95,8 +80,6 @@ export const signTokens = async (user: any) => {
 };
 
 export const transformToLineItems = (products: any[]) => {
-  console.log("products", products);
-
   const lineItems = products.map((product) => {
     return {
       price_data: {
