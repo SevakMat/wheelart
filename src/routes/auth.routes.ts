@@ -1,14 +1,10 @@
 import express from "express";
 import {
-  // forgotPasswordHandler,
   loginUserHandler,
   logoutUserHandler,
   registerGoogleUserHandler,
-  // logoutUserHandler,
-  // refreshAccessTokenHandler,
   registerUserHandler,
-  // resetPasswordHandler,
-  // verifyEmailHandler,
+  verifyEmailHandler,
 } from "../controllers/auth.controller";
 
 import { deserializeUser } from "../middleware/deserializeUser";
@@ -39,11 +35,11 @@ router.post("/login", validate(loginUserSchema), loginUserHandler);
 
 // router.get('/refresh', refreshAccessTokenHandler);
 
-// router.get(
-//   '/verifyemail/:verificationCode',
-//   validate(verifyEmailSchema),
-//   verifyEmailHandler
-// );
+router.get(
+  "/email-verification/:verificationCode",
+  validate(verifyEmailSchema),
+  verifyEmailHandler
+);
 
 // router.get('/logout', deserializeUser, requireUser, logoutUserHandler);
 router.post("/logout", logoutUserHandler);
