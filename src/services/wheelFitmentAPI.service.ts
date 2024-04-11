@@ -1,6 +1,4 @@
 import { Prisma } from "@prisma/client";
-import axios, { AxiosRequestConfig } from "axios";
-import { AxiosResponse } from "axios";
 import { CarsDataFormater } from "../controllers/helpers/CarsDataFormater";
 
 // make=bmw&
@@ -158,20 +156,14 @@ export const FindRimDetailsByCarService = async (
   props: FindWheelByCarProps
 ): Promise<any> => {
   let url = generateUrl({ ...props, key: "search/by_model" });
-
-  const responce = await axios({
-    method: "get",
-    url: url,
+  const response = await fetch(url, {
+    method: "GET",
     headers: {},
-  })
-    .then(function (response) {
-      return filterData(response.data.data);
-    })
-    .catch(function (error) {
-      throw error;
-    });
+  });
+  const testJson = await response.json();
+  return filterData(testJson.data);
 
-  return responce;
+  // return responce;
 };
 
 export const FindTireDetailsByCarService = async (
@@ -179,18 +171,13 @@ export const FindTireDetailsByCarService = async (
 ): Promise<any> => {
   let url = generateUrl({ ...props, key: "search/by_model" });
 
-  var config = {
-    method: "get",
-    url: url,
+  const response = await fetch(url, {
+    method: "GET",
     headers: {},
-  };
-  return axios(config)
-    .then(function (response) {
-      return extractTireInformation(response.data.data[0].wheels);
-    })
-    .catch(function (error) {
-      throw error;
-    });
+  });
+  const testJson = await response.json();
+
+  return extractTireInformation(testJson.data[0].wheels);
 };
 
 export const getCarsInfoByCarsData = async (
@@ -202,15 +189,13 @@ export const getCarsInfoByCarsData = async (
 ) => {
   const url = generateUrl({ key, make, model, generation, modification });
 
-  const config: AxiosRequestConfig = {
-    method: "get",
-    url: url,
-    headers: {},
-  };
-
   try {
-    const response = await axios(config);
-    return CarsDataFormater(response);
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {},
+    });
+    const testJson = await response.json();
+    return CarsDataFormater(testJson);
   } catch (error: any) {
     throw error;
   }

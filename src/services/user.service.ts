@@ -59,12 +59,14 @@ export const signTokens = async (user: any) => {
 
   const access_token = jwt.sign(
     { payload },
-    config.get<string>("jwtSecretKey"),
+    process.env.JWT_SECRET_KEY as string,
+
     { expiresIn: "1h" }
   );
   const refresh_token = jwt.sign(
     { payload },
-    config.get<string>("jwtRefreshSecretKey"),
+    process.env.JWT_REFRESH_SECRET_KEY as string,
+
     { expiresIn: "1d" }
   );
 
