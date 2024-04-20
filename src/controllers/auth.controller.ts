@@ -228,10 +228,13 @@ export const loginUserHandler = async (
 
     // const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
-    ///////////////////!!!!!!!!!!!!!!!
-    // if (!user || !(await bcrypt.compare(password, user?.password))) {
-    //   return next(new AppError(400, "Invalid email or password"));
-    // }
+    /////////////////!!!!!!!!!!!!!!!
+    if (
+      !user ||
+      (user?.password && !(await bcrypt.compare(password, user?.password)))
+    ) {
+      return next(new AppError(400, "Invalid email or password"));
+    }
 
     // Sign Tokens
     const { access_token, refresh_token } = await signTokens(user);

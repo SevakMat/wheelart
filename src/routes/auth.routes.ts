@@ -1,11 +1,4 @@
 import express from "express";
-import {
-  loginUserHandler,
-  logoutUserHandler,
-  registerGoogleUserHandler,
-  registerUserHandler,
-  verifyEmailHandler,
-} from "../controllers/auth.controller";
 
 import { validate } from "../middleware/validate";
 
@@ -18,6 +11,11 @@ import {
   verifyEmailSchema,
 } from "../schemas/user.schema";
 import { UserPaymentHandler } from "../controllers/payment.controler";
+import { registerUserHandler } from "../controllers/AuthController/registerUserHandler";
+import { registerGoogleUserHandler } from "../controllers/AuthController/registerGoogleUserHandler";
+import { loginUserHandler } from "../controllers/AuthController/loginUserHandler";
+import { verifyEmailHandler } from "../controllers/AuthController/verifyEmailHandler";
+import { logoutUserHandler } from "../controllers/AuthController/logoutUserHandler";
 
 const router = express.Router();
 
@@ -39,7 +37,6 @@ router.get(
   verifyEmailHandler
 );
 
-// router.get('/logout', deserializeUser, requireUser, logoutUserHandler);
 router.post("/logout", logoutUserHandler);
 
 router.post("/create-checkout-session", UserPaymentHandler);

@@ -15,7 +15,6 @@ import {
   FindTireDetailsByCarService,
   getCarsInfoByCarsData,
 } from "../services/wheelFitmentAPI.service";
-import { CliarsRimsByInputArgs } from "./inputs/CliarsRimsByInputArgs";
 
 export const getAllRimsHandler = async (
   req: Request,
@@ -38,7 +37,7 @@ export const getAllRimsHandler = async (
       },
     });
   } catch (err: any) {
-    next(err);
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -86,12 +85,7 @@ export const getRimsByCarInputArgsHandler = async (
       data: { rims, tires, rimsCount, wheelDetails },
     });
   } catch (err: any) {
-    res.status(403).json({
-      status: "error",
-      message: "something is wrong with getRimsByCarInputArgsHandler",
-      data: {},
-    });
-    console.log(err);
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -133,11 +127,11 @@ export const getCarDatailsHandler = async (req: Request, res: Response) => {
       },
     });
   } catch (err: any) {
-    console.log(err);
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
-export const getCarsTypesHandler = async (
+export const getCarsMakeHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -150,7 +144,7 @@ export const getCarsTypesHandler = async (
       data: dataFromApi,
     });
   } catch (err: any) {
-    next(err);
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -241,7 +235,8 @@ export const getSingleRimDataHandler = async (req: Request, res: Response) => {
       recommendedRims: recommendedRims,
     });
   } catch (err: any) {
-    console.log(err);
+    console.error(err); // Log errors
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -258,5 +253,6 @@ export const getPopularRimsDataHandler = async (
     });
   } catch (err: any) {
     console.log(err);
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
