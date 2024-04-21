@@ -20,6 +20,7 @@ export const findRimsByInputArgsService = async ({
   pagination,
 }: FindRimsByInputArgsServiceProps) => {
   const skip = pagination ? (pagination - 1) * 12 : 0;
+  console.log("where", where);
 
   const [rims, rimsCount] = await Promise.all([
     prisma.rims.findMany({

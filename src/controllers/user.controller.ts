@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from "express";
 
 export const getMeHandler = async (
   req: Request,
@@ -9,12 +9,12 @@ export const getMeHandler = async (
     const user = res.locals.user;
 
     res.status(200).status(200).json({
-      status: 'success',
+      status: "success",
       data: {
         user,
       },
     });
   } catch (err: any) {
-    next(err);
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };

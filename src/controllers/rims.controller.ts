@@ -10,12 +10,9 @@ import {
   findTiresByInputArgsService,
   findTiresTestService,
 } from "../services/tires.service";
-import {
-  FindRimDetailsByCarService,
-  FindTireDetailsByCarService,
-  getCarsInfoByCarsData,
-} from "../services/wheelFitmentAPI.service";
-import { CliarsRimsByInputArgs } from "./inputs/CliarsRimsByInputArgs";
+import { GetRImeDetailsByCarDetails } from "../services/carAPI/getRImeDetailsByCarDetails";
+import { getCarsDetailsByCarDetails } from "../services/carAPI/getCarsDetailsByCarDetails";
+import { GetTireDetailsByCarDetails } from "../services/carAPI/getTireDetailsByCarDetails";
 
 export const getAllRimsHandler = async (
   req: Request,
@@ -38,7 +35,7 @@ export const getAllRimsHandler = async (
       },
     });
   } catch (err: any) {
-    next(err);
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -48,12 +45,13 @@ export const getRimsByCarInputArgsHandler = async (
 ) => {
   try {
     const { pagination } = req.body.where;
-    const { wheelDetails, tireDetails } = await FindRimDetailsByCarService(
+    const { rimDetails, tireDetails } = await GetRImeDetailsByCarDetails(
       req.body.where
     );
+    console.log("rimDetails", rimDetails);
 
     const { rims, rimsCount } = await findRimsByInputArgsService({
-      where: wheelDetails,
+      where: rimDetails,
       select: {
         id: true,
         sizeR: true,
@@ -66,6 +64,8 @@ export const getRimsByCarInputArgsHandler = async (
       },
       pagination,
     });
+
+    console.log(rims.length);
 
     const tires = await findTiresByInputArgsService({
       where: tireDetails,
@@ -83,15 +83,12 @@ export const getRimsByCarInputArgsHandler = async (
 
     res.status(200).json({
       status: "success",
-      data: { rims, tires, rimsCount, wheelDetails },
+      data: { rims, tires, rimsCount, rimDetails },
     });
   } catch (err: any) {
-    res.status(403).json({
-      status: "error",
-      message: "something is wrong with getRimsByCarInputArgsHandler",
-      data: {},
-    });
     console.log(err);
+
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -103,11 +100,14 @@ export const getCarDatailsHandler = async (req: Request, res: Response) => {
       generationDada,
       modificationDada: any = [];
     if (where?.make) {
-      modelDada = await getCarsInfoByCarsData("models", where?.make as string);
+      modelDada = await getCarsDetailsByCarDetails(
+        "models",
+        where?.make as string
+      );
     }
 
     if (where?.make && where?.model) {
-      generationDada = await getCarsInfoByCarsData(
+      generationDada = await getCarsDetailsByCarDetails(
         "generations",
         where?.make as string,
         where?.model as string
@@ -116,7 +116,7 @@ export const getCarDatailsHandler = async (req: Request, res: Response) => {
     /// stuc nerqev
 
     if (where?.make && where?.model && where?.generation) {
-      modificationDada = await getCarsInfoByCarsData(
+      modificationDada = await getCarsDetailsByCarDetails(
         "modifications",
         where?.make as string,
         where?.model as string,
@@ -133,24 +133,24 @@ export const getCarDatailsHandler = async (req: Request, res: Response) => {
       },
     });
   } catch (err: any) {
-    console.log(err);
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
-export const getCarsTypesHandler = async (
+export const getCarsMakeHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const dataFromApi = await getCarsInfoByCarsData("makes");
+    const dataFromApi = await getCarsDetailsByCarDetails("makes");
 
     res.status(200).status(200).json({
       status: "success",
       data: dataFromApi,
     });
   } catch (err: any) {
-    next(err);
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -207,7 +207,7 @@ export const getSingleRimDataHandler = async (req: Request, res: Response) => {
 
     let tires: any = [];
     if (body.make && body.model & body.year && body.modification) {
-      const tireData = await FindTireDetailsByCarService(body);
+      const tireData = await GetTireDetailsByCarDetails(body);
       tires = await findTiresByInputArgsService({
         where: {
           OR: tireData,
@@ -241,7 +241,8 @@ export const getSingleRimDataHandler = async (req: Request, res: Response) => {
       recommendedRims: recommendedRims,
     });
   } catch (err: any) {
-    console.log(err);
+    console.error(err); // Log errors
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -258,5 +259,6 @@ export const getPopularRimsDataHandler = async (
     });
   } catch (err: any) {
     console.log(err);
+    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };

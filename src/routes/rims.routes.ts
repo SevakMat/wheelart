@@ -2,7 +2,7 @@ import express from "express";
 import {
   getAllRimsHandler,
   getRimsByCarInputArgsHandler,
-  getCarsTypesHandler,
+  getCarsMakeHandler,
   getSingleRimDataHandler,
   getCarDatailsHandler,
   getPopularRimsDataHandler,
@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/all", getAllRimsHandler);
 
-router.get("/makes", getCarsTypesHandler);
+router.get("/makes", getCarsMakeHandler);
 
 router.post("/rim/:id", getSingleRimDataHandler);
 

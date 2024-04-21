@@ -37,6 +37,9 @@ export const getAllTiresFilters = async (
       filterData,
     });
   } catch (err: any) {
-    console.log(err);
+    res.status(502).json({
+      status: "failed",
+      message: "An error occurred",
+    });
   }
 };
