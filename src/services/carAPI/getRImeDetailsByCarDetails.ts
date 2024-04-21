@@ -19,8 +19,6 @@ export const generateRimAndTireDetails = (data: any) => {
     )
     .filter((obj: any) => obj.sizeR !== null && obj.width !== null);
 
-  console.log("transformedArray", transformedArray);
-
   const rimDetails = {
     studHoles: findUnic.stud_holes,
     pcd: findUnic.pcd,
