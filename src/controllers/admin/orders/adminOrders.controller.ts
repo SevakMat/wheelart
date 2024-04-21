@@ -1,28 +1,28 @@
-import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import { PrismaClient } from "@prisma/client";
+import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
 
 export const createOrderHandler = async (req: Request, res: Response) => {
   try {
     const { orderType, itemId, itemCount } = req.body;
-    
+
     const createdOrder = await prisma.order.create({
       data: {
         orderType,
         itemId,
-        itemCount
-      }
+        itemCount,
+      },
     });
 
     res.status(201).json({
-      status: 'success',
+      status: "success",
       data: { order: createdOrder },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to create order',
+      status: "error",
+      message: "Failed to create order",
     });
   }
 };
@@ -36,40 +36,59 @@ export const getUserOrdersListHandler = async (req: Request, res: Response) => {
       where: {
         users: {
           some: {
-            userId
-          }
-        }
+            userId,
+          },
+        },
       },
       include: {
         tire: true,
-        rims: true
-      }
+        rims: true,
+      },
     });
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { orderList },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to fetch user orders',
+      status: "error",
+      message: "Failed to fetch user orders",
     });
   }
 };
 
 export const getAllOrdersHandler = async (req: Request, res: Response) => {
   try {
-    const allOrders = await prisma.order.findMany();
+    // ste/
+    // const allOrders = await prisma.order.findMany();
+    const allOrdersWithUserIds = await prisma.order.findMany({
+      include: {
+        users: {
+          select: {
+            userId: true,
+          },
+        },
+      },
+    });
+
+    // Map the result to create the desired object format
+    const allOrders = allOrdersWithUserIds.map((order) => ({
+      ...order,
+
+      userId: order.users[0].userId,
+    }));
+
+    console.log(allOrders);
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { orders: allOrders },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to fetch orders',
+      status: "error",
+      message: "Failed to fetch orders",
     });
   }
 };
@@ -87,19 +106,19 @@ export const getOrderByIdHandler = async (req: Request, res: Response) => {
 
     if (!order) {
       return res.status(404).json({
-        status: 'error',
-        message: 'Order not found',
+        status: "error",
+        message: "Order not found",
       });
     }
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { order },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to fetch order',
+      status: "error",
+      message: "Failed to fetch order",
     });
   }
 };
@@ -117,18 +136,18 @@ export const updateOrderHandler = async (req: Request, res: Response) => {
       data: {
         orderType,
         itemId,
-        itemCount
+        itemCount,
       },
     });
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: { order: updatedOrder },
     });
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to update order',
+      status: "error",
+      message: "Failed to update order",
     });
   }
 };
@@ -147,8 +166,8 @@ export const deleteOrderHandler = async (req: Request, res: Response) => {
     res.status(204).end();
   } catch (error) {
     res.status(500).json({
-      status: 'error',
-      message: 'Failed to delete order',
+      status: "error",
+      message: "Failed to delete order",
     });
   }
 };
