@@ -37,13 +37,14 @@ CREATE TABLE "rims" (
     "pcd" INTEGER NOT NULL,
     "centerBore" VARCHAR(255) NOT NULL,
     "rimModel" VARCHAR(255) NOT NULL,
-    "width" INTEGER NOT NULL,
+    "width" DOUBLE PRECISION NOT NULL,
     "color" VARCHAR(255) NOT NULL,
     "gram" INTEGER NOT NULL,
     "description" VARCHAR(255) NOT NULL,
     "imageUrl" VARCHAR(255) NOT NULL,
     "price" INTEGER NOT NULL,
     "score" INTEGER NOT NULL,
+    "stock" INTEGER NOT NULL,
 
     CONSTRAINT "rims_pkey" PRIMARY KEY ("id")
 );

@@ -1,6 +1,8 @@
 import { PrismaClient, Rims } from "@prisma/client";
 import { Request, Response } from "express";
 import { ClearCreateRimDataHelper, ClearUpdateRimDataHelper } from "./helpers";
+import { readFromExcel } from "../excel/readFromExcel";
+import { updateRims } from "../excel/updateDB";
 
 interface RequestWithBody<B> extends Request {
   body: B;
@@ -166,5 +168,23 @@ export const deleteRimHandler: (
       status: "error",
       message: "Failed to delete rim",
     });
+  }
+};
+
+export const integreateExelHandler = async (req: any, res: any) => {
+  try {
+    console.log(33333);
+    const filePath = req.file.path;
+    const rimsToUpdate = await readFromExcel(filePath);
+
+    await updateRims(rimsToUpdate);
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Excel file integrated successfully" });
+  } catch (error) {
+    // Handle errors
+    console.error("Error integrating Excel file:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };

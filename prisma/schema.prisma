@@ -44,13 +44,14 @@ model Rims {
   pcd           Int
   centerBore    String    @db.VarChar(255)
   rimModel      String    @db.VarChar(255)
-  width         Int
+  width         Float
   color         String    @db.VarChar(255)
   gram          Int
   description   String    @db.VarChar(255)
   imageUrl      String    @db.VarChar(255)
   price         Int
   score         Int
+  stock         Int
   orders        Order[]  // Add this line to establish the relation
 }
 

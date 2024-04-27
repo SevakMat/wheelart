@@ -11,31 +11,16 @@ import {
   UpdateTireHandler,
   DeleteTireHandler,
 } from "./types";
+import { ClearCreateTireDataHelper } from "./helpers";
 
 const prisma = new PrismaClient();
 
 export const createTireHandler: CreateTireHandler = async (req, res) => {
   try {
-    const {
-      tireWidth,
-      tireAspectRatio,
-      rimDiameter,
-      marka,
-      stock,
-      imageUrl,
-      price,
-    } = req.body;
+    const clearCreateTireData = ClearCreateTireDataHelper(req.body);
 
     const createdTire = await prisma.tire.create({
-      data: {
-        tireWidth,
-        tireAspectRatio,
-        rimDiameter,
-        marka,
-        stock,
-        imageUrl,
-        price,
-      },
+      data: { ...clearCreateTireData },
     });
 
     res.status(201).json({

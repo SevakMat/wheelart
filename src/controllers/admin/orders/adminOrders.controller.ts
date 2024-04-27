@@ -127,7 +127,7 @@ export const updateOrderHandler = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const orderId = parseInt(id, 10);
-    const { orderType, itemId, itemCount } = req.body;
+    const { orderType, itemId, itemCount, status } = req.body;
 
     const updatedOrder = await prisma.order.update({
       where: {
@@ -137,6 +137,7 @@ export const updateOrderHandler = async (req: Request, res: Response) => {
         orderType,
         itemId,
         itemCount,
+        status,
       },
     });
 

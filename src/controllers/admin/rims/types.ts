@@ -1,5 +1,5 @@
-import { Rims } from '@prisma/client';
-import { Response } from 'express';
+import { Rims } from "@prisma/client";
+import { Response } from "express";
 
 interface RequestWithParams<P> {
   params: P;
@@ -13,7 +13,7 @@ export interface RimData {
   sizeR: number;
   studHoles: number;
   pcd: number;
-  centerBore: number;
+  centerBore: string;
   rimModel: string;
   width: number;
   color: string;
@@ -39,8 +39,23 @@ export interface ErrorResponse {
   message: string;
 }
 
-export type CreateRimHandler = (req: RequestWithBody<RimData>, res: any) => Promise<void>;
-export type GetAllRimsHandler = (req: RequestWithParams<any>, res: any) => Promise<void>;
-export type GetRimByIdHandler = (req: RequestWithParams<{ id: string }>, res:any) => Promise<void>;
-export type UpdateRimHandler = (req: RequestWithParams<{ id: string }> & RequestWithBody<RimData>, res: any) => Promise<void>;
-export type DeleteRimHandler = (req: RequestWithParams<{ id: string }>, res: any) => Promise<void>;
+export type CreateRimHandler = (
+  req: RequestWithBody<RimData>,
+  res: any
+) => Promise<void>;
+export type GetAllRimsHandler = (
+  req: RequestWithParams<any>,
+  res: any
+) => Promise<void>;
+export type GetRimByIdHandler = (
+  req: RequestWithParams<{ id: string }>,
+  res: any
+) => Promise<void>;
+export type UpdateRimHandler = (
+  req: RequestWithParams<{ id: string }> & RequestWithBody<RimData>,
+  res: any
+) => Promise<void>;
+export type DeleteRimHandler = (
+  req: RequestWithParams<{ id: string }>,
+  res: any
+) => Promise<void>;
