@@ -20,34 +20,24 @@ export const ClearCreateTireDataHelper = (body: any) => {
   };
 };
 
-export const ClearUpdateRimDataHelper = (body: any) => {
+export const ClearUpdateTireDataHelper = (body: any) => {
   const {
-    sizeR,
-    studHoles,
-    pcd,
-    centerBore,
-    rimModel,
-    width,
-    color,
-    gram,
-    description,
+    tireWidth,
+    tireAspectRatio,
+    rimDiameter,
+    marka,
+    stock,
     imageUrl,
     price,
-    score,
   } = body;
 
   return {
-    sizeR: Number(sizeR),
-    studHoles: Number(studHoles),
-    pcd: Number(pcd),
-    centerBore,
-    rimModel,
-    width: Number(width),
-    color,
-    gram: Number(gram),
-    description,
+    tireWidth: Number(tireWidth),
+    tireAspectRatio: Number(tireAspectRatio),
+    rimDiameter: Number(rimDiameter),
+    marka,
+    stock: Number(stock),
     imageUrl,
     price: Number(price),
-    score: Number(score),
   };
 };

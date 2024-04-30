@@ -1,9 +1,9 @@
 import { PrismaClient, Rims } from "@prisma/client";
-import { RimData } from "../rims/types";
+import { RimData } from "../../rims/types";
 
 const prisma = new PrismaClient();
 
-export async function updateRims(rimsArray: any[]) {
+export async function updateRimDB(rimsArray: any[]) {
   try {
     for (const rim of rimsArray) {
       const existingRim = await prisma.rims.findFirst({
@@ -11,10 +11,13 @@ export async function updateRims(rimsArray: any[]) {
       });
 
       if (existingRim) {
-        await prisma.rims.update({
+        const existingStock = existingRim?.stock || 0;
+
+        const test = await prisma.rims.update({
           where: { id: existingRim.id },
-          data: { score: rim.score },
+          data: { stock: existingStock + rim.stock },
         });
+        console.log("test", test);
       } else {
         await prisma.rims.create({
           data: rim,

@@ -1,8 +1,8 @@
 import { PrismaClient, Rims } from "@prisma/client";
 import { Request, Response } from "express";
 import { ClearCreateRimDataHelper, ClearUpdateRimDataHelper } from "./helpers";
-import { readFromExcel } from "../excel/readFromExcel";
-import { updateRims } from "../excel/updateDB";
+import { readRimDataFromExcel } from "../excel/rim/readRimDataFromExcel";
+import { updateRimDB } from "../excel/rim/updateRimDB";
 
 interface RequestWithBody<B> extends Request {
   body: B;
@@ -49,6 +49,7 @@ export const createRimHandler: (
 ) => Promise<void> = async (req, res) => {
   try {
     const clearCreateRimData = ClearCreateRimDataHelper(req.body);
+    console.log(333, clearCreateRimData);
 
     const createdRim = await prisma.rims.create({
       data: clearCreateRimData,
@@ -173,11 +174,10 @@ export const deleteRimHandler: (
 
 export const integreateExelHandler = async (req: any, res: any) => {
   try {
-    console.log(33333);
     const filePath = req.file.path;
-    const rimsToUpdate = await readFromExcel(filePath);
+    const rimsToUpdate = await readRimDataFromExcel(filePath);
 
-    await updateRims(rimsToUpdate);
+    await updateRimDB(rimsToUpdate);
 
     return res
       .status(200)

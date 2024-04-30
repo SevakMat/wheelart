@@ -42,13 +42,13 @@ model Rims {
   sizeR         Int
   studHoles     Int
   pcd           Int
-  centerBore    String    @db.VarChar(255)
+  centerBore    Float   
   rimModel      String    @db.VarChar(255)
   width         Float
   color         String    @db.VarChar(255)
   gram          Int
   description   String    @db.VarChar(255)
-  imageUrl      String    @db.VarChar(255)
+  imageUrl      String    @db.VarChar(1000)
   price         Int
   score         Int
   stock         Int
@@ -66,7 +66,7 @@ model Tire {
   marka           String    @db.VarChar(255)
   stock           Int
   price           Int
-  imageUrl        String    @db.VarChar(255)
+  imageUrl        String    @db.VarChar(1000)
   orders          Order[]  // Add this line to establish the relation
 
 }

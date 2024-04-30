@@ -29,13 +29,20 @@ export const loginUserHandler = async (
       throw new AppError(400, "Invalid email or password");
     }
 
+    // if (
+    //   !user ||
+    //   (user?.password && !(await bcrypt.compare(password, user?.password)))
+    // ) {
+    //   return next(new AppError(400, "Invalid email or password"));
+    // }
+
     // Check if user is verified
-    if (!user.emailVerified) {
-      throw new AppError(
-        401,
-        "You are not verified, please verify your email to login"
-      );
-    }
+    // if (!user.emailVerified) {
+    //   throw new AppError(
+    //     401,
+    //     "You are not verified, please verify your email to login"
+    //   );
+    // }
 
     // Sign Tokens
     const { access_token, refresh_token } = await signTokens(user);
