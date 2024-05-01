@@ -19,6 +19,14 @@ export interface GetRimsFiltersServiceType {
   pagination?: number;
 }
 
+export interface GetTiresFiltersServiceType {
+  tireWidth?: number[];
+  tireAspectRatio?: number[];
+  rimDiameter?: number[];
+  marka?: string[];
+  stock?: number[];
+  pagination?: number;
+}
 const prisma = new PrismaClient();
 
 export const getFiltersAndRimsService = async (
@@ -46,15 +54,6 @@ export const getFiltersAndRimsService = async (
     rimsCount: rimsCount,
   };
 };
-
-export interface GetTiresFiltersServiceType {
-  tireWidth?: number[];
-  tireAspectRatio?: number[];
-  rimDiameter?: number[];
-  marka?: string[];
-  stock?: number[];
-  pagination?: number;
-}
 
 export const getFiltersAndTiresService = async (
   userSelectedFilters: GetTiresFiltersServiceType

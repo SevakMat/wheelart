@@ -22,7 +22,7 @@ export const generateRimAndTireDetails = (data: any) => {
   const rimDetails = {
     studHoles: findUnic.stud_holes,
     pcd: findUnic.pcd,
-    centerBore: findUnic.centre_bore,
+    centerBore: isNaN(+findUnic.centre_bore) ? 0 : Number(findUnic.centre_bore),
     OR: transformedArray,
     // sizeR: { in: test },
   };

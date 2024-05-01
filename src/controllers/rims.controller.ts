@@ -178,6 +178,7 @@ export const getSingleRimDataHandler = async (req: Request, res: Response) => {
         width: true,
         gram: true,
         score: true,
+        stock:true
       },
     });
 

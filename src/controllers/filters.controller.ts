@@ -4,11 +4,7 @@ import {
   getFiltersAndTiresService,
 } from "../services/filters.service";
 
-export const getAllRimsFilters = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getAllRimsFilters = async (req: Request, res: Response) => {
   try {
     const filterData = await getFiltersAndRimsService(req.body);
 

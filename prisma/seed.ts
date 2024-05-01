@@ -1,5 +1,8 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
+
 const prisma = new PrismaClient();
+
 async function main() {
   const rimsSeedData = [
     {
@@ -79,15 +82,17 @@ async function main() {
       data: { ...item, price: 100 },
     });
   });
+  const hashedPassword = await bcrypt.hash("wheeladminart", 12);
 
   await prisma.user.create({
     data: {
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@example.com",
+      firstName: "Admin",
+      lastName: "Admin",
+      email: "admin.admin@admin.com",
       phoneNumber: "+1234567890",
-      password: "aasdasd",
-      role: "user",
+      password: hashedPassword,
+      role: "admin",
+      emailVerified: true,
 
       // Add other fields as needed
     },

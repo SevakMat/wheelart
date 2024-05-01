@@ -31,9 +31,9 @@ export const ClearRimsFiltersInputArgs = (
   //   filterQuery.price = { in: price };
   // }
 
-  if (centerBore && centerBore.length > 0) {
-    filterQuery.centerBore = { in: centerBore.map(String) };
-  }
+  // if (centerBore && centerBore.length > 0) {
+  //   filterQuery.centerBore = { in: centerBore };
+  // }
 
   const groupedFilters: Record<string, any> = {
     by: ["sizeR", "pcd", "studHoles", "centerBore", "width", "color", "price"],

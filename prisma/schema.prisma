@@ -98,7 +98,7 @@ model Order {
   users      OrderUser[]
   itemCount  Int             @map("item_count")
   sessionId  String?         @db.VarChar(255)
-
+  price      Float
   @@index([itemId])
 }
 

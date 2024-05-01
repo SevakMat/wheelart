@@ -10,5 +10,6 @@ export const ClearCreateOrderInputArgs = (
     status: data.status,
     itemCount: data.count,
     sessionId,
+    price: data.price,
   };
 };

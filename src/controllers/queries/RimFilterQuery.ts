@@ -18,7 +18,7 @@ export const RimFilterQuery = (filter: GetRimsFiltersServiceType) => {
   }
 
   if (centerBore && centerBore.length > 0) {
-    filterQuery.centerBore = { in: centerBore.map(String) };
+    filterQuery.centerBore = { in: centerBore };
   }
   if (width && width.length > 0) {
     filterQuery.width = { in: width };
@@ -31,8 +31,5 @@ export const RimFilterQuery = (filter: GetRimsFiltersServiceType) => {
   if (price && price.length > 0) {
     filterQuery.price = { in: price };
   }
-
-
-
-  return filterQuery
-}
+  return filterQuery;
+};

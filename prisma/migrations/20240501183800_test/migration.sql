@@ -73,6 +73,7 @@ CREATE TABLE "Order" (
     "itemId" INTEGER NOT NULL,
     "item_count" INTEGER NOT NULL,
     "sessionId" VARCHAR(255),
+    "price" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );

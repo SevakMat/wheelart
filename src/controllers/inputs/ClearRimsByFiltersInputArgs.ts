@@ -1,11 +1,12 @@
 import { GetRimsFiltersServiceType } from "../../services/filters.service";
 import { RimFilterQuery } from "../queries/RimFilterQuery";
 
-export const ClearRimsByFiltersInputArgs = (filter: GetRimsFiltersServiceType): any => {
+export const ClearRimsByFiltersInputArgs = (
+  filter: GetRimsFiltersServiceType
+): any => {
+  const filterQuery = RimFilterQuery(filter);
 
-  const filterQuery = RimFilterQuery(filter)
-
-  const skip = filter?.pagination ? (filter?.pagination - 1) * 12 : 0
+  const skip = filter?.pagination ? (filter?.pagination - 1) * 12 : 0;
 
   const groupedFilters: Record<string, any> = {
     ...(Object.keys(filterQuery).length > 0 && { where: filterQuery }),
@@ -19,10 +20,10 @@ export const ClearRimsByFiltersInputArgs = (filter: GetRimsFiltersServiceType): 
       studHoles: true,
       imageUrl: true,
       width: true,
-      color: true
+      color: true,
     },
-    take: 12,// qani hat eta
-    skip // vord uc sksi
+    take: 12, // qani hat eta
+    skip, // vord uc sksi
   };
 
   return groupedFilters;
