@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from "express";
+import bcrypt from "bcryptjs";
+
 import { findUniqueUser, signTokens } from "../../services/user.service";
 import AppError from "../../utils/appError";
 import { accessTokenCookieOptions, refreshTokenCookieOptions } from "./utils";
@@ -25,14 +27,17 @@ export const loginUserHandler = async (
       }
     );
 
-    if (!user || !user.password || password !== user.password) {
-      throw new AppError(400, "Invalid email or password");
+    if (
+      !user ||
+      (user?.password && !(await bcrypt.compare(password, user?.password)))
+    ) {
+      return next(new AppError(400, "Invalid email or password"));
     }
 
-    // Check if user is verified
+    // // Check if user is verified
     if (!user.emailVerified) {
       throw new AppError(
-        401,
+        402,
         "You are not verified, please verify your email to login"
       );
     }

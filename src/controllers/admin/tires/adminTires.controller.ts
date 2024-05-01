@@ -11,31 +11,21 @@ import {
   UpdateTireHandler,
   DeleteTireHandler,
 } from "./types";
+import {
+  ClearCreateTireDataHelper,
+  ClearUpdateTireDataHelper,
+} from "./helpers";
+import { readTireDataFromExcel } from "../excel/tire/readTireDataFromExcel";
+import { updateTireDB } from "../excel/tire/updateTireDB";
 
 const prisma = new PrismaClient();
 
 export const createTireHandler: CreateTireHandler = async (req, res) => {
   try {
-    const {
-      tireWidth,
-      tireAspectRatio,
-      rimDiameter,
-      marka,
-      stock,
-      imageUrl,
-      price,
-    } = req.body;
+    const clearCreateTireData = ClearCreateTireDataHelper(req.body);
 
     const createdTire = await prisma.tire.create({
-      data: {
-        tireWidth,
-        tireAspectRatio,
-        rimDiameter,
-        marka,
-        stock,
-        imageUrl,
-        price,
-      },
+      data: { ...clearCreateTireData },
     });
 
     res.status(201).json({
@@ -100,21 +90,15 @@ export const updateTireHandler: UpdateTireHandler = async (req, res) => {
   try {
     const { id } = req.params;
     const tireId = parseInt(id, 10);
-    const { tireWidth, tireAspectRatio, rimDiameter, marka, stock, imageUrl } =
-      req.body;
+
+    const updatedTireData = ClearUpdateTireDataHelper(req.body);
+    console.log(updatedTireData);
 
     const updatedTire = await prisma.tire.update({
       where: {
         id: tireId,
       },
-      data: {
-        tireWidth,
-        tireAspectRatio,
-        rimDiameter,
-        marka,
-        stock,
-        imageUrl,
-      },
+      data: updatedTireData,
     });
 
     res.status(200).json({
@@ -146,5 +130,23 @@ export const deleteTireHandler: DeleteTireHandler = async (req, res) => {
       status: "error",
       message: "Failed to delete tire",
     });
+  }
+};
+
+export const integreateExelHandler = async (req: any, res: any) => {
+  try {
+    console.log(33333);
+    const filePath = req.file.path;
+    const tiresToUpdate = await readTireDataFromExcel(filePath);
+
+    await updateTireDB(tiresToUpdate);
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Excel file integrated successfully" });
+  } catch (error) {
+    // Handle errors
+    console.error("Error integrating Excel file:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };

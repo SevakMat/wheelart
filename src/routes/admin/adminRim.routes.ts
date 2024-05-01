@@ -1,21 +1,32 @@
-import express from 'express';
-import { createRimHandler, deleteRimHandler, getAllRimsHandler, getRimByIdHandler, updateRimHandler } from '../../controllers/admin/rims/adminRims.controller';
+import express from "express";
+import {
+  createRimHandler,
+  deleteRimHandler,
+  getAllRimsHandler,
+  getRimByIdHandler,
+  integreateExelHandler,
+  updateRimHandler,
+} from "../../controllers/admin/rims/adminRims.controller";
+import { upload } from "../../controllers/admin/excel/storage";
 
 const router = express.Router();
 
 // Route to get all rims
-router.get('/all', getAllRimsHandler);
+router.get("/all", getAllRimsHandler);
 
 // Route to get a rim by ID
-router.get('/:id', getRimByIdHandler);
+router.get("/:id", getRimByIdHandler);
 
 // Route to update a rim by ID
-router.put('/:id', updateRimHandler);
+router.put("/:id", updateRimHandler);
 
 // Route to delete a rim by ID
-router.delete('/:id', deleteRimHandler);
+router.delete("/:id", deleteRimHandler);
 
 // Route to create a new rim
-router.post('/create', createRimHandler);
+router.post("/create", createRimHandler);
+
+// Route to create a new rim
+router.post("/integreate-exel", upload.single("file"), integreateExelHandler);
 
 export default router;

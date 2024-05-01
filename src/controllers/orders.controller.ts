@@ -29,6 +29,7 @@ export const createOrderHandler = async (req: Request, res: Response) => {
 
     orderData.map(async (order: OrderType) => {
       const clearData: any = ClearCreateOrderInputArgs(order, sessionId);
+      console.log(clearData);
 
       //ste petqa db ic jnjenq et qanaki et parametreri rim kam tire
 
@@ -49,7 +50,7 @@ export const createOrderHandler = async (req: Request, res: Response) => {
       data: {},
     });
   } catch (err: any) {
-    console.log(err);
+    // console.log(err);
 
     res.status(400).json({
       status: "error",

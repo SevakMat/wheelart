@@ -35,15 +35,16 @@ CREATE TABLE "rims" (
     "sizeR" INTEGER NOT NULL,
     "studHoles" INTEGER NOT NULL,
     "pcd" INTEGER NOT NULL,
-    "centerBore" VARCHAR(255) NOT NULL,
+    "centerBore" DOUBLE PRECISION NOT NULL,
     "rimModel" VARCHAR(255) NOT NULL,
-    "width" INTEGER NOT NULL,
+    "width" DOUBLE PRECISION NOT NULL,
     "color" VARCHAR(255) NOT NULL,
     "gram" INTEGER NOT NULL,
     "description" VARCHAR(255) NOT NULL,
-    "imageUrl" VARCHAR(255) NOT NULL,
+    "imageUrl" VARCHAR(1000) NOT NULL,
     "price" INTEGER NOT NULL,
     "score" INTEGER NOT NULL,
+    "stock" INTEGER NOT NULL,
 
     CONSTRAINT "rims_pkey" PRIMARY KEY ("id")
 );
@@ -57,7 +58,7 @@ CREATE TABLE "tire" (
     "marka" VARCHAR(255) NOT NULL,
     "stock" INTEGER NOT NULL,
     "price" INTEGER NOT NULL,
-    "imageUrl" VARCHAR(255) NOT NULL,
+    "imageUrl" VARCHAR(1000) NOT NULL,
 
     CONSTRAINT "tire_pkey" PRIMARY KEY ("id")
 );
@@ -65,6 +66,8 @@ CREATE TABLE "tire" (
 -- CreateTable
 CREATE TABLE "Order" (
     "id" SERIAL NOT NULL,
+    "created_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "orderType" "OrderTypeEnum" NOT NULL,
     "status" "OrderStatusType" NOT NULL DEFAULT 'CREATED',
     "itemId" INTEGER NOT NULL,

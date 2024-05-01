@@ -1,11 +1,25 @@
 export const ClearCreateRimDataHelper = (body: any) => {
-  const { sizeR, studHoles, pcd, centerBore, rimModel, width, color, gram, description, imageUrl, price, score } = body;
+  const {
+    sizeR,
+    studHoles,
+    pcd,
+    centerBore,
+    rimModel,
+    width,
+    color,
+    gram,
+    description,
+    imageUrl,
+    price,
+    score,
+    stock,
+  } = body;
 
   return {
     sizeR: Number(sizeR),
     studHoles: Number(studHoles),
     pcd: Number(pcd),
-    centerBore,
+    centerBore: Number(centerBore),
     rimModel,
     width: Number(width),
     color,
@@ -13,19 +27,33 @@ export const ClearCreateRimDataHelper = (body: any) => {
     description,
     imageUrl,
     price: Number(price),
-    score: Number(score)
-  }
-
-}
+    stock: Number(stock),
+    score: 1,
+  };
+};
 
 export const ClearUpdateRimDataHelper = (body: any) => {
-  const { sizeR, studHoles, pcd, centerBore, rimModel, width, color, gram, description, imageUrl, price, score } = body;
+  const {
+    sizeR,
+    studHoles,
+    pcd,
+    centerBore,
+    rimModel,
+    width,
+    color,
+    gram,
+    description,
+    imageUrl,
+    price,
+    stock,
+    score,
+  } = body;
 
   return {
     sizeR: Number(sizeR),
     studHoles: Number(studHoles),
     pcd: Number(pcd),
-    centerBore,
+    centerBore: Number(centerBore),
     rimModel,
     width: Number(width),
     color,
@@ -33,7 +61,7 @@ export const ClearUpdateRimDataHelper = (body: any) => {
     description,
     imageUrl,
     price: Number(price),
-    score: Number(score)
-  }
-
-}
+    score: Number(score),
+    stock: Number(stock),
+  };
+};

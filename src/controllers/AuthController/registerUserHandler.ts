@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
+import bcrypt from "bcryptjs";
 import { encrypt } from "../../emailService/hashing";
 import { ClearCreateUserInputArgs } from "../inputs/ClearCreateUserInputArgs";
 import { createUser, findUniqueUser } from "../../services/user.service";
-import bcrypt from "bcryptjs";
 import { sendEmail } from "../../emailService/emailService";
 
 export const registerUserHandler = async (
