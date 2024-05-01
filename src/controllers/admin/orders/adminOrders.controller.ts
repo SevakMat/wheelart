@@ -60,8 +60,6 @@ export const getUserOrdersListHandler = async (req: Request, res: Response) => {
 
 export const getAllOrdersHandler = async (req: Request, res: Response) => {
   try {
-    // ste/
-    // const allOrders = await prisma.order.findMany();
     const allOrdersWithUserIds = await prisma.order.findMany({
       include: {
         users: {
@@ -75,7 +73,6 @@ export const getAllOrdersHandler = async (req: Request, res: Response) => {
     // Map the result to create the desired object format
     const allOrders = allOrdersWithUserIds.map((order) => ({
       ...order,
-
       userId: order.users[0].userId,
     }));
 

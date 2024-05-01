@@ -66,6 +66,8 @@ CREATE TABLE "tire" (
 -- CreateTable
 CREATE TABLE "Order" (
     "id" SERIAL NOT NULL,
+    "created_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "orderType" "OrderTypeEnum" NOT NULL,
     "status" "OrderStatusType" NOT NULL DEFAULT 'CREATED',
     "itemId" INTEGER NOT NULL,

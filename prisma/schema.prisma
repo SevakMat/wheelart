@@ -86,6 +86,10 @@ enum OrderTypeEnum {
 
 model Order {
   id         Int             @id @default(autoincrement())
+  
+  createdDate       DateTime   @default(now()) @map("created_date")
+  updatedDate       DateTime   @default(now()) @map("updated_date")
+
   orderType  OrderTypeEnum
   status     OrderStatusType @default(CREATED)
   itemId     Int

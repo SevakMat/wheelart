@@ -1,16 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import { Request, Response } from "express";
+import bcrypt from "bcryptjs";
+
 import {
-  UserData,
-  UserResponse,
-  UsersResponse,
-  ErrorResponse,
   CreateUserHandler,
   GetAllUsersHandler,
   GetUserByIdHandler,
   UpdateUserHandler,
   DeleteUserHandler,
 } from "./types";
+import { findUniqueUser } from "../../../services/user.service";
 
 const prisma = new PrismaClient();
 
@@ -22,13 +20,25 @@ export const createUserHandler: CreateUserHandler = async (
     const { firstName, lastName, phoneNumber, email, password, role } =
       req.body;
 
+    const hashedPassword = await bcrypt.hash(password, 12);
+    console.log(hashedPassword);
+
+    const existingUser = await findUniqueUser({ email }, { id: true });
+
+    if (existingUser) {
+      return res.status(409).json({
+        status: "error",
+        message: "An account with this email already exists.",
+      });
+    }
+
     const createdUser = await prisma.user.create({
       data: {
         firstName,
         lastName,
         phoneNumber,
         email,
-        password,
+        password: hashedPassword,
         role,
       },
     });
@@ -38,6 +48,8 @@ export const createUserHandler: CreateUserHandler = async (
       data: { user: createdUser },
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
       status: "error",
       message: "Failed to create user",
@@ -77,7 +89,7 @@ export const getUserByIdHandler: GetUserByIdHandler = async (
         id: userId,
       },
       select: {
-        active: true,
+        id: true,
         createdDate: true,
         email: true,
         emailVerified: true,
