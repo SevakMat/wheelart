@@ -68,8 +68,36 @@ export const getAllOrdersHandler = async (req: Request, res: Response) => {
             userId: true,
           },
         },
+        tire: {
+          select: {
+            id: true,
+            marka: true,
+          },
+        },
+        rims: {
+          select: {
+            id: true,
+            rimModel: true,
+          },
+        },
       },
     });
+    // console.log(4444, allOrdersWithUserIds);
+
+    const orderList = allOrdersWithUserIds.map((order) => ({
+      id: order.id,
+      orderType: order.orderType,
+      status: order.status,
+      price: order.price,
+      name:
+        order.orderType === "TIRE" ? order.tire?.marka : order.rims?.rimModel,
+      itemId: order.orderType === "TIRE" ? order.tire?.id : order.rims?.id,
+
+      itemCount: order.itemCount,
+      userId: order.users[0].userId,
+      sessionId: order.sessionId,
+      createdDate: order.createdDate,
+    }));
 
     // Map the result to create the desired object format
     const allOrders = allOrdersWithUserIds.map((order) => ({
@@ -77,11 +105,9 @@ export const getAllOrdersHandler = async (req: Request, res: Response) => {
       userId: order.users[0].userId,
     }));
 
-    console.log(allOrders);
-
     res.status(200).json({
       status: "success",
-      data: { orders: allOrders },
+      data: { orders: orderList },
     });
   } catch (error) {
     res.status(500).json({
