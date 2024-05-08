@@ -70,8 +70,6 @@ export const createOrderHandler = async (req: Request, res: Response) => {
       data: {},
     });
   } catch (err: any) {
-    // console.log(err);
-
     res.status(400).json({
       status: "error",
     });

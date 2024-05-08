@@ -30,6 +30,36 @@ export const createUser = async (input: Prisma.UserCreateInput) => {
   return { ...user, id: user.id.toString() };
 };
 
+export const updateUser = async (
+  input: Prisma.UserUpdateInput,
+  userId: number
+): Promise<any> => {
+  try {
+    const user = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        ...input,
+      },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        active: true,
+        emailVerified: true,
+        lastName: true,
+        role: true,
+        googleId: true,
+      },
+    });
+
+    return { ...user, id: user.id.toString() };
+  } catch (err) {
+    throw err;
+  }
+};
+
 // export const findUser = async (
 //   where: Partial<Prisma.UserCreateInput>,
 //   select?: Prisma.UserSelect
@@ -70,14 +100,6 @@ export const signTokens = async (user: any) => {
     { expiresIn: "1d" }
   );
 
-  // const access_token = signJwt({ sub: user.id }, "accessTokenPrivateKey", {
-  //   expiresIn: `${config.get<number>("accessTokenExpiresIn")}m`,
-  // });
-
-  // const refresh_token = signJwt({ sub: user.id }, "refreshTokenPrivateKey", {
-  //   expiresIn: `${config.get<number>("refreshTokenExpiresIn")}m`,
-  // });
-
   return { access_token, refresh_token };
 };
 
@@ -85,16 +107,36 @@ export const transformToLineItems = (products: any[]) => {
   const lineItems = products.map((product) => {
     return {
       price_data: {
-        currency: "usd",
+        currency: "eur",
         product_data: {
           name: product.rimModel ? product.rimModel : product.marka, // Use rimModel as the product name
           images: [product.imageUrl], // Use imageUrl as the product image
         },
         unit_amount: Math.round(product.price * 100), // Convert price to cents
       },
-      quantity: product.count, // Use count as the quantity
+      quantity: 1, // Use count as the quantity
     };
   });
 
   return lineItems;
+};
+
+export const updateUserVerificationCode = async (
+  input: Prisma.UserUpdateInput,
+  email: string
+): Promise<any> => {
+  try {
+    const user = await prisma.user.update({
+      where: {
+        email,
+      },
+      data: {
+        ...input,
+      },
+    });
+
+    return { ...user, id: user.id.toString() };
+  } catch (err) {
+    throw err;
+  }
 };

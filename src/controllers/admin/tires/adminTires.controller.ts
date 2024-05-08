@@ -92,7 +92,6 @@ export const updateTireHandler: UpdateTireHandler = async (req, res) => {
     const tireId = parseInt(id, 10);
 
     const updatedTireData = ClearUpdateTireDataHelper(req.body);
-    console.log(updatedTireData);
 
     const updatedTire = await prisma.tire.update({
       where: {
@@ -135,7 +134,6 @@ export const deleteTireHandler: DeleteTireHandler = async (req, res) => {
 
 export const integreateExelHandler = async (req: any, res: any) => {
   try {
-    console.log(33333);
     const filePath = req.file.path;
     const tiresToUpdate = await readTireDataFromExcel(filePath);
 

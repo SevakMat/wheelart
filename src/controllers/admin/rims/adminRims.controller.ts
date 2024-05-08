@@ -49,7 +49,6 @@ export const createRimHandler: (
 ) => Promise<void> = async (req, res) => {
   try {
     const clearCreateRimData = ClearCreateRimDataHelper(req.body);
-    console.log(333, clearCreateRimData);
 
     const createdRim = await prisma.rims.create({
       data: clearCreateRimData,

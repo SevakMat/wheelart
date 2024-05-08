@@ -8,20 +8,26 @@ export const UserPaymentHandler = async (req: any, res: Response) => {
 
   const { filteredOrders } = req.body;
 
-  const stripe = new Stripe(stripeSecretKey);
+  try {
+    const stripe = new Stripe(stripeSecretKey);
 
-  const lineItems = transformToLineItems(filteredOrders);
+    const lineItems = transformToLineItems(filteredOrders);
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: lineItems,
-    mode: "payment",
-    success_url: `${baseUrl}/user/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${baseUrl}/user/payment-failed`,
-  });
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: lineItems,
+      mode: "payment",
+      success_url: `${baseUrl}/user/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/user/payment-failed`,
+    });
 
-  res.status(200).json({
-    status: "success",
-    id: session.id,
-  });
+    res.status(200).json({
+      status: "success",
+      id: session.id,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "filed",
+    });
+  }
 };

@@ -16,8 +16,6 @@ export async function updateTireDB(tiresArray: any[]) {
         });
 
         if (existingTire) {
-          console.log("existingTire", existingTire);
-
           const existingStock = existingTire.stock || 0;
           await tx.tire.update({
             where: { id: existingTire.id },

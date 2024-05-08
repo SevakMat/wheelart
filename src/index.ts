@@ -1,7 +1,6 @@
 // require('dotenv').config();
 import express, { NextFunction, Request, Response, response } from "express";
 import { PrismaClient } from "@prisma/client";
-import config from "config";
 import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";

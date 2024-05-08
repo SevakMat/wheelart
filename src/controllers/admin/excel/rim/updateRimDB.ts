@@ -13,11 +13,10 @@ export async function updateRimDB(rimsArray: any[]) {
       if (existingRim) {
         const existingStock = existingRim?.stock || 0;
 
-        const test = await prisma.rims.update({
+        await prisma.rims.update({
           where: { id: existingRim.id },
           data: { stock: existingStock + rim.stock },
         });
-        console.log("test", test);
       } else {
         await prisma.rims.create({
           data: rim,

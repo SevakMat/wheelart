@@ -28,7 +28,7 @@ export const getAllRimsHandler = async (
       centerBore: true,
     });
 
-    res.status(200).status(200).json({
+    res.status(200).json({
       status: "success",
       data: {
         rims,
@@ -48,7 +48,6 @@ export const getRimsByCarInputArgsHandler = async (
     const { rimDetails, tireDetails } = await GetRImeDetailsByCarDetails(
       req.body.where
     );
-    console.log("rimDetails", rimDetails);
 
     const { rims, rimsCount } = await findRimsByInputArgsService({
       where: rimDetails,
@@ -64,8 +63,6 @@ export const getRimsByCarInputArgsHandler = async (
       },
       pagination,
     });
-
-    console.log(rims.length);
 
     const tires = await findTiresByInputArgsService({
       where: tireDetails,
@@ -145,7 +142,7 @@ export const getCarsMakeHandler = async (
   try {
     const dataFromApi = await getCarsDetailsByCarDetails("makes");
 
-    res.status(200).status(200).json({
+    res.status(200).json({
       status: "success",
       data: dataFromApi,
     });
@@ -178,7 +175,7 @@ export const getSingleRimDataHandler = async (req: Request, res: Response) => {
         width: true,
         gram: true,
         score: true,
-        stock:true
+        stock: true,
       },
     });
 
@@ -235,7 +232,7 @@ export const getSingleRimDataHandler = async (req: Request, res: Response) => {
       });
     }
 
-    res.status(200).status(200).json({
+    res.status(200).json({
       status: "success",
       singleRim,
       recommendedTires: tires,
@@ -254,7 +251,7 @@ export const getPopularRimsDataHandler = async (
   try {
     const popularRims = await findPopularRimsService();
 
-    res.status(200).status(200).json({
+    res.status(200).json({
       status: "success",
       popularRims,
     });

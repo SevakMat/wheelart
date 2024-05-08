@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { decrypt } from "../../emailService/hashing";
+import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
+
+import { decrypt } from "../../emailService/hashing";
 import { accessTokenCookieOptions, refreshTokenCookieOptions } from "./utils";
 import { signTokens } from "../../services/user.service";
 import AppError from "../../utils/appError";
@@ -11,16 +13,22 @@ export const verifyEmailHandler = async (
   next: NextFunction
 ) => {
   const prisma = new PrismaClient();
-
+  const password = req?.body?.password;
   try {
     const decryptedData = decrypt(
       req.params.verificationCode,
       process.env.HASH_SECRET_KEY as string
     );
 
+    let data: any = { emailVerified: true };
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 12);
+      data = { ...data, password: hashedPassword };
+    }
+
     const user = await prisma.user.update({
       where: { email: decryptedData },
-      data: { emailVerified: true },
+      data: { ...data },
       select: {
         id: true,
         email: true,

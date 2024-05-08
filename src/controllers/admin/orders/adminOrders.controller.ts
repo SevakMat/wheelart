@@ -82,7 +82,6 @@ export const getAllOrdersHandler = async (req: Request, res: Response) => {
         },
       },
     });
-    // console.log(4444, allOrdersWithUserIds);
 
     const orderList = allOrdersWithUserIds.map((order) => ({
       id: order.id,

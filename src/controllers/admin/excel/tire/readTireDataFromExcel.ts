@@ -2,8 +2,6 @@ import fs from "fs";
 import * as XLSX from "xlsx";
 
 function extractInfo(row: any) {
-  console.log(row);
-
   const images = [row[15], row[16], row[17], row[18]]
     .filter((value) => value)
     .join(";");

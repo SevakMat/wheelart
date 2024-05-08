@@ -21,7 +21,6 @@ export const createUserHandler: CreateUserHandler = async (
       req.body;
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    console.log(hashedPassword);
 
     const existingUser = await findUniqueUser({ email }, { id: true });
 

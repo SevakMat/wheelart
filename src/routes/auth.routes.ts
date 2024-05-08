@@ -3,11 +3,8 @@ import express from "express";
 import { validate } from "../middleware/validate";
 
 import {
-  forgotPasswordSchema,
   loginUserSchema,
-  registerGoogleUserSchema,
   registerUserSchema,
-  resetPasswordSchema,
   verifyEmailSchema,
 } from "../schemas/user.schema";
 import { UserPaymentHandler } from "../controllers/payment.controler";
@@ -16,6 +13,8 @@ import { registerGoogleUserHandler } from "../controllers/AuthController/registe
 import { loginUserHandler } from "../controllers/AuthController/loginUserHandler";
 import { verifyEmailHandler } from "../controllers/AuthController/verifyEmailHandler";
 import { logoutUserHandler } from "../controllers/AuthController/logoutUserHandler";
+import { UpdateUserHandler } from "../controllers/AuthController/updateUserHandler";
+import { ForgotPasswordHandler } from "../controllers/AuthController/forgotPasswordHandler";
 
 const router = express.Router();
 
@@ -29,9 +28,7 @@ router.post(
 
 router.post("/login", validate(loginUserSchema), loginUserHandler);
 
-// router.get('/refresh', refreshAccessTokenHandler);
-
-router.get(
+router.post(
   "/email-verification/:verificationCode",
   validate(verifyEmailSchema),
   verifyEmailHandler
@@ -41,16 +38,9 @@ router.post("/logout", logoutUserHandler);
 
 router.post("/create-checkout-session", UserPaymentHandler);
 
-// router.post(
-//   '/forgotpassword',
-//   validate(forgotPasswordSchema),
-//   forgotPasswordHandler
-// );
+router.post("/forgotpassword", ForgotPasswordHandler);
 
-// router.patch(
-//   '/resetpassword/:resetToken',
-//   validate(resetPasswordSchema),
-//   resetPasswordHandler
-// );
+router.post("/update-user/:userId", UpdateUserHandler);
 
+// petqa me ga ste
 export default router;
