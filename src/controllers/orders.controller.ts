@@ -30,8 +30,6 @@ export const createOrderHandler = async (req: Request, res: Response) => {
 
     orderData.map(async (order: OrderType) => {
       const clearData: any = ClearCreateOrderInputArgs(order, sessionId);
-      console.log(clearData);
-
       //ste petqa db ic jnjenq et qanaki et parametreri rim kam tire
 
       const newOrder = await prisma.order.create({

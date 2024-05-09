@@ -13,7 +13,7 @@ export const getAllRimsFilters = async (req: Request, res: Response) => {
       filterData,
     });
   } catch (err: any) {
-    res.status(403).json({
+    res.status(500).json({
       status: "error",
       message: "issues  with  getAllRimsFilters",
     });

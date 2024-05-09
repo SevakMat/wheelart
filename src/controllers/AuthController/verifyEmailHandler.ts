@@ -4,8 +4,8 @@ import { PrismaClient } from "@prisma/client";
 
 import { decrypt } from "../../emailService/hashing";
 import { accessTokenCookieOptions, refreshTokenCookieOptions } from "./utils";
-import { signTokens } from "../../services/user.service";
 import AppError from "../../utils/appError";
+import { generateJWTTokens } from "../../services/jwt/generateJWTToke";
 
 export const verifyEmailHandler = async (
   req: Request,
@@ -45,7 +45,7 @@ export const verifyEmailHandler = async (
       throw new AppError(401, "Could not verify email");
     }
 
-    const { access_token, refresh_token } = await signTokens(user);
+    const { access_token, refresh_token } = await generateJWTTokens(user);
 
     setCookies(res, access_token, refresh_token);
     return sendResponse(res, 200, "success", access_token, user);
@@ -53,14 +53,13 @@ export const verifyEmailHandler = async (
     if (err.code === "P2025") {
       return sendResponse(
         res,
-        403,
+        404,
         "fail",
         null,
         null,
         "Verification code is invalid or user doesn't exist"
       );
     }
-    next(err);
   } finally {
     await prisma.$disconnect();
   }

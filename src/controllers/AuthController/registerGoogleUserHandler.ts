@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
-import { createUser, signTokens } from "../../services/user.service";
+import { createUser } from "../../services/user.service";
 import { accessTokenCookieOptions, refreshTokenCookieOptions } from "./utils";
 import { ClearUserGoogleInputArgs } from "../inputs/ClearUserGoogleInputArgs";
+import { generateJWTTokens } from "../../services/jwt/generateJWTToke";
 
 export const registerGoogleUserHandler = async (
   req: Request,
@@ -33,13 +34,13 @@ export const registerGoogleUserHandler = async (
     const clearUserGoogleData = ClearUserGoogleInputArgs(req.body);
 
     if (user) {
-      const { access_token, refresh_token } = await signTokens(user);
+      const { access_token, refresh_token } = await generateJWTTokens(user);
       setCookies(res, access_token, refresh_token);
       return sendResponse(res, 200, "success", access_token, user);
     }
 
     const newUser = await createUser(clearUserGoogleData);
-    const { access_token, refresh_token } = await signTokens(newUser);
+    const { access_token, refresh_token } = await generateJWTTokens(newUser);
     setCookies(res, access_token, refresh_token);
     return sendResponse(res, 200, "success", access_token, newUser);
   } catch (err: any) {

@@ -1,6 +1,4 @@
 import { PrismaClient, Prisma, User } from "@prisma/client";
-import jwt, { SignOptions } from "jsonwebtoken";
-import config from "config";
 
 export const excludedFields = [
   "password",
@@ -32,12 +30,12 @@ export const createUser = async (input: Prisma.UserCreateInput) => {
 
 export const updateUser = async (
   input: Prisma.UserUpdateInput,
-  userId: number
+  id: number
 ): Promise<any> => {
   try {
     const user = await prisma.user.update({
       where: {
-        id: userId,
+        id,
       },
       data: {
         ...input,
@@ -60,16 +58,6 @@ export const updateUser = async (
   }
 };
 
-// export const findUser = async (
-//   where: Partial<Prisma.UserCreateInput>,
-//   select?: Prisma.UserSelect
-// ) => {
-//   return (await prisma.user.findFirst({
-//     where,
-//     select,
-//   })) as User;
-// };
-
 export const findUniqueUser = async (
   where: Prisma.UserWhereUniqueInput,
   select?: Prisma.UserSelect
@@ -79,28 +67,6 @@ export const findUniqueUser = async (
     select,
   });
   return userDara as User;
-};
-
-export const signTokens = async (user: any) => {
-  const payload = {
-    userId: Number(user.id),
-    userEmail: user.email,
-  };
-
-  const access_token = jwt.sign(
-    { payload },
-    process.env.JWT_SECRET_KEY as string,
-
-    { expiresIn: "1h" }
-  );
-  const refresh_token = jwt.sign(
-    { payload },
-    process.env.JWT_REFRESH_SECRET_KEY as string,
-
-    { expiresIn: "1d" }
-  );
-
-  return { access_token, refresh_token };
 };
 
 export const transformToLineItems = (products: any[]) => {

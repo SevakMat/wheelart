@@ -3,11 +3,11 @@ import { updateUser } from "../../services/user.service";
 import { toInt } from "../../utils/stringToNumber";
 
 export const UpdateUserHandler = async (req: Request, res: Response) => {
-  let { userId } = req.params;
-  const id = toInt(userId);
+  let { id } = req.params;
 
+  const userId = toInt(id);
   try {
-    const updatedUser = await updateUser(req.body, id);
+    const updatedUser = await updateUser(req.body, userId);
 
     res.status(200).json({
       user: updatedUser,

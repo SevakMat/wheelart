@@ -4,14 +4,15 @@ import {
   createOrderHandler,
   getUserOrdersListHandler,
 } from "../controllers/orders.controller";
+import { VerifyJWTToken } from "../services/jwt/verifyJWTToken";
 
 const router = express.Router();
 
 // router.use(deserializeUser, requireUser);
 
-router.get("/all", getAllRimsHandler);
+router.get("/all", VerifyJWTToken, getAllRimsHandler);
 
-router.post("/create", createOrderHandler);
-router.get("/orders/:id", getUserOrdersListHandler);
+router.post("/create", VerifyJWTToken, createOrderHandler);
+router.get("/orders/:id", VerifyJWTToken, getUserOrdersListHandler);
 
 export default router;

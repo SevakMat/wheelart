@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 
-import { findUniqueUser, signTokens } from "../../services/user.service";
+import { findUniqueUser } from "../../services/user.service";
 import AppError from "../../utils/appError";
 import { accessTokenCookieOptions, refreshTokenCookieOptions } from "./utils";
+import { generateJWTTokens } from "../../services/jwt/generateJWTToke";
 
 export const loginUserHandler = async (
   req: Request,
@@ -43,12 +44,19 @@ export const loginUserHandler = async (
     }
 
     // Sign Tokens
-    const { access_token, refresh_token } = await signTokens(user);
-
+    const payload = {
+      userId: Number(user.id),
+      userEmail: user.email,
+    };
+    const { access_token, refresh_token } = await generateJWTTokens(payload);
     setCookies(res, access_token, refresh_token);
-    return sendResponse(res, 200, "success", access_token, user);
+    res.status(200).json({
+      access_token,
+      refresh_token,
+      user,
+    });
   } catch (err) {
-    next(err);
+    throw new Error();
   }
 };
 

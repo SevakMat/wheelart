@@ -52,6 +52,7 @@ export const registerUserHandler = async (
 
     // Send verification email
     await sendEmail({
+      from: "smat6371@gmail.com",
       to: email,
       subject: "Email Verification for Wheel Art",
       text: "Email Verification",

@@ -8,6 +8,7 @@ const transporter = nodemailer.createTransport({
 });
 
 interface EmailParams {
+  from: string;
   to: string;
   subject: string;
   text: string;
@@ -15,6 +16,7 @@ interface EmailParams {
 }
 
 const sendEmail = async ({
+  from,
   to,
   subject,
   text,
@@ -22,7 +24,7 @@ const sendEmail = async ({
 }: EmailParams): Promise<void> => {
   try {
     const info = await transporter.sendMail({
-      from: "smat6371@gmail.com",
+      from,
       to,
       subject,
       text,

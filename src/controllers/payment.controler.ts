@@ -11,6 +11,7 @@ export const UserPaymentHandler = async (req: any, res: Response) => {
   try {
     const stripe = new Stripe(stripeSecretKey);
 
+    // ste patqa stugel ete orderi meji itemnery kan nor sharunakel
     const lineItems = transformToLineItems(filteredOrders);
 
     const session = await stripe.checkout.sessions.create({

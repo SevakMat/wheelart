@@ -1,10 +1,11 @@
-import express from 'express';
-import { getMeHandler } from '../controllers/user.controller';
+import express from "express";
+import jwt from "jsonwebtoken";
+import { getMeHandler } from "../controllers/user.controller";
+import { VerifyJWTToken } from "../services/jwt/verifyJWTToken";
 
 const router = express.Router();
 
-// router.use(deserializeUser, requireUser);
-
-router.get('/me', getMeHandler);
+// Apply token verification middleware to the "/me" route
+router.get("/me", VerifyJWTToken, getMeHandler);
 
 export default router;

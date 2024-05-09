@@ -15,6 +15,9 @@ import { verifyEmailHandler } from "../controllers/AuthController/verifyEmailHan
 import { logoutUserHandler } from "../controllers/AuthController/logoutUserHandler";
 import { UpdateUserHandler } from "../controllers/AuthController/updateUserHandler";
 import { ForgotPasswordHandler } from "../controllers/AuthController/forgotPasswordHandler";
+import { SendToAdminMessageHandler } from "../controllers/AuthController/sendToAdminMessageHandler";
+import { VerifyJWTToken } from "../services/jwt/verifyJWTToken";
+import { VerifyRefreshToken } from "../services/jwt/verifyRefreshToken";
 
 const router = express.Router();
 
@@ -35,12 +38,12 @@ router.post(
 );
 
 router.post("/logout", logoutUserHandler);
-
 router.post("/create-checkout-session", UserPaymentHandler);
-
 router.post("/forgotpassword", ForgotPasswordHandler);
+router.post("/sent-to-admin-message", SendToAdminMessageHandler);
 
-router.post("/update-user/:userId", UpdateUserHandler);
+router.post("/update-user/:id", VerifyJWTToken, UpdateUserHandler);
 
-// petqa me ga ste
+router.post("/refresh-token", VerifyRefreshToken);
+
 export default router;
