@@ -39,6 +39,7 @@ export const createUserHandler: CreateUserHandler = async (
         email,
         password: hashedPassword,
         role,
+        emailVerified: true,
       },
     });
 

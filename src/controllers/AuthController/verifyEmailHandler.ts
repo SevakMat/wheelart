@@ -4,7 +4,6 @@ import { PrismaClient } from "@prisma/client";
 
 import { decrypt } from "../../emailService/hashing";
 import { accessTokenCookieOptions, refreshTokenCookieOptions } from "./utils";
-import AppError from "../../utils/appError";
 import { generateJWTTokens } from "../../services/jwt/generateJWTToke";
 
 export const verifyEmailHandler = async (
@@ -42,7 +41,9 @@ export const verifyEmailHandler = async (
     });
 
     if (!user) {
-      throw new AppError(401, "Could not verify email");
+      return res.status(401).json({
+        message: "Could not verify email",
+      });
     }
 
     const { access_token, refresh_token } = await generateJWTTokens(user);

@@ -93,8 +93,6 @@ async function main() {
       password: hashedPassword,
       role: "admin",
       emailVerified: true,
-
-      // Add other fields as needed
     },
   });
 }

@@ -2,11 +2,7 @@ import express from "express";
 
 import { validate } from "../middleware/validate";
 
-import {
-  loginUserSchema,
-  registerUserSchema,
-  verifyEmailSchema,
-} from "../schemas/user.schema";
+import { registerUserSchema, verifyEmailSchema } from "../schemas/user.schema";
 import { UserPaymentHandler } from "../controllers/payment.controler";
 import { registerUserHandler } from "../controllers/AuthController/registerUserHandler";
 import { registerGoogleUserHandler } from "../controllers/AuthController/registerGoogleUserHandler";
@@ -29,7 +25,7 @@ router.post(
   registerGoogleUserHandler
 );
 
-router.post("/login", validate(loginUserSchema), loginUserHandler);
+router.post("/login", loginUserHandler);
 
 router.post(
   "/email-verification/:verificationCode",

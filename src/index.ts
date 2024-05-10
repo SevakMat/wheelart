@@ -20,8 +20,6 @@ import adminTireRouter from "./routes/admin/adminTire.routes";
 import adminUserRouter from "./routes/admin/adminUser.routes";
 import adminOrderRouter from "./routes/admin/adminOrder.routes";
 
-import AppError from "./utils/appError";
-
 // import nodemailer from 'nodemailer';
 // (async function () {
 //   const credentials = await nodemailer.createTestAccount();
@@ -82,11 +80,15 @@ async function bootstrap() {
 
   // UNHANDLED ROUTES
   app.all("*", (req: Request, res: Response, next: NextFunction) => {
-    next(new AppError(404, `Route ${req.originalUrl} not found`));
+    next(
+      res.status(404).json({
+        message: `Route ${req.originalUrl} not foundlogin`,
+      })
+    );
   });
 
   // GLOBAL ERROR HANDLER
-  app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
+  app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     err.status = err.status || "error";
     err.statusCode = err.statusCode || 500;
 

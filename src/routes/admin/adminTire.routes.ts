@@ -8,8 +8,10 @@ import {
   updateTireHandler,
 } from "../../controllers/admin/tires/adminTires.controller";
 import { upload } from "../../controllers/admin/excel/storage";
+import { VerifyJWTToken } from "../../services/jwt/verifyJWTToken";
 
 const router = express.Router();
+router.use(VerifyJWTToken);
 
 // Route to get all tires
 router.get("/all", getAllTiresHandler);

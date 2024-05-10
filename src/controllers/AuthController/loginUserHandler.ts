@@ -1,16 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 
 import { findUniqueUser } from "../../services/user.service";
-import AppError from "../../utils/appError";
 import { accessTokenCookieOptions, refreshTokenCookieOptions } from "./utils";
 import { generateJWTTokens } from "../../services/jwt/generateJWTToke";
 
-export const loginUserHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const loginUserHandler = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
@@ -25,22 +20,35 @@ export const loginUserHandler = async (
         lastName: true,
         phoneNumber: true,
         orders: true,
+        role: true,
       }
     );
+    //check for admin role
 
-    if (
-      !user ||
-      (user?.password && !(await bcrypt.compare(password, user?.password)))
-    ) {
-      return next(new AppError(400, "Invalid email or password"));
+    if (!user) {
+      return res.status(402).json({
+        message: "User not found",
+      });
+    }
+
+    if (user?.password && !(await bcrypt.compare(password, user?.password))) {
+      return res.status(402).json({
+        message: "Invalid mail or password",
+      });
+    }
+    console.log(req.headers, user.role);
+
+    if (req.headers?.admin === "FTS" && user.role !== "admin") {
+      return res.status(401).json({
+        message: "Not authorized as admin",
+      });
     }
 
     // // Check if user is verified
     if (!user.emailVerified) {
-      throw new AppError(
-        402,
-        "You are not verified, please verify your email to login"
-      );
+      return res.status(402).json({
+        message: "You are not verified, please verify your email to login",
+      });
     }
 
     // Sign Tokens
@@ -50,13 +58,15 @@ export const loginUserHandler = async (
     };
     const { access_token, refresh_token } = await generateJWTTokens(payload);
     setCookies(res, access_token, refresh_token);
-    res.status(200).json({
+    return res.status(200).json({
       access_token,
       refresh_token,
       user,
     });
   } catch (err) {
-    throw new Error();
+    return res.status(500).json({
+      message: "Something went wrong",
+    });
   }
 };
 
@@ -71,19 +81,4 @@ const setCookies = (
     ...accessTokenCookieOptions,
     httpOnly: false,
   });
-};
-
-const sendResponse = (
-  res: Response,
-  status: number,
-  statusText: string,
-  access_token: string | null,
-  user: any | null,
-  message?: string
-) => {
-  const response: any = { status: statusText };
-  if (access_token) response.access_token = access_token;
-  if (user) response.user = user;
-  if (message) response.message = message;
-  return res.status(status).json(response);
 };

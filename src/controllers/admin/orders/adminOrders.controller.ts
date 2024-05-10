@@ -66,6 +66,7 @@ export const getAllOrdersHandler = async (req: Request, res: Response) => {
         users: {
           select: {
             userId: true,
+            user: true,
           },
         },
         tire: {
@@ -83,32 +84,30 @@ export const getAllOrdersHandler = async (req: Request, res: Response) => {
       },
     });
 
-    const orderList = allOrdersWithUserIds.map((order) => ({
-      id: order.id,
-      orderType: order.orderType,
-      status: order.status,
-      price: order.price,
-      name:
-        order.orderType === "TIRE" ? order.tire?.marka : order.rims?.rimModel,
-      itemId: order.orderType === "TIRE" ? order.tire?.id : order.rims?.id,
-
-      itemCount: order.itemCount,
-      userId: order.users[0].userId,
-      sessionId: order.sessionId,
-      createdDate: order.createdDate,
-    }));
-
-    // Map the result to create the desired object format
-    const allOrders = allOrdersWithUserIds.map((order) => ({
-      ...order,
-      userId: order.users[0].userId,
-    }));
+    const orderList = allOrdersWithUserIds.map((order) => {
+      return {
+        id: order.id,
+        orderType: order.orderType,
+        status: order.status,
+        price: order.price,
+        name:
+          order.orderType === "TIRE" ? order.tire?.marka : order.rims?.rimModel,
+        itemId: order.orderType === "TIRE" ? order.tire?.id : order.rims?.id,
+        itemCount: order.itemCount,
+        userId: order.users[0].userId,
+        userName: order.users[0].user.lastName,
+        sessionId: order.sessionId,
+        createdDate: order.createdDate,
+      };
+    });
 
     res.status(200).json({
       status: "success",
       data: { orders: orderList },
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
       status: "error",
       message: "Failed to fetch orders",
@@ -179,7 +178,16 @@ export const updateOrderHandler = async (req: Request, res: Response) => {
 export const deleteOrderHandler = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    const { userId } = req.body;
     const orderId = parseInt(id, 10);
+    console.log(userId);
+
+    await prisma.orderUser.delete({
+      where: {
+        id: orderId,
+        userId,
+      },
+    });
 
     await prisma.order.delete({
       where: {

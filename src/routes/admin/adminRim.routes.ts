@@ -8,8 +8,10 @@ import {
   updateRimHandler,
 } from "../../controllers/admin/rims/adminRims.controller";
 import { upload } from "../../controllers/admin/excel/storage";
+import { VerifyJWTToken } from "../../services/jwt/verifyJWTToken";
 
 const router = express.Router();
+router.use(VerifyJWTToken);
 
 // Route to get all rims
 router.get("/all", getAllRimsHandler);
