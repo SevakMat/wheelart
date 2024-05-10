@@ -25,8 +25,6 @@ export async function updateRimDB(rimsArray: any[]) {
     }
     return true;
   } catch (error) {
-    console.log(error);
-
-    return false;
+    throw new Error("Something happend with saving process");
   }
 }

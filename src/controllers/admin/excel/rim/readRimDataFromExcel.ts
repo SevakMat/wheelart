@@ -28,8 +28,13 @@ function extractInfo(row: any) {
 export const readRimDataFromExcel = async (filePath: string) => {
   const workbook = XLSX.readFile(filePath);
 
-  const sheetName = workbook.SheetNames[0];
+  const sheetName = process.env.RIM_SHEET_NAME as string;
   const worksheet = workbook.Sheets[sheetName];
+
+  if (!worksheet) {
+    throw new Error("SHeet name must be WHEELS");
+  }
+
   const ref = worksheet["!ref"] as string;
   const range = XLSX.utils.decode_range(ref);
 

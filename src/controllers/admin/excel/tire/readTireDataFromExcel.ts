@@ -8,9 +8,9 @@ function extractInfo(row: any) {
 
   if (!row[5]) return;
   return {
-    tireWidth: row[7],
-    tireAspectRatio: row[8],
-    rimDiameter: row[9],
+    tireWidth: row[7] ?? 0,
+    tireAspectRatio: row[8] ?? 0,
+    rimDiameter: row[9] ?? 0,
     marka: row[5] ? row[5].trim() : "",
     price: !!row[13] ? row[13] : 0,
     stock: !!row[1] ? row[1] : 0,
@@ -21,8 +21,13 @@ function extractInfo(row: any) {
 export const readTireDataFromExcel = async (filePath: string) => {
   const workbook = XLSX.readFile(filePath);
 
-  const sheetName = workbook.SheetNames[0];
+  const sheetName = process.env.TIRE_SHEET_NAME as string;
   const worksheet = workbook.Sheets[sheetName];
+
+  if (!worksheet) {
+    throw new Error("SHeet name must be TYRES");
+  }
+
   const ref = worksheet["!ref"] as string;
   const range = XLSX.utils.decode_range(ref);
 

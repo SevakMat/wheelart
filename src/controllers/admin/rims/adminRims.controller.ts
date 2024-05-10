@@ -181,9 +181,7 @@ export const integreateExelHandler = async (req: any, res: any) => {
     return res
       .status(200)
       .json({ success: true, message: "Excel file integrated successfully" });
-  } catch (error) {
-    // Handle errors
-    console.error("Error integrating Excel file:", error);
-    return res.status(500).json({ error: "Internal server error" });
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
   }
 };

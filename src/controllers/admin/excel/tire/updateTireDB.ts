@@ -31,7 +31,6 @@ export async function updateTireDB(tiresArray: any[]) {
 
     return true;
   } catch (error) {
-    console.error("Error updating tire database:", error);
-    return false;
+    throw new Error("Something happend with saving process");
   }
 }
