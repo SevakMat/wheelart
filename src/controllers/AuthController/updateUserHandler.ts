@@ -9,12 +9,12 @@ export const UpdateUserHandler = async (req: Request, res: Response) => {
   try {
     const updatedUser = await updateUser(req.body, userId);
 
-    res.status(200).json({
+    return res.status(200).json({
       user: updatedUser,
       status: "success",
     });
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       user: null,
       status: "faild",
       message: "Something went wrong ",

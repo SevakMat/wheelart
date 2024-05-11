@@ -43,14 +43,14 @@ export const createUserHandler: CreateUserHandler = async (
       },
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       status: "success",
       data: { user: createdUser },
     });
   } catch (error) {
     console.log(error);
 
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to create user",
     });
@@ -64,12 +64,12 @@ export const getAllUsersHandler: GetAllUsersHandler = async (
   try {
     const allUsers = await prisma.user.findMany();
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { users: allUsers },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to fetch users",
     });
@@ -107,12 +107,12 @@ export const getUserByIdHandler: GetUserByIdHandler = async (
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { user },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to fetch user",
     });
@@ -143,12 +143,12 @@ export const updateUserHandler: UpdateUserHandler = async (
       },
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { user: updatedUser },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to update user",
     });
@@ -169,9 +169,9 @@ export const deleteUserHandler: DeleteUserHandler = async (
       },
     });
 
-    res.status(204).end();
+    return res.status(204).end();
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to delete user",
     });

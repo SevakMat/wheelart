@@ -10,6 +10,7 @@ export interface OrderType {
   count: number;
   status: string;
   price: number;
+  itemCount?: number;
 }
 
 export const createOrderHandler = async (req: Request, res: Response) => {
@@ -23,18 +24,19 @@ export const createOrderHandler = async (req: Request, res: Response) => {
     });
 
     if (orderCount > 0) {
-      res.status(200).json({
-        status: "You already created orders for this items",
+      return res.status(400).json({
+        message: "You already created orders for this items",
       });
     }
 
-    orderData.map(async (order: OrderType) => {
+    await orderData.map(async (order: OrderType) => {
       const clearData: any = ClearCreateOrderInputArgs(order, sessionId);
-      //ste petqa db ic jnjenq et qanaki et parametreri rim kam tire
 
       const newOrder = await prisma.order.create({
         data: clearData,
       });
+
+      console.log();
 
       await prisma.orderUser.create({
         data: {
@@ -63,13 +65,13 @@ export const createOrderHandler = async (req: Request, res: Response) => {
       }
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: {},
     });
   } catch (err: any) {
-    res.status(400).json({
-      status: "error",
+    return res.status(400).json({
+      message: "Quelque chose s'est mal passé",
     });
   }
 };
@@ -114,13 +116,13 @@ export const getUserOrdersListHandler = async (req: Request, res: Response) => {
       itemCount: order.itemCount,
     }));
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { orderList },
     });
   } catch (err: any) {
-    res.status(400).json({
-      status: "error",
+    return res.status(400).json({
+      message: "Quelque chose s'est mal passé",
     });
   }
 };

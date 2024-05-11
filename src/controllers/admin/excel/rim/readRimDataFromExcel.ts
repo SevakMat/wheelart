@@ -4,7 +4,7 @@ import * as XLSX from "xlsx";
 function extractInfo(row: any) {
   if (!row[0]) return;
 
-  const images = [row[17], row[18], row[19], row[20]]
+  let images: string = [row[17], row[18], row[19], row[20]]
     .filter((value) => value)
     .join(";");
 

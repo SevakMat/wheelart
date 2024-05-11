@@ -25,7 +25,7 @@ export const SendToAdminMessageHandler = async (
       .json({ status: "success", message: "Your message is send to admin" });
     return;
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "An error occurred while processing the request.",
     });

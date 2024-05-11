@@ -72,7 +72,7 @@ async function bootstrap() {
 
   // Testing
   app.get("/api/healthchecker", (_, res: Response) => {
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       message: "Welcome to NodeJs with Prisma and PostgreSQL",
     });
@@ -92,7 +92,7 @@ async function bootstrap() {
     err.status = err.status || "error";
     err.statusCode = err.statusCode || 500;
 
-    res.status(err.statusCode).json({
+    return res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
     });

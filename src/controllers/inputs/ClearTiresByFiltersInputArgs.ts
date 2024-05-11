@@ -18,6 +18,7 @@ export const ClearTiresByFiltersInputArgs = (
       tireAspectRatio: true,
       tireWidth: true,
       price: true,
+      imageUrl: true,
     },
     take: 12, // qani hat eta
     skip, // vord uc sksi

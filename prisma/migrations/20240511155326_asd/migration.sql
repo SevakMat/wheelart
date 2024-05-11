@@ -70,7 +70,7 @@ CREATE TABLE "Order" (
     "updated_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "orderType" "OrderTypeEnum" NOT NULL,
     "status" "OrderStatusType" NOT NULL DEFAULT 'CREATED',
-    "itemId" INTEGER NOT NULL,
+    "itemId" INTEGER,
     "item_count" INTEGER NOT NULL,
     "sessionId" VARCHAR(255),
     "price" DOUBLE PRECISION NOT NULL,
@@ -112,10 +112,10 @@ CREATE INDEX "OrderUser_userId_idx" ON "OrderUser"("userId");
 CREATE INDEX "OrderUser_orderId_idx" ON "OrderUser"("orderId");
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "tire_order_item_id_fkey" FOREIGN KEY ("itemId") REFERENCES "tire"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "tire_order_item_id_fkey" FOREIGN KEY ("itemId") REFERENCES "tire"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "rims_order_item_id_fkey" FOREIGN KEY ("itemId") REFERENCES "rims"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "rims_order_item_id_fkey" FOREIGN KEY ("itemId") REFERENCES "rims"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrderUser" ADD CONSTRAINT "order_user_user_id_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

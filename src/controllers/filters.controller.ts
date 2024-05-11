@@ -8,12 +8,12 @@ export const getAllRimsFilters = async (req: Request, res: Response) => {
   try {
     const filterData = await getFiltersAndRimsService(req.body);
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       filterData,
     });
   } catch (err: any) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "issues  with  getAllRimsFilters",
     });
@@ -28,12 +28,12 @@ export const getAllTiresFilters = async (
   try {
     const filterData = await getFiltersAndTiresService(req.body);
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       filterData,
     });
   } catch (err: any) {
-    res.status(502).json({
+    return res.status(502).json({
       status: "failed",
       message: "An error occurred",
     });

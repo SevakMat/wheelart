@@ -1,5 +1,4 @@
 import { PrismaClient, Rims } from "@prisma/client";
-import { RimData } from "../../rims/types";
 
 const prisma = new PrismaClient();
 

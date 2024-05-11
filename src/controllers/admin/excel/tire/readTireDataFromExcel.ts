@@ -2,10 +2,14 @@ import fs from "fs";
 import * as XLSX from "xlsx";
 
 function extractInfo(row: any) {
-  const images = [row[15], row[16], row[17], row[18]]
+  let images = [row[15], row[16], row[17], row[18]]
     .filter((value) => value)
     .join(";");
 
+  if (images.length < 10) {
+    images =
+      "https://media.istockphoto.com/id/1332478606/photo/a-new-tire-is-placed-on-the-tire-storage-rack-in-the-car-workshop-be-prepared-for-vehicles.jpg?s=1024x1024&w=is&k=20&c=gHzS0LlmFVAisYQ1My9TjCKWddDqnJp_60KZIqyaz44=";
+  }
   if (!row[5]) return;
   return {
     tireWidth: row[7] ?? 0,
