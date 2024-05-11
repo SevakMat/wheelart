@@ -1,3 +1,4 @@
+import axios from "axios";
 import { CarsDataFormater } from "../../controllers/helpers/CarsDataFormater";
 import { generateUrl } from "./generateApiUrl";
 
@@ -11,9 +12,9 @@ export const getCarsDetailsByCarDetails = async (
   const url = generateUrl({ key, make, model, generation, modification });
 
   try {
-    const response = await fetch(url, { method: "GET" });
-    const testJson = await response.json();
-    return CarsDataFormater(testJson);
+    const response = await axios.get(url);
+    const testData = response.data;
+    return CarsDataFormater(testData);
   } catch (error: any) {
     throw error;
   }

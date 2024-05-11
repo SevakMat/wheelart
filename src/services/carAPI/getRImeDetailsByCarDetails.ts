@@ -1,3 +1,4 @@
+import axios from "axios";
 import { CarDetailsType } from "./carType";
 import { generateUrl } from "./generateApiUrl";
 
@@ -46,10 +47,12 @@ export const generateRimAndTireDetails = (data: any) => {
 export const GetRImeDetailsByCarDetails = async (
   props: CarDetailsType
 ): Promise<any> => {
-  let url = generateUrl({ ...props, key: "search/by_model" });
-  const response = await fetch(url, { method: "GET" });
-  const testJson = await response.json();
-  return generateRimAndTireDetails(testJson.data);
-
-  // return responce;
+  try {
+    let url = generateUrl({ ...props, key: "search/by_model" });
+    const response = await axios.get(url);
+    const testJson = response.data;
+    return generateRimAndTireDetails(testJson.data);
+  } catch (error) {
+    console.error("Error fetching rim and tire details:", error);
+  }
 };

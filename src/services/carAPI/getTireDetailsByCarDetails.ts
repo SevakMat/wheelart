@@ -1,10 +1,13 @@
+import axios from "axios";
 import { CarDetailsType } from "./carType";
 import { generateUrl } from "./generateApiUrl";
 
+// Function to extract tire information from the input array
 function extractTireInformation(inputArray: any) {
   const tireArray: any = [];
 
   inputArray.forEach((item: any) => {
+    // Check if front tire details are available and push them to the tireArray
     if (
       item.front &&
       item.front.tire_width &&
@@ -17,6 +20,7 @@ function extractTireInformation(inputArray: any) {
         rimDiameter: item.front.rim_diameter,
       });
     }
+    // Check if rear tire details are available and push them to the tireArray
     if (
       item.rear &&
       item.rear.tire_width &&
@@ -34,13 +38,24 @@ function extractTireInformation(inputArray: any) {
   return tireArray;
 }
 
+// Asynchronous function to get tire details by car details
 export const GetTireDetailsByCarDetails = async (
   props: CarDetailsType
 ): Promise<any> => {
-  let url = generateUrl({ ...props, key: "search/by_model" });
+  try {
+    // Generate URL for the API request
+    let url = generateUrl({ ...props, key: "search/by_model" });
 
-  const response = await fetch(url, { method: "GET" });
-  const testJson = await response.json();
+    // Fetch data using Axios
+    const response = await axios.get(url);
 
-  return extractTireInformation(testJson.data[0].wheels);
+    // Extract tire information from the response data
+    const tireDetails = extractTireInformation(response.data[0].wheels);
+
+    return tireDetails;
+  } catch (error) {
+    // Handle errors, if any
+    console.error("Error fetching tire details:", error);
+    throw error; // Rethrow the error for handling at a higher level
+  }
 };
