@@ -14,7 +14,9 @@ export const ForgotPasswordHandler = async (req: Request, res: Response) => {
     const user = await findUniqueUser({ email: email.toLowerCase() });
 
     if (!user) {
-      res.status(400).json({ status: "error", message: "User is not exist" }); // Send appropriate error response
+      return res
+        .status(400)
+        .json({ status: "error", message: "User is not exist" }); // Send appropriate error response
       return;
     }
 
@@ -37,6 +39,8 @@ export const ForgotPasswordHandler = async (req: Request, res: Response) => {
       .status(200)
       .json({ status: "success", message: "Please check your email" });
   } catch (err) {
-    res.status(500).json({ status: "error", message: "Something went wrong" });
+    return res
+      .status(500)
+      .json({ status: "error", message: "Something went wrong" });
   }
 };

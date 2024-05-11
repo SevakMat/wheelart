@@ -68,13 +68,15 @@ export const getSingleTireDataHandler = async (req: Request, res: Response) => {
       },
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       singleTire,
       recommendedTires,
       recommendedRims,
     });
   } catch (err: any) {
-    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
+    return res
+      .status(500)
+      .json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };

@@ -16,12 +16,12 @@ export const createOrderHandler = async (req: Request, res: Response) => {
       },
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       status: "success",
       data: { order: createdOrder },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to create order",
     });
@@ -47,12 +47,12 @@ export const getUserOrdersListHandler = async (req: Request, res: Response) => {
       },
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { orderList },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to fetch user orders",
     });
@@ -101,14 +101,14 @@ export const getAllOrdersHandler = async (req: Request, res: Response) => {
       };
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { orders: orderList },
     });
   } catch (error) {
     console.log(error);
 
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to fetch orders",
     });
@@ -133,12 +133,12 @@ export const getOrderByIdHandler = async (req: Request, res: Response) => {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { order },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to fetch order",
     });
@@ -163,12 +163,12 @@ export const updateOrderHandler = async (req: Request, res: Response) => {
       },
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { order: updatedOrder },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to update order",
     });
@@ -195,9 +195,9 @@ export const deleteOrderHandler = async (req: Request, res: Response) => {
       },
     });
 
-    res.status(204).end();
+    return res.status(204).end();
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to delete order",
     });

@@ -1,18 +1,26 @@
 import Stripe from "stripe";
 import { transformToLineItems } from "../services/user.service";
 import { Response } from "express";
+import { CanUserBuy } from "../services/orders/canUserBuy";
 
 export const UserPaymentHandler = async (req: any, res: Response) => {
   const baseUrl = process.env.BASE_URL;
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY as string;
-
   const { filteredOrders } = req.body;
 
   try {
     const stripe = new Stripe(stripeSecretKey);
+    const canBuy = await CanUserBuy(filteredOrders);
 
-    // ste patqa stugel ete orderi meji itemnery kan nor sharunakel
+    if (!canBuy) {
+      return res.status(500).json({
+        message:
+          "Commande déposée pour un nombre d'articles insuffisant. Veuillez nous contacter",
+      });
+    }
+
     const lineItems = transformToLineItems(filteredOrders);
+    console.log("lineItems", lineItems[0].price_data);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -22,13 +30,15 @@ export const UserPaymentHandler = async (req: any, res: Response) => {
       cancel_url: `${baseUrl}/user/payment-failed`,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       id: session.id,
     });
   } catch (err) {
-    res.status(400).json({
-      status: "filed",
+    console.log(err);
+
+    return res.status(400).json({
+      message: "Quelque chose s'est mal passé1",
     });
   }
 };

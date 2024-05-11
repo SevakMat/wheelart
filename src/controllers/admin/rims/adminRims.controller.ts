@@ -46,7 +46,7 @@ export interface ErrorResponse {
 export const createRimHandler: (
   req: RequestWithBody<RimData>,
   res: ResponseWithData<RimResponse | ErrorResponse>
-) => Promise<void> = async (req, res) => {
+) => Promise<any> = async (req, res) => {
   try {
     const clearCreateRimData = ClearCreateRimDataHelper(req.body);
 
@@ -54,12 +54,12 @@ export const createRimHandler: (
       data: clearCreateRimData,
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       status: "success",
       data: { rim: createdRim },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to create rim",
     });
@@ -69,16 +69,16 @@ export const createRimHandler: (
 export const getAllRimsHandler: (
   req: Request,
   res: ResponseWithData<RimsResponse | ErrorResponse>
-) => Promise<void> = async (req, res) => {
+) => Promise<any> = async (req, res) => {
   try {
     const allRims = await prisma.rims.findMany();
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { rims: allRims },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to fetch rims",
     });
@@ -88,7 +88,7 @@ export const getAllRimsHandler: (
 export const getRimByIdHandler: (
   req: any,
   res: ResponseWithData<RimResponse | ErrorResponse>
-) => Promise<void> = async (req, res) => {
+) => Promise<any> = async (req, res) => {
   try {
     const { id } = req.params;
     const rimId = parseInt(id, 10);
@@ -100,19 +100,19 @@ export const getRimByIdHandler: (
     });
 
     if (!rim) {
-      res.status(404).json({
+      return res.status(404).json({
         status: "error",
         message: "Rim not found",
       });
       return; // Ensure function exits after sending response
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { rim },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to fetch rim",
     });
@@ -122,7 +122,7 @@ export const getRimByIdHandler: (
 export const updateRimHandler: (
   req: any & RequestWithBody<RimData>,
   res: ResponseWithData<RimResponse | ErrorResponse>
-) => Promise<void> = async (req, res) => {
+) => Promise<any> = async (req, res) => {
   try {
     const { id } = req.params;
     const rimId = parseInt(id, 10);
@@ -136,12 +136,12 @@ export const updateRimHandler: (
       data: clearUpdateRimData,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { rim: updatedRim },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to update rim",
     });
@@ -150,8 +150,8 @@ export const updateRimHandler: (
 
 export const deleteRimHandler: (
   req: any,
-  res: ResponseWithData<void | ErrorResponse>
-) => Promise<void> = async (req, res) => {
+  res: ResponseWithData<any | ErrorResponse>
+) => Promise<any> = async (req, res) => {
   try {
     const { id } = req.params;
     const rimId = parseInt(id, 10);
@@ -162,9 +162,9 @@ export const deleteRimHandler: (
       },
     });
 
-    res.status(204).end();
+    return res.status(204).end();
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to delete rim",
     });

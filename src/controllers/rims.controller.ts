@@ -28,14 +28,16 @@ export const getAllRimsHandler = async (
       centerBore: true,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: {
         rims,
       },
     });
   } catch (err: any) {
-    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
+    return res
+      .status(500)
+      .json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -78,14 +80,16 @@ export const getRimsByCarInputArgsHandler = async (
       },
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { rims, tires, rimsCount, rimDetails },
     });
   } catch (err: any) {
     console.log(err);
 
-    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
+    return res
+      .status(500)
+      .json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -121,7 +125,7 @@ export const getCarDatailsHandler = async (req: Request, res: Response) => {
       );
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: {
         modelDada,
@@ -130,7 +134,9 @@ export const getCarDatailsHandler = async (req: Request, res: Response) => {
       },
     });
   } catch (err: any) {
-    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
+    return res
+      .status(500)
+      .json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -142,12 +148,14 @@ export const getCarsMakeHandler = async (
   try {
     const dataFromApi = await getCarsDetailsByCarDetails("makes");
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: dataFromApi,
     });
   } catch (err: any) {
-    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
+    return res
+      .status(500)
+      .json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -232,7 +240,7 @@ export const getSingleRimDataHandler = async (req: Request, res: Response) => {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       singleRim,
       recommendedTires: tires,
@@ -240,7 +248,9 @@ export const getSingleRimDataHandler = async (req: Request, res: Response) => {
     });
   } catch (err: any) {
     console.error(err); // Log errors
-    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
+    return res
+      .status(500)
+      .json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };
 
@@ -251,12 +261,14 @@ export const getPopularRimsDataHandler = async (
   try {
     const popularRims = await findPopularRimsService();
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       popularRims,
     });
   } catch (err: any) {
     console.log(err);
-    res.status(500).json({ status: "error", message: "Internal server error" }); // Send appropriate error response
+    return res
+      .status(500)
+      .json({ status: "error", message: "Internal server error" }); // Send appropriate error response
   }
 };

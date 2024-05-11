@@ -60,7 +60,7 @@ export const registerUserHandler = async (
     });
 
     // Respond with success
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
     });
   } catch (err: any) {

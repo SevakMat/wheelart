@@ -20,7 +20,10 @@ import { updateTireDB } from "../excel/tire/updateTireDB";
 
 const prisma = new PrismaClient();
 
-export const createTireHandler: CreateTireHandler = async (req, res) => {
+export const createTireHandler: CreateTireHandler = async (
+  req,
+  res
+): Promise<any> => {
   try {
     const clearCreateTireData = ClearCreateTireDataHelper(req.body);
 
@@ -28,35 +31,41 @@ export const createTireHandler: CreateTireHandler = async (req, res) => {
       data: { ...clearCreateTireData },
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       status: "success",
       data: { tire: createdTire },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to create tire",
     });
   }
 };
 
-export const getAllTiresHandler: GetAllTiresHandler = async (req, res) => {
+export const getAllTiresHandler: GetAllTiresHandler = async (
+  req,
+  res
+): Promise<any> => {
   try {
     const allTires = await prisma.tire.findMany();
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { tires: allTires },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to fetch tires",
     });
   }
 };
 
-export const getTireByIdHandler: GetTireByIdHandler = async (req, res) => {
+export const getTireByIdHandler: GetTireByIdHandler = async (
+  req,
+  res
+): Promise<any> => {
   try {
     const { id } = req.params;
     const tireId = parseInt(id, 10);
@@ -74,19 +83,22 @@ export const getTireByIdHandler: GetTireByIdHandler = async (req, res) => {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { tire },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to fetch tire",
     });
   }
 };
 
-export const updateTireHandler: UpdateTireHandler = async (req, res) => {
+export const updateTireHandler: UpdateTireHandler = async (
+  req,
+  res
+): Promise<any> => {
   try {
     const { id } = req.params;
     const tireId = parseInt(id, 10);
@@ -100,19 +112,22 @@ export const updateTireHandler: UpdateTireHandler = async (req, res) => {
       data: updatedTireData,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       data: { tire: updatedTire },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to update tire",
     });
   }
 };
 
-export const deleteTireHandler: DeleteTireHandler = async (req, res) => {
+export const deleteTireHandler: DeleteTireHandler = async (
+  req,
+  res
+): Promise<any> => {
   try {
     const { id } = req.params;
     const tireId = parseInt(id, 10);
@@ -123,9 +138,9 @@ export const deleteTireHandler: DeleteTireHandler = async (req, res) => {
       },
     });
 
-    res.status(204).end();
+    return res.status(204).end();
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "error",
       message: "Failed to delete tire",
     });

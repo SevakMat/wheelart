@@ -71,11 +71,12 @@ export const findUniqueUser = async (
 
 export const transformToLineItems = (products: any[]) => {
   const lineItems = products.map((product) => {
+    const name = product.rimModel ? product.rimModel : product.marka ?? "name";
     return {
       price_data: {
         currency: "eur",
         product_data: {
-          name: product.rimModel ? product.rimModel : product.marka, // Use rimModel as the product name
+          name, // Use rimModel as the product name
           images: [product.imageUrl], // Use imageUrl as the product image
         },
         unit_amount: Math.round(product.price * 100), // Convert price to cents
