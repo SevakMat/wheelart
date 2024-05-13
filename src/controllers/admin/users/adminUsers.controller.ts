@@ -48,8 +48,6 @@ export const createUserHandler: CreateUserHandler = async (
       data: { user: createdUser },
     });
   } catch (error) {
-    console.log(error);
-
     return res.status(500).json({
       status: "error",
       message: "Failed to create user",

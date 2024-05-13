@@ -85,23 +85,20 @@ enum OrderTypeEnum {
 }
 
 model Order {
-  id         Int             @id @default(autoincrement())
-  
-  createdDate       DateTime   @default(now()) @map("created_date")
-  updatedDate       DateTime   @default(now()) @map("updated_date")
-
-  orderType  OrderTypeEnum
-  status     OrderStatusType @default(CREATED)
-  itemId     Int
-  tire       Tire?           @relation(fields: [itemId], references: [id], map: "tire_order_item_id_fkey")
-  rims       Rims?           @relation(fields: [itemId], references: [id], map: "rims_order_item_id_fkey")
-  users      OrderUser[]
-  itemCount  Int             @map("item_count")
-  sessionId  String?         @db.VarChar(255)
-  price      Float
-  @@index([itemId])
+  id               Int           @id @default(autoincrement())
+  createdDate      DateTime      @default(now()) @map("created_date")
+  updatedDate      DateTime      @default(now()) @map("updated_date")
+  orderType        OrderTypeEnum
+  status           OrderStatusType @default(CREATED)
+  tireId           Int?           @map("tire_id")
+  rimId            Int?           @map("rim_id")
+  tire             Tire?          @relation(fields: [tireId], references: [id])
+  rims             Rims?          @relation(fields: [rimId], references: [id])
+  users            OrderUser[]
+  itemCount        Int            @map("item_count")
+  sessionId        String?        @db.VarChar(255)
+  price            Float
 }
-
 
 model OrderUser {
   id         Int      @id @default(autoincrement())

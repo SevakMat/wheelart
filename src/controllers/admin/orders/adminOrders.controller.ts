@@ -3,30 +3,30 @@ import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
 
-export const createOrderHandler = async (req: Request, res: Response) => {
-  try {
-    const { orderType, itemId, itemCount, price } = req.body;
+// export const createOrderHandler = async (req: Request, res: Response) => {
+//   try {
+//     const { orderType, itemId, itemCount, price } = req.body;
 
-    const createdOrder = await prisma.order.create({
-      data: {
-        orderType,
-        itemId,
-        itemCount,
-        price,
-      },
-    });
+//     const createdOrder = await prisma.order.create({
+//       data: {
+//         orderType,
+//         rimId: 1,
+//         itemCount,
+//         price,
+//       },
+//     });
 
-    return res.status(201).json({
-      status: "success",
-      data: { order: createdOrder },
-    });
-  } catch (error) {
-    return res.status(500).json({
-      status: "error",
-      message: "Failed to create order",
-    });
-  }
-};
+//     return res.status(201).json({
+//       status: "success",
+//       data: { order: createdOrder },
+//     });
+//   } catch (error) {
+//     return res.status(500).json({
+//       status: "error",
+//       message: "Failed to create order",
+//     });
+//   }
+// };
 
 export const getUserOrdersListHandler = async (req: Request, res: Response) => {
   try {
@@ -91,13 +91,15 @@ export const getAllOrdersHandler = async (req: Request, res: Response) => {
         status: order.status,
         price: order.price,
         name:
-          order.orderType === "TIRE" ? order.tire?.marka : order.rims?.rimModel,
-        itemId: order.orderType === "TIRE" ? order.tire?.id : order.rims?.id,
-        itemCount: order.itemCount,
-        userId: order.users[0].userId,
-        userName: order.users[0].user.lastName,
-        sessionId: order.sessionId,
-        createdDate: order.createdDate,
+          order?.orderType === "TIRE"
+            ? order?.tire?.marka
+            : order?.rims?.rimModel,
+        itemId: order?.orderType === "TIRE" ? order?.tire?.id : order?.rims?.id,
+        itemCount: order?.itemCount,
+        userId: order?.users[0]?.userId,
+        userName: order?.users[0]?.user?.firstName,
+        sessionId: order?.sessionId,
+        createdDate: order?.createdDate,
       };
     });
 
@@ -106,8 +108,6 @@ export const getAllOrdersHandler = async (req: Request, res: Response) => {
       data: { orders: orderList },
     });
   } catch (error) {
-    console.log(error);
-
     return res.status(500).json({
       status: "error",
       message: "Failed to fetch orders",
@@ -149,7 +149,7 @@ export const updateOrderHandler = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const orderId = parseInt(id, 10);
-    const { orderType, itemId, itemCount, status } = req.body;
+    const { orderType, rimId, tireId, itemCount, status } = req.body;
 
     const updatedOrder = await prisma.order.update({
       where: {
@@ -157,7 +157,8 @@ export const updateOrderHandler = async (req: Request, res: Response) => {
       },
       data: {
         orderType,
-        itemId,
+        rimId: rimId,
+        tireId: tireId,
         itemCount,
         status,
       },
@@ -180,7 +181,6 @@ export const deleteOrderHandler = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { userId } = req.body;
     const orderId = parseInt(id, 10);
-    console.log(userId);
 
     await prisma.orderUser.delete({
       where: {

@@ -20,7 +20,6 @@ export const UserPaymentHandler = async (req: any, res: Response) => {
     }
 
     const lineItems = transformToLineItems(filteredOrders);
-    console.log("lineItems", lineItems[0].price_data);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -35,8 +34,6 @@ export const UserPaymentHandler = async (req: any, res: Response) => {
       id: session.id,
     });
   } catch (err) {
-    console.log(err);
-
     return res.status(400).json({
       message: "Quelque chose s'est mal passé1",
     });

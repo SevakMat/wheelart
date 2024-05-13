@@ -36,7 +36,6 @@ export const loginUserHandler = async (req: Request, res: Response) => {
         message: "Invalid mail or password",
       });
     }
-    console.log(req.headers, user.role);
 
     if (req.headers?.admin === "FTS" && user.role !== "admin") {
       return res.status(401).json({

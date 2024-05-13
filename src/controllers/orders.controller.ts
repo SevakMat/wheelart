@@ -36,17 +36,16 @@ export const createOrderHandler = async (req: Request, res: Response) => {
         data: clearData,
       });
 
-      console.log();
-
       await prisma.orderUser.create({
         data: {
           userId: id,
           orderId: newOrder.id,
         },
       });
-      if (clearData.type === "RIM") {
+
+      if (clearData.orderType === "RIM") {
         await prisma.rims.update({
-          where: { id: clearData.itemId },
+          where: { id: clearData.rimId },
           data: {
             stock: {
               decrement: clearData.itemCount,
@@ -55,7 +54,7 @@ export const createOrderHandler = async (req: Request, res: Response) => {
         });
       } else {
         await prisma.tire.update({
-          where: { id: clearData.itemId },
+          where: { id: clearData.tireId },
           data: {
             stock: {
               decrement: clearData.itemCount,
@@ -94,11 +93,13 @@ export const getUserOrdersListHandler = async (req: Request, res: Response) => {
         tire: {
           select: {
             imageUrl: true,
+            marka: true,
           },
         },
         rims: {
           select: {
             imageUrl: true,
+            rimModel: true,
           },
         },
       },
@@ -114,6 +115,8 @@ export const getUserOrdersListHandler = async (req: Request, res: Response) => {
           ? order.tire?.imageUrl
           : order.rims?.imageUrl,
       itemCount: order.itemCount,
+      orderName:
+        order.orderType === "TIRE" ? order?.tire?.marka : order?.rims?.rimModel,
     }));
 
     return res.status(200).json({

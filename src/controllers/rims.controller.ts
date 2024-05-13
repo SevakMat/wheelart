@@ -85,8 +85,6 @@ export const getRimsByCarInputArgsHandler = async (
       data: { rims, tires, rimsCount, rimDetails },
     });
   } catch (err: any) {
-    console.log(err);
-
     return res
       .status(500)
       .json({ status: "error", message: "Internal server error" }); // Send appropriate error response
@@ -266,7 +264,6 @@ export const getPopularRimsDataHandler = async (
       popularRims,
     });
   } catch (err: any) {
-    console.log(err);
     return res
       .status(500)
       .json({ status: "error", message: "Internal server error" }); // Send appropriate error response

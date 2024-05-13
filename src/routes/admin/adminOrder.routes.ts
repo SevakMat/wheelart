@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  createOrderHandler,
+  // createOrderHandler,
   deleteOrderHandler,
   getAllOrdersHandler,
   getOrderByIdHandler,
@@ -13,7 +13,7 @@ const router = express.Router();
 router.use(VerifyJWTToken);
 
 // Route to create a new order
-router.post("/create", createOrderHandler);
+// router.post("/create", createOrderHandler);
 
 // Route to get user's orders list
 router.get("/user/:id", getUserOrdersListHandler);

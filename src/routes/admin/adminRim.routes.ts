@@ -29,6 +29,7 @@ router.delete("/:id", deleteRimHandler);
 router.post("/create", createRimHandler);
 
 // Route to create a new rim
+// router.post("/integreate-exel", upload.single("file"), integreateExelHandler);
 router.post("/integreate-exel", upload.single("file"), integreateExelHandler);
 
 export default router;

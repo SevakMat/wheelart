@@ -5,8 +5,6 @@ import { generateJWTTokens } from "./generateJWTToke";
 export const VerifyRefreshToken = async (req: Request, res: Response) => {
   const jwtRefreshSecretKey = process.env.JWT_REFRESH_SECRET_KEY as string;
 
-  console.log("jwtRefreshSecretKey", jwtRefreshSecretKey);
-
   const { refreshToken } = req.body;
 
   if (!refreshToken) {
@@ -27,7 +25,6 @@ export const VerifyRefreshToken = async (req: Request, res: Response) => {
           .status(403)
           .json({ message: "Unauthorized: Invalid refresh token" });
       }
-      console.log("decoded");
       const { payload } = decoded;
       const { access_token, refresh_token } = await generateJWTTokens(payload);
 

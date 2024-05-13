@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { ClearCreateOrderInputArgs } from "../../controllers/inputs/ClearCreateOrderInputArgs";
 import { OrderType } from "../../controllers/orders.controller";
 import { log } from "console";
 const prisma = new PrismaClient();
